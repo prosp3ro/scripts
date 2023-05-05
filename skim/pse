@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# project search
+# used in .zshrc
+
+isinstalled fd skim || exit
+
+case "$1" in
+    "git") dir="$HOME/.local/git" ;;
+    "src") dir="$HOME/.local/src" ;;
+    "srv") dir="/srv/http" ;;
+    *) exit 1 ;;
+esac
+
+export SKIM_DEFAULT_COMMAND='fd -d 1 --type directory -E node_modules'
+cd "$dir" && cd "$(sk --reverse)" || exit 1

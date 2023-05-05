@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1091
+source config
+
+unmountusb() {
+	[ -z "$drives" ] && exit
+    chosen="$(echo "$drives" | sk --reverse --height 5 --header "Unmount which drive?")" || exit 1
+	chosen="$(echo "$chosen" | awk '{print $1}')"
+	[ -z "$chosen" ] && exit
+	sudo -A umount "$chosen" && echoGreen "$chosen unmounted."
+	}
+
+drives=$(lsblk -nrpo "name,type,size,mountpoint" | awk '$4!~/\/boot|\/home$|SWAP/&&length($4)>1{printf "%s (%s)\n",$4,$3}')
+
+[ -z "$drives" ] && echoRedExit "No drives found."
+unmountusb

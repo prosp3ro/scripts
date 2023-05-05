@@ -1,0 +1,6 @@
+#!/bin/sh
+
+lvl="$(router.py | tr -d "\<span id\">/btterylvl=")"
+
+[ "$lvl" -le 20 ] && notify-send -u critical "Router low battery!" "$lvl%" && echo "Router: ❗$lvl%"
+[ "$lvl" -gt 20 ] && echo "Router: $lvl%"

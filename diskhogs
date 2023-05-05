@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+isinstalled expac bat || exit
+
+expac '%m %n' -H 'G' | sort -n -r | bat

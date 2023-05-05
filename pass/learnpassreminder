@@ -1,0 +1,6 @@
+#!/bin/sh
+
+while true; do
+    notify-send "Password learning reminder" "Press Super+F9."
+    sleep 1h
+done

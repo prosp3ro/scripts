@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+sudo systemctl start mysqld
+sudo systemctl start mysql.service
+sudo systemctl start mariadb.service
+systemctl status mariadb -o short

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+echo "CPU: $( mpstat | cut -d ' ' -f 10 | tr -d '\n%usr ' )%"

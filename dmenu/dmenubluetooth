@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1091
+
+source config
+isinstalled shuf nsxiv shuf bluetoothctl || exit
+
+bluetoothConnect(){
+    deviceInfo=$(bluetoothctl devices Trusted | $DMENU_V -i -p "Select option:") || exit 1
+    deviceMacAddress=$(echo "$deviceInfo" | awk '{print $2}')
+    bluetoothctl connect "$deviceMacAddress"
+}
+
+case "$(printf "disconnect\\nconnect\\npower status\\npower on\\npower off" | $DMENU_V -i -p "Select option:")" in
+    "disconnect")
+        bluetoothctl disconnect
+        ;;
+    "connect")
+        bluetoothConnect
+        ;;
+    "power status")
+        notify-send "Bluetooth" "$(bluetoothctl show | grep 'Powered' | sed 's/	//g')."
+        ;;
+    "power on")
+        bluetoothctl power on
+        notify-send "Bluetooth powered on."
+        ;;
+    "power off")
+        bluetoothctl power off
+        notify-send "Bluetooth powered off."
+        ;;
+esac

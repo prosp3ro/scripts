@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+isinstalled shuf nsxiv shuf || exit
+
+backgroundDir="$HOME/img/bgs"
+find "$backgroundDir" -type f | shuf | nsxiv -

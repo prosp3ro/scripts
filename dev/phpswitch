@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+scriptsDir="$HOME/.local/sc"
+
+activate74(){
+    if [[ -f "$scriptsDir/php" ]]; then
+        rm "$scriptsDir/php"
+        rm "$scriptsDir/phpize"
+
+        ln -s "/usr/bin/php74" "$scriptsDir/php"
+        ln -s "/usr/bin/phpize74" "$scriptsDir/phpize"
+
+        echo "PHP 7.4 version activated."
+    else
+        echo "$scriptsDir/php or $scriptsDir/phpize don't exist."
+    fi
+}
+
+activateLatest(){
+    if [[ -f "$scriptsDir/php" ]]; then
+        rm "$scriptsDir/php"
+        rm "$scriptsDir/phpize"
+
+        ln -s "/usr/bin/php" "$scriptsDir/php"
+        ln -s "/usr/bin/phpize" "$scriptsDir/phpize"
+
+        echo "Latest PHP version activated."
+    else
+        echo "$scriptsDir/php or $scriptsDir/phpize don't exist."
+    fi
+}
+
+case "$1" in
+    "74") activate74 ;;
+    "latest") activateLatest ;;
+    *) exit 1 ;;
+esac

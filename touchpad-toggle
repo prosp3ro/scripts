@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+isinstalled xinput || exit
+
+device=$(xinput | grep -i 'touchpad' | awk '{print $6}' | sed 's/.*=//g')
+touchpadState=$(xinput list-props "$device" | grep "Device Enabled" | grep -o "[01]$")
+
+[ "$touchpadState" == "1" ] && xinput --disable "$device" && notify-send "Touchpad disabled."
+[ "$touchpadState" != "1" ] && xinput --enable "$device" && notify-send "Touchpad enabled."

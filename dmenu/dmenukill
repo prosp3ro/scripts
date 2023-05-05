@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1091
+
+source config
+
+set -euo pipefail
+
+main() {
+    # Running ps to get running processes and display in dmenu.
+    selected="$(ps xo pid,command | \
+        $DMENU_V -p "Search for process to kill:" "$@" | \
+        awk '{print $1" "$2}')";
+
+    echo "$selected"
+
+    # Nested 'if' statements.  The outer 'if' statement is what to do
+    # when we select one of the 'selected' options listed in dmenu.
+    if [[ -n $selected ]]; then
+        answer="$(printf "Yes\\nNo" | $DMENU -i -p "Kill $selected?" "$@")"
+
+        if [[ $answer == "Yes" ]]; then
+            # This echo command prints everything before the first space.
+            # Luke Smith has a video on why this is most efficient in this case
+            # An alternative way to do it would be with awk or cut, both are less 
+            # efficient however.
+            kill -9 "${selected%% *}"
+            echo "Process $selected has been killed." && exit 0
+        else
+            # We want this script to exit with a 1 and not 0 because 1 means
+            # an error, so this can be handled by other scripts better
+            echo "Program terminated." && exit 1
+        fi
+    fi
+}
+
+[[ "${BASH_SOURCE[0]}" == "${0}" ]] && main "$@"

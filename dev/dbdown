@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+sudo systemctl stop mysqld
+sudo systemctl stop mysql.service
+sudo systemctl stop mariadb.service
+systemctl status mariadb -o cat

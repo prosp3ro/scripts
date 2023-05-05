@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+locationDir="$HOME/.local/git"
+# locationDir="$HOME/.local/src"
+
+usage() {
+    echo -e "Options: \n- dmenu \n- dwm \n- st \n- nsxiv"
+    exit 1
+}
+
+case "$1" in
+    "dmenu") 
+        cd "$locationDir/dmenu" || exit 1
+        sudo make install ;;
+
+    "dwm") 
+        cd "$locationDir/dwm" || exit 1
+        sudo make install
+        kill -HUP "$(pgrep -u "$USER" "\bdwm$")" ;;
+
+    "st")
+        cd "$locationDir/st" || exit 1
+        sudo make install ;;
+
+    "nsxiv") 
+        cd "$locationDir/nsxiv" || exit 1
+        rm -f config.h
+        sudo make install ;;
+
+    *) usage ;;
+esac

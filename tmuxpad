@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+tmux -f "$XDG_CONFIG_HOME/tmux/tmux.conf" attach || tmux
+tmux -f "$XDG_CONFIG_HOME/tmux/tmux.conf" new-session -s "core" || tmux -f "$XDG_CONFIG_HOME/tmux/tmux.conf" attach-session -t "core"
+
+# vimwikiDir="$HOME/doc/vimwiki"
+
+# cd "$vimwikiDir" || exit 1
+# nvim "$vimwikiDir/index.md"

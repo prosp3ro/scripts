@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1091
+
+source config
+
+wmpid(){ # This function is needed if there are multiple instances of the window manager.
+	tree="$(pstree -ps $$)"
+	tree="${tree#*$WM(}"
+	echo "${tree%%)*}"
+}
+
+case "$(printf "lock\\nkill awesome\\nkill i3\\nreboot\\npoweroff" | $DMENU -i )" in
+    "lock") i3lock -c "#000000" -f ;;
+    "kill awesome") kill -TERM "$(pgrep -u "$USER" "\bawesome$")" ;;
+    "kill i3") kill -TERM "$(pgrep -u "$USER" "\bi3$")" ;;
+    "reboot") systemctl reboot -i ;;
+    "poweroff") systemctl poweroff -i ;;
+    *) exit 1 ;;
+esac

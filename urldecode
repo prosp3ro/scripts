@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+urlDecode() { : "${*//+/ }"; echo -e "${_//%/\\x}"; }
+
+x=("$@")
+y=$(urlDecode $x)
+echo "$y"

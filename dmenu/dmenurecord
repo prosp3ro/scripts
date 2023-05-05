@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1091
+
+source config
+isinstalled xdpyinfo ffmpeg slop pkill || exit
+
+tmpDir="$HOME/tmp"
+[ ! -d "$tmpDir" ] && notify-send "$tmpDir doesn't exist" && exit 1
+
+video() {
+    notify-send "Record" "Recording started."
+    ffmpeg \
+	-f x11grab \
+	-s "$(xdpyinfo | grep dimensions | awk '{print $2;}')" \
+	-i "$DISPLAY" \
+ 	-c:v libx264 -qp 0 -r 30 \
+	"$tmpDir/video-$(date '+%y%m%d-%H%M-%S').mkv" &
+	echo $! > /tmp/recordingpid
+}
+
+videoselected() {
+	slop -f "%x %y %w %h" > /tmp/slop
+	read -r X Y W H < /tmp/slop
+	rm /tmp/slop
+
+    notify-send "Record" "Recording started."
+	ffmpeg \
+	-f x11grab \
+	-framerate 60 \
+	-video_size "$W"x"$H" \
+	-i :0.0+"$X,$Y" \
+	-c:v libx264 -qp 0 -r 30 \
+	"$tmpDir/videoselected-$(date '+%y%m%d-%H%M-%S').mkv" &
+	echo $! > /tmp/recordingpid
+}
+
+killrecording() {
+	recpid="$(/usr/bin/cat /tmp/recordingpid)"
+	# kill with SIGTERM, allowing finishing touches.
+	kill -15 "$recpid"
+	rm -f /tmp/recordingpid
+	pkill -RTMIN+9 "${STATUSBAR:-dwmblocks}"
+    notify-send "Record" "Recording finished."
+	# even after SIGTERM, ffmpeg may still run, so SIGKILL it.
+	sleep 3
+	kill -9 "$recpid"
+	exit
+}
+
+askrecording() { \
+	choice=$(printf "video\\nvideo selected" | $DMENU -i -p "Select recording style:")
+	case "$choice" in
+		video) video;;
+		*selected) videoselected;;
+	esac
+}
+
+asktoend() { \
+	response=$(printf "No\\nYes" | $DMENU -i -p "Recording still active. End recording?") &&
+	[ "$response" = "Yes" ] &&  killrecording
+}
+
+case "$1" in
+	video) video;;
+	*selected) videoselected;;
+	kill) killrecording;;
+	*) ([ -f /tmp/recordingpid ] && asktoend && exit) || askrecording;;
+esac

@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1091
+source config
+
+getmount() { \
+	[ -z "$chosen" ] && exit 1
+    # shellcheck disable=SC2086
+	mp="$(find $1 2>/dev/null | sk --reverse --height 5)" || exit 1
+	[ "$mp" = "" ] && exit 1
+}
+
+mountusb() { \
+	chosen="$(echo "$usbdrives" | sk --reverse --height 5 --header "Mount which drive?")" || exit 1
+	chosen="$(echo "$chosen" | awk '{print $1}')"
+
+	sudo mount "$chosen" 2>/dev/null &&
+       echoBlue "$chosen mounted." &&
+       exit 0
+
+	alreadymounted=$(lsblk -nrpo "name,type,mountpoint" | 
+        awk '$3!~/\/boot|\/home$|SWAP/&&length($3)>1{printf "-not ( -path *%s -prune ) ",$3}'
+        )
+
+	getmount "$HOME/mnt -maxdepth 5 -type d $alreadymounted"
+
+	partitiontype="$(lsblk -no "fstype" "$chosen")"
+
+	case "$partitiontype" in
+		"vfat") sudo -A mount -t vfat "$chosen" "$mp" -o rw,umask=0000;;
+		"exfat") sudo -A mount "$chosen" "$mp" -o uid="$(id -u)",gid="$(id -g)";;
+		*) sudo -A mount "$chosen" "$mp"; user="$(whoami)"; ug="$(groups | awk '{print $1}')"; sudo -A chown "$user":"$ug" "$mp";;
+	esac
+
+	echoGreen -n "$chosen mounted to $mp."
+}
+
+usbdrives="$(lsblk -rpo "name,type,size,mountpoint" |
+    grep 'part\|rom' |
+    grep -v '/dev/sda2' |
+    awk '$4==""{printf "%s (%s)\n",$1,$3}'
+    )"
+
+if [ -z "$usbdrives" ]; then
+	echoRedExit "No device detected."
+else
+    mountusb
+fi

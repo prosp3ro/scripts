@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1091
+
+source config
+isinstalled veracrypt-console-bin mountpoint || exit
+
+set -e 
+
+mntVCBackupDir="$HOME/mnt/vc-backup"
+backupLocalVolume="$HOME/.local/veracrypt/backup"
+
+mountedDevice="$HOME/mnt/$1"
+
+if [[ $# -ne 1 ]]; then
+    echo "Usage: $0 <mounted directory>" >&2
+    exit 1
+fi
+
+[ ! -f "$backupLocalVolume" ] && echoRedExit "$backupLocalVolume does not exist."
+[ ! -f "$mountedDevice/backup" ] && echoRedExit "$mountedDevice is probably not mounted."
+
+if mountpoint -q "$mntVCBackupDir"; then
+    echoBlue "Unmounting VeraCrypt volume."
+    sudo veracrypt -d "$mntVCBackupDir"
+
+    mountpoint -q "$mntVCBackupDir" && echoRedExit "Error: $mntVCBackupDir is still mounted."
+fi
+
+echoBlue "Replacing old backup file."
+mv -v "$mountedDevice/backup" "$mountedDevice/backup-old"
+
+echoBlue -n "Copying current backup file to $mountedDevice."
+cp -v "$backupLocalVolume" "$mountedDevice"
+
+echoBlue -n "Info:"
+runDust "$mountedDevice"
+ls --color=auto -alh "$mountedDevice"
+
+echoBlue -n "Run backuptest script to perform tests."

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+while true
+do
+    lvl="$(cat /sys/class/power_supply/BAT1/capacity)"
+    notify-send "Battery level" "$lvl%"
+    sleep 5m
+done

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+isinstalled bat skim || exit
+
+bat "$XDG_CONFIG_HOME/zsh/history" | 
+    perl -e 'print reverse <>' | 
+    sk --height 40 --reverse

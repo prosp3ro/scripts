@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+isinstalled skim || exit
+
+pacman -Slq |
+    sk -m --preview "cat <(pacman -Si {1}) <(pacman -Fl {1} | awk \"{print \$2}\")" |
+    xargs -ro sudo pacman -S

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+username="prospero"
+password="prospero"
+dbName="$1"
+
+mysql -u"$username" -p"$password" "$dbName"

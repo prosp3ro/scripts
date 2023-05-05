@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+isinstalled skim || exit
+
+scriptsDir="$HOME/.local/scripts"
+
+cd "$scriptsDir" || exit 1
+
+du -a "$scriptsDir"/* | 
+    awk '{print $2}' | 
+    sk --reverse --height 15 | 
+    xargs -r "$EDITOR"

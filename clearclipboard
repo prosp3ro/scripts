@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+isinstalled xclip || exit
+
+xclip -selection clipboard "/dev/null"
+notify-send "Clipboard cleared."

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+isinstalled yt-dlp || exit
+
+subsDir="$HOME/tmp/yt-subs"
+[ ! -d "$subsDir" ] && exit 1
+cd "$subsDir" || exit 1
+url="$1"
+language="en"
+format="vtt"
+
+yt-dlp --sub-lang "$language" --sub-format "$format" --write-auto-sub --skip-download "$url"

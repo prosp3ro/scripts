@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1091
+
+source config
+isinstalled xdotool || exit
+
+subFile="$(find "$(readlink -f "$XDG_DOCUMENTS_DIR/ytsubs")" -type f -name '*.md' | $DMENU_V -i -p "Choose a sub file:")" || exit 1
+channelName="$(sed 's/ --.*//' < "$subFile" | $DMENU_V -i -p "Choose a channel:")" || exit 1
+
+channelLink="$(grep "$channelName" "$subFile" | sed 's/.*-- //')"
+fixedLink="$(echo "$channelLink" | sed '2,$d')"
+# xdotool type --window "$(xdotool getactivewindow)" "$channelLink"
+
+xdotool type "$fixedLink"

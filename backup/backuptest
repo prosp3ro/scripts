@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1091
+
+source config
+isinstalled veracrypt-console-bin file tar || exit
+
+backupcheckMntDir="$HOME/tmp/backuptest"
+tmpDir="$HOME/tmp"
+
+usage() { 
+    echo -e "Options:\n- usb \n- usb2 \n- ext"
+    exit 1
+}
+
+runBackupChecks(){
+    echoBlue "Mounting $driveBackupFile volume to $backupcheckMntDir."
+    [ -f "$backupcheckMntDir/donotdelete" ] && echoRedExit "Looks like something is already mounted in $backupcheckMntDir."
+    [ -f "$driveBackupFile" ] && sudo veracrypt -t --pim=0 -k "" --protect-hidden=no "$driveBackupFile" "$backupcheckMntDir"
+    [ ! -f "$driveBackupFile" ] && echoRedExit "$driveBackupFile doesn't exist."
+
+    echoBlue -n "Running tests."
+    ls --color=auto -alh "$backupcheckMntDir"
+    runDust "$backupcheckMntDir" 2>/dev/null
+    file "$backupcheckMntDir/backup.tar.gz"
+    file "$backupcheckMntDir/oldbackup.tar.gz"
+    file "$backupcheckMntDir/img.tar.gz"
+
+    echoBlue -n "Do you want to copy backup.tar.gz to $tmpDir? [y/N]"
+    read -r answer
+
+    if [ "$answer" == "y" ]; then
+        echoBlue "Deleting old tar file and directory."
+        [ -f "$tmpDir/backup.tar.gz" ] && rm -vrf "$tmpDir/backup.tar.gz"
+        [ -d "$tmpDir/home" ] && rm -rf "${tmpDir/home:?}"
+
+        echoBlue "Copying backup.tar.gz to $tmpDir for further tests."
+        cp -v "$backupcheckMntDir/backup.tar.gz" "$tmpDir"
+        cd "$tmpDir" || exit 1
+
+        echoBlue "Untaring backup file."
+        tar zxf "$tmpDir/backup.tar.gz"
+    fi
+
+    echoBlue "Unmounting $driveBackupFile volume."
+    sudo veracrypt -d "$backupcheckMntDir"
+
+    echoBlue "Check $tmpDir/home."
+
+    [ -f "$backupcheckMntDir/donotdelete" ] && echoRed "Looks like unmounting failed. Do it manually."
+}
+
+case "$1" in
+    "usb") 
+        driveBackupFile="$HOME/mnt/usb/backup"
+        runBackupChecks ;;
+    "usb2") 
+        driveBackupFile="$HOME/mnt/usb2/backup"
+        runBackupChecks ;;
+    "ext") 
+        driveBackupFile="$HOME/mnt/ext/backup"
+        runBackupChecks ;;
+    *) usage ;;
+esac

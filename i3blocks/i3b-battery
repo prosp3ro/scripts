@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+battery="/sys/class/power_supply/BAT1"
+
+case "$(cat "$battery/status")" in
+    "Full") status="FULL" ;;
+    "Discharging") status="DCHR" ;;
+    "Charging") status="CHR" ;;
+    "Not charging") status="NCHR" ;;
+    "Unknown") status="UNK" ;;
+esac
+
+capacity=$(cat "$battery/capacity")
+
+[ "$capacity" -le 20 ] && warn="LOW " && notify-send -u critical "Low battery!" "$capacity"
+
+echo "Battery: $status $warn$capacity%"; unset warn

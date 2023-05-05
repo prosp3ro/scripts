@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+isinstalled maim nsxiv || exit
+
+tmpFile=$(mktemp /tmp/freezescreen.XXXXXXXX.png)
+# Take a screenshot
+maim -u -m 1 "$tmpFile"
+nsxiv "$tmpFile"
+rm "$tmpFile"

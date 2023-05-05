@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+isinstalled yt-dlp || exit
+
+usage() {
+    echo -e "Options: \n--best-audio \n--song or -s \n--song-np or -snp to download one song instead of entire playlist"
+    exit 1
+}
+
+case "$1" in
+    --best-audio) yt-dlp -i -x -f bestaudio/best "$2" ;;
+    -s|--song) yt-dlp -i -x --audio-format mp3 "$2" ;;
+    -snp|--song-np) yt-dlp -i -x --audio-format mp3 "$2" --no-playlist ;;
+    *) usage ;;
+esac

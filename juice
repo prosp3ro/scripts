@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+newMusicDir="$HOME/music/new-juice"
+baseMusicDir="$HOME/music/juice-wrld"
+phoneMusicDir="$HOME/mnt/phone/SD card/music/juice-wrld"
+
+case "$1" in
+    "newtophone")
+        echo "Copying to phone."
+        cp -vnR "$newMusicDir"/* "$phoneMusicDir"
+        ;;
+    "newtobase")
+        echo "Copying to base dir."
+        cp -vnR "${newMusicDir}"/* "$baseMusicDir"
+        ;;
+    "delnew")
+        echo "Deleting all new songs."
+        rm -vrf "${newMusicDir:?}"/*
+        ;;
+    *) echo "Wrong argument."
+        ;;
+esac

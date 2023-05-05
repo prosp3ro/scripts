@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1091
+
+source config
+isinstalled sensors pamixer xbacklight || exit
+
+MEM="$( free --mebi | sed -n '2{p;q}' | awk '{printf ("%2.1f/%2.1fGiB\n", ($3 / 1024), ($2 / 1024) ) }' )"
+CPUTEMP="$( sensors | grep 'Core' | awk '{print $1 $2 $3}' )"
+HOUR="$( date "+%H:%M")"
+BAT="$( /usr/bin/cat /sys/class/power_supply/BAT1/capacity )"
+
+VOL(){
+    [ "$(pamixer --get-mute)" = true ] && echo "Muted"
+    [ "$(pamixer --get-mute)" = false ] && vol=$(pamixer --get-volume) && echo $vol%
+}
+
+BRIGHTNESS="$( xbacklight | sed 's/\..*$//' )"
+
+notify-send "Sysinfo" "Brightness: $BRIGHTNESS%\nMem: $MEM\n$CPUTEMP\nHour: $HOUR\nBat: $BAT%\nVol: $(VOL)"

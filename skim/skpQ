@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+isinstalled skim || exit
+
+pacman -Q | sk --height 40 --reverse

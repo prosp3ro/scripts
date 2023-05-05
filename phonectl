@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1091
+
+source config
+isinstalled jmtpfs fusermount veracrypt-console-bin || exit
+
+phone="$HOME/mnt/phone"
+backup4phoneDir="$phone/Internal shared storage/backup4phone"
+backup4boxDir="$phone/Internal shared storage/backup4box"
+localVCBackupFile="$HOME/.local/veracrypt/backup"
+mntVCBackupDir="$HOME/mnt/vc-backup"
+
+usage() {
+    echo -e "Options: \n- mount \n- umount \n- backup2phone \n- backup2box"
+    exit 1
+}
+
+backup2phone() {
+    [ ! -d "$backup4phoneDir" ] && echoRedExit "$backup4phoneDir doesn't exist!"
+    if [ -d "$backup4phoneDir" ]; then
+        echoBlue "Removing old backup."
+        rm -vrf "${backup4phoneDir:?}"/*
+
+        echoBlue -n "Copying files to the phone."
+        # cp -n option is not used because I want it to overwrite all files
+        cp -vR "$XDG_DOCUMENTS_DIR/keepass" "$backup4phoneDir" || notify-send "$0" "$XDG_DOCUMENTS_DIR/keepass doesn't exist."
+        cp -vR "$XDG_DOCUMENTS_DIR/cv" "$backup4phoneDir" || notify-send "$0" "$XDG_DOCUMENTS_DIR/cv doesn't exist."
+        cp -vR "$XDG_DOCUMENTS_DIR/bookmarks" "$backup4phoneDir" || notify-send "$0" "$XDG_DOCUMENTS_DIR/bookmarks doesn't exist."
+        cp -vR "$XDG_DOCUMENTS_DIR/ytsubs" "$backup4phoneDir" || notify-send "$0" "$XDG_DOCUMENTS_DIR/ytsubs doesn't exist."
+    fi
+}
+
+backup2box() {
+    [ ! -d "$backup4boxDir" ] && echoRedExit "$backup4boxDir doesn't exist!"
+
+    if [ ! -f "$mntVCBackupDir/donotdelete" ]; then
+        echoBlue "Mounting backup VeraCrypt volume."
+        sudo veracrypt --pim=0 -k "" --protect-hidden=no "$localVCBackupFile" "$mntVCBackupDir"
+    fi
+
+    [ ! -d "$mntVCBackupDir/phone" ] && echoRedExit "$mntVCBackupDir/phone doesn't exist!"
+    if [ -d "$mntVCBackupDir/phone" ]; then
+        echoBlue "Copying backup from the phone to the VC volume."
+        # cp -n option is not used because I want it to overwrite all files
+        cp -vR "${backup4boxDir:?}"/* "$mntVCBackupDir/phone"
+    fi
+
+}
+
+case "$1" in
+    "mount")
+        sudo jmtpfs -o allow_other "$phone" 2>/dev/null
+        exit 1 ;;
+    "umount") 
+        sudo fusermount -u "$phone"
+        exit 1 ;;
+    "backup2phone")
+        backup2phone ;;
+    "backup2box")
+        backup2box ;;
+    *) usage ;;
+esac

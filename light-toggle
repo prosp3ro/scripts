@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+isinstalled xbacklight || exit
+
+if [ "$(xbacklight)" != "0.000000" ]; then
+    xbacklight -set 0
+    notify-send "Light turned off."
+else
+    xbacklight -set 40
+    notify-send "Light turned on."
+fi

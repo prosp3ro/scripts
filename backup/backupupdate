@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+
+source config
+isinstalled veracrypt-console-bin tar || exit
+
+mntVCBackup="$HOME/mnt/vc-backup"
+localVCBackup="$HOME/.local/veracrypt/backup"
+
+backupConfig="$XDG_CONFIG_HOME/backup.cfg"
+[ ! -f "$backupConfig" ] && echoRedExit "$backupConfig file doesn't exist"
+
+usage() {
+    echo -e "Options: \n--standard \n--img"
+    exit 1
+}
+
+standardBackup() {
+    echoBlue "Replacing oldbackup.tar.gz file."
+    mv -v "$mntVCBackup/backup.tar.gz" "$mntVCBackup/oldbackup.tar.gz"
+
+    echoBlue -n "Creating new backup tar archive."
+    tar -zcf "$mntVCBackup/backup.tar.gz" $( < "$backupConfig") || echoRedExit "tar command failed"
+
+    echoBlue -n "Backup info:"
+    runDust "$mntVCBackup"
+    runDust "$mntVCBackup/backup.tar.gz"
+    runDust "$mntVCBackup/oldbackup.tar.gz"
+    file "$mntVCBackup/backup.tar.gz" "$mntVCBackup/oldbackup.tar.gz"
+
+    echoBlue -n "$HOME/doc:"
+    runDust "$HOME/doc"
+}
+
+imgBackup() {
+    echoBlue "Before update info:"
+    runDust "$mntVCBackup/img.tar.gz"
+
+    echoBlue -n "Deleting and creating new img tar archive."
+    rm -rf "$mntVCBackup/img.tar.gz"
+    tar -zcf "$mntVCBackup/img.tar.gz" "$HOME/img"
+
+    echoBlue -n "After update:"
+    runDust "$mntVCBackup"
+    runDust "$mntVCBackup/img.tar.gz"
+
+    echoBlue -n "Info about updated file:"
+    file "$mntVCBackup/img.tar.gz"
+}
+
+vcMount() {
+    [ ! -f "$mntVCBackup/donotdelete" ] && sudo veracrypt --display-password \
+        -t \
+        --pim=0 -k "" \
+        --protect-hidden=no \
+        "$localVCBackup" "$mntVCBackup"
+}
+
+case "$1" in
+  "--standard")
+      vcMount
+      standardBackup ;;
+  "--img") 
+      vcMount
+      imgBackup ;;
+  *) usage ;;
+esac

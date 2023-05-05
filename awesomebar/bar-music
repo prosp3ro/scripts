@@ -1,0 +1,4 @@
+#!/bin/sh
+
+printf "🎵"
+mpc status | grep -e '-' -e 'volume' | sed 's/volume: /🔊/g;s/volume:/🔊/g' | sed 's/   repeat.*//g' | paste -sd ' '

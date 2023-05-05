@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1091
+source config
+isinstalled dym tr xclip || exit
+
+word="$(printf "" | $DMENU -p "Enter word:")"
+
+# if word is empty then exit
+dym -c "$word" | $DMENU -p "Select correct spelling" | tr -d "\n" | xclip -selection clipboard

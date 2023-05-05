@@ -1,0 +1,28 @@
+#!/bin/sh
+
+args=("$@")
+
+[[ -z "${args[0]}" || "${args[0]}" == "--help" ]] && echo "Options:
+- usb
+- usb2
+- ext
+- phone
+--help" && exit
+
+MOUNT_DIR="$HOME/mnt"
+[ ! -d "$MOUNT_DIR" ] && echo "${MOUNT_DIR} does not exist." && exit 1
+
+is_mounted() {
+  mounted_device="$(lsblk -nrpo "name,type,size,mountpoint" | grep "$1")"
+  [ -z "$mounted_device" ] && echo "Device not found." && exit 1 
+  }
+
+case "${args[0]}" in
+  "usb") is_mounted "$MOUNT_DIR/usb"; sudo -A umount "$MOUNT_DIR/usb";;
+  "usb2") is_mounted "$MOUNT_DIR/usb2"; sudo -A umount "$MOUNT_DIR/usb2";;
+  "ext") is_mounted "$MOUNT_DIR/ext"; sudo -A umount "$MOUNT_DIR/ext";;
+  "phone") sudo fusermount -u "$MOUNT_DIR/phone";;
+  *) echo "Wrong argument.";;
+esac
+
+echo "Device unmounted."

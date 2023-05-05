@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1091
+
+# A dmenu prompt to unmount drives.
+# Provides you with mounted partitions, select one to unmount.
+# Drives mounted at /, /boot and /home will not be options to unmount.
+
+source config
+
+unmountusb() {
+	[ -z "$drives" ] && exit
+    chosen="$(echo "$drives" | $DMENU -i -p "Unmount which drive?")" || exit 1
+	chosen="$(echo "$chosen" | awk '{print $1}')"
+	[ -z "$chosen" ] && exit
+	sudo -A umount "$chosen" && notify-send "Umount" "$chosen unmounted."
+	}
+
+drives=$(lsblk -nrpo "name,type,size,mountpoint" | awk '$4!~/\/boot|\/home$|SWAP/&&length($4)>1{printf "%s (%s)\n",$4,$3}')
+
+[ -z "$drives" ] && notify-send "Unmounting" "No drives found." && exit
+echo "Unmountable USB drive detected."
+unmountusb

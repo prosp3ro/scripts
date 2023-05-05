@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+[ -d "$HOME/tmp" ] && mkdir "$HOME/tmp"
+cp -r "$XDG_CACHE_HOME/keepassxc" "$HOME/tmp/keepassxc_backup"
+
+if ! rm -rf "${XDG_CACHE_HOME:?}/"*; then
+  echo "Error: failed to remove cache directory contents" >&2
+  rm -rf "$HOME/tmp/keepassxc_backup"
+  exit 1
+fi
+
+mv "$HOME/tmp/keepassxc" "$XDG_CACHE_HOME/keepassxc"

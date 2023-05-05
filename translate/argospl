@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+isinstalled xclip argos-translate || exit
+
+xclip -out -selection clipboard > /tmp/clipboard
+sed -i "s/[-*/\!@#$%{}^&*()_+>'\"-<:-=~|]//g;s/\[//g;s/\]//g" /tmp/clipboard
+argos-translate --from-lang en --to-lang pl "$(cat /tmp/clipboard)" | xclip -selection clipboard
+notify-send "Argos Translate" "Translation completed."
