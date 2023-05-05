@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-isinstalled fd skim || exit
-
-export SKIM_DEFAULT_COMMAND='fd -d 1 --type directory -E node_modules'
-cd "$HOME/tmp/src" && cd "$(sk --reverse)" && nvim

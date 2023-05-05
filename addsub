@@ -4,7 +4,7 @@ isinstalled skim || exit
 
 [ -z "$1" ] && echo -e "Usage: $0 <sub name> -- <sub link>" && exit 1
 
-ytSubsFile="$(find "$XDG_DOCUMENTS_DIR/ytsubs" | sk --header "Where should a new subscription be saved?")" || exit 1
+ytSubsFile="$(find "$HOME/.local/web/ytsubs" | sk --header "Where should a new subscription be saved?")" || exit 1
 sub="$*" || exit 1
 
 echo "Channel has been added to \"$ytSubsFile\" file."

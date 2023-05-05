@@ -5,13 +5,13 @@
 source config
 isinstalled xdotool || exit
 
-# getSite="$(grep -v '^#' $HOME/doc/bookmarks/sites.md | dmenu -i -l 25 | cut -d' ' -f1)"
+# getSite="$(grep -v '^#' $HOME/.local/web/bookmarks/sites.md | dmenu -i -l 25 | cut -d' ' -f1)"
 
 getSite() {
-  # grep -v '^#' $XDG_DOCUMENTS_DIR/bookmarks/sites.md |
-  # sed 1,1d "$XDG_DOCUMENTS_DIR/bookmarks/sites.md" |
-  # cat "$XDG_DOCUMENTS_DIR/bookmarks/sites.md" |
-    $DMENU_V -i < "$XDG_DOCUMENTS_DIR/bookmarks/bookmarks.md" |
+  # grep -v '^#' $HOME/.local/web/bookmarks/sites.md |
+  # sed 1,1d "$HOME/.local/web/bookmarks/sites.md" |
+  # cat "$HOME/.local/web/bookmarks/sites.md" |
+    $DMENU_V -i < "$HOME/.local/web/bookmarks/bookmarks.md" |
         cut -d' ' -f1
 }
 
