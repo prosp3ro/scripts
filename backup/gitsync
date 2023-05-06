@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+cd "$HOME/.local/scripts"
+git add .
+git commit -m "scripts"
+git push
+
+cd "$HOME/.local/work"
+git add .
+git commit -m "work"
+git push
+
+cd "$HOME/.local/web"
+git add .
+git commit -m "web"
+git push
+
+cd "$HOME/.config/nvim"
+git add .
+git commit -m "nvim"
+git push
