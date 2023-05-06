@@ -22,6 +22,7 @@ git --git-dir="$gitDir" --work-tree="$workTree" add "$XDG_CONFIG_HOME/i3blocks"
 git --git-dir="$gitDir" --work-tree="$workTree" add "$XDG_CONFIG_HOME/i3status"
 git --git-dir="$gitDir" --work-tree="$workTree" add "$XDG_CONFIG_HOME/keepassxc"
 git --git-dir="$gitDir" --work-tree="$workTree" add "$XDG_CONFIG_HOME/keepmenu"
+git --git-dir="$gitDir" --work-tree="$workTree" add "$XDG_CONFIG_HOME/lazygit"
 git --git-dir="$gitDir" --work-tree="$workTree" add "$XDG_CONFIG_HOME/lf"
 git --git-dir="$gitDir" --work-tree="$workTree" add "$XDG_CONFIG_HOME/mpd"
 git --git-dir="$gitDir" --work-tree="$workTree" add "$XDG_CONFIG_HOME/mpv"
@@ -40,5 +41,5 @@ git --git-dir="$gitDir" --work-tree="$workTree" add "$XDG_CONFIG_HOME/user-dirs.
 git --git-dir="$gitDir" --work-tree="$workTree" add "$XDG_CONFIG_HOME/QtProject.conf"
 git --git-dir="$gitDir" --work-tree="$workTree" add -u
 
-git --git-dir="$gitDir" --work-tree="$workTree" commit -m 'acerice'
+git --git-dir="$gitDir" --work-tree="$workTree" commit -m 'sync'
 git --git-dir="$gitDir" --work-tree="$workTree" push
