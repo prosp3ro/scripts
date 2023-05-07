@@ -25,9 +25,6 @@ backup2phone() {
         echoBlue -n "Copying files to the phone."
         # cp -n option is not used because I want it to overwrite all files
         cp -vR "$XDG_DOCUMENTS_DIR/keepass" "$backup4phoneDir" || notify-send "$0" "$XDG_DOCUMENTS_DIR/keepass doesn't exist."
-        cp -vR "$XDG_DOCUMENTS_DIR/cv" "$backup4phoneDir" || notify-send "$0" "$XDG_DOCUMENTS_DIR/cv doesn't exist."
-        cp -vR "$XDG_DOCUMENTS_DIR/bookmarks" "$backup4phoneDir" || notify-send "$0" "$XDG_DOCUMENTS_DIR/bookmarks doesn't exist."
-        cp -vR "$XDG_DOCUMENTS_DIR/ytsubs" "$backup4phoneDir" || notify-send "$0" "$XDG_DOCUMENTS_DIR/ytsubs doesn't exist."
     fi
 }
 
