@@ -27,7 +27,7 @@ git --git-dir="$gitDir" --work-tree="$workTree" add "$XDG_CONFIG_HOME/zathura"
 git --git-dir="$gitDir" --work-tree="$workTree" add "$XDG_CONFIG_HOME/zsh"
 git --git-dir="$gitDir" --work-tree="$workTree" add "$XDG_CONFIG_HOME/user-dirs.dirs"
 git --git-dir="$gitDir" --work-tree="$workTree" add "$XDG_CONFIG_HOME/user-dirs.locale"
-# git --git-dir="$gitDir" --work-tree="$workTree" add "$XDG_CONFIG_HOME/lazygit"
+git --git-dir="$gitDir" --work-tree="$workTree" add "$XDG_CONFIG_HOME/lazygit"
 git --git-dir="$gitDir" --work-tree="$workTree" add -u
 
 git --git-dir="$gitDir" --work-tree="$workTree" commit -m 'appgo'
