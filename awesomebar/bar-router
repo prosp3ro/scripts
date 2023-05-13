@@ -2,5 +2,5 @@
 
 lvl="$(router.py | tr -d "\<span id\">/btterylvl=")"
 
-[ "$lvl" -le 20 ] && notify-send -u critical "Router low battery!" "$lvl%" && echo "Router: ❗$lvl%"
-[ "$lvl" -gt 20 ] && echo "Router: $lvl%"
+[ "$lvl" -le 30 ] && notify-send -u critical "Low router battery!" "$lvl%" && echo "💾❗$lvl%"
+[ "$lvl" -gt 30 ] && echo "🖥️$lvl%"
