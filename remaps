@@ -9,6 +9,7 @@ keyboardLayout=""
 zowieMouseName="Kingsis Corporation ZOWIE Gaming mouse"
 logitechMouseName="Logitech Wireless Mouse"
 dellMouseName="PixArt Dell MS116 USB Optical Mouse"
+defenderMouseName="2.4G Wireless Optical Mouse  Mouse"
 touchpadName="ELAN0501:01 04F3:3060 Touchpad"
 
 select_keyboard_layout() {
@@ -20,9 +21,10 @@ remap_keys() {
     setxkbmap -option caps:escape
     xset r rate 320 70
     xmodmap -e 'keycode 135 = Super_R'
-    xinput --set-prop "$zowieMouseName" "libinput Accel Speed" "-1"
-    xinput --set-prop "$logitechMouseName" "libinput Accel Speed" "-1"
-    xinput --set-prop "$dellMouseName" "libinput Accel Speed" "-1"
+    # xinput --set-prop "$zowieMouseName" "libinput Accel Speed" "-1"
+    # xinput --set-prop "$logitechMouseName" "libinput Accel Speed" "-1"
+    # xinput --set-prop "$dellMouseName" "libinput Accel Speed" "-1"
+    xinput --set-prop "$defenderMouseName" "libinput Accel Speed" "-1"
     xinput --set-prop "$touchpadName" "libinput Tapping Enabled" "1"
     xinput --set-prop "$touchpadName" "libinput Natural Scrolling Enabled" "1"
 }
