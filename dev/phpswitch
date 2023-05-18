@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-scriptsDir="$HOME/.local/sc"
+scriptsDir="$HOME/.local/scripts"
 
 activate74(){
     if [[ -f "$scriptsDir/php" ]]; then
