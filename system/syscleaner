@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+paru -Sc
+sudo pacman -Sc
+
 [ ! -d "$HOME/tmp" ] && mkdir "$HOME/tmp"
 cp -r "$XDG_CACHE_HOME/keepassxc" "$HOME/tmp/keepassxc"
 
