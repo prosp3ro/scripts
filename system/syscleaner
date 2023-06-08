@@ -4,7 +4,7 @@ paru -Sc
 sudo pacman -Sc
 
 [ ! -d "$HOME/tmp" ] && mkdir "$HOME/tmp"
-cp -r "$XDG_CACHE_HOME/keepassxc" "$HOME/tmp/keepassxc"
+cp -R "$XDG_CACHE_HOME/keepassxc" "$HOME/tmp/keepassxc"
 
 if ! rm -rf "${XDG_CACHE_HOME:?}/"*; then
   echo "Error: failed to remove cache directory contents" >&2
