@@ -28,7 +28,7 @@ mountusb() { \
 
 	alreadymounted=$(lsblk -nrpo "name,type,mountpoint" | awk '$3!~/\/boot|\/home$|SWAP/&&length($3)>1{printf "-not ( -path *%s -prune ) ",$3}')
 
-	getmount "/home/prospero/mnt/ext /home/prospero/mnt/usb /home/prospero/mnt/usb2 -maxdepth 5 -type d $alreadymounted"
+	getmount "/home/prospero/mnt -maxdepth 5 -type d $alreadymounted"
 
 	partitiontype="$(lsblk -no "fstype" "$chosen")"
 

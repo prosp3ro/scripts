@@ -10,7 +10,7 @@ args=("$@")
 --help" && exit
 
 MOUNT_DIR="$HOME/mnt"
-[ ! -d "$MOUNT_DIR" ] && echo "${MOUNT_DIR} does not exist." && exit 1
+[ ! -d "$MOUNT_DIR" ] && echo "$MOUNT_DIR does not exist." && exit 1
 
 is_mounted() {
   mounted_device="$(lsblk -nrpo "name,type,size,mountpoint" | grep "$1")"
@@ -18,9 +18,7 @@ is_mounted() {
   }
 
 case "${args[0]}" in
-  "usb") is_mounted "$MOUNT_DIR/usb"; sudo -A umount "$MOUNT_DIR/usb";;
-  "usb2") is_mounted "$MOUNT_DIR/usb2"; sudo -A umount "$MOUNT_DIR/usb2";;
-  "ext") is_mounted "$MOUNT_DIR/ext"; sudo -A umount "$MOUNT_DIR/ext";;
+  "dev") is_mounted "$MOUNT_DIR/dev"; sudo -A umount "$MOUNT_DIR/usb";;
   "phone") sudo fusermount -u "$MOUNT_DIR/phone";;
   *) echo "Wrong argument.";;
 esac

@@ -17,15 +17,15 @@ checking_drives() {
 case "${args[0]}" in
     "usb") 
         checking_drives
-        sudo mount -t vfat "/dev/sdb1" "$MOUNT_DIR/usb" -o rw,umask=0000
+        sudo mount -t vfat "/dev/sdb1" "$MOUNT_DIR/dev" -o rw,umask=0000
         ;;
     # ntfs
     "ext")
         checking_drives;
-        sudo mount "/dev/sdb1" "$MOUNT_DIR/ext";
+        sudo mount "/dev/sdb1" "$MOUNT_DIR/dev";
         user="$(whoami)";
         ug="$(groups | awk '{print $1}')";
-        sudo chown "$user":"$ug" "$MOUNT_DIR/ext"
+        sudo chown "$user":"$ug" "$MOUNT_DIR/dev"
         ;;
     "phone") 
         sudo jmtpfs -o allow_other "$MOUNT_DIR/phone" 2>/dev/null

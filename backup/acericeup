@@ -18,7 +18,6 @@ directories=(
     "$XDG_CONFIG_HOME/i3"
     "$XDG_CONFIG_HOME/i3blocks"
     "$XDG_CONFIG_HOME/i3status"
-    "$XDG_CONFIG_HOME/keepassxc"
     "$XDG_CONFIG_HOME/keepmenu"
     "$XDG_CONFIG_HOME/lazygit"
     "$XDG_CONFIG_HOME/lf"
