@@ -11,12 +11,7 @@ backup4boxDir="$phone/Internal shared storage/backup4box"
 localVCBackupFile="$HOME/.local/veracrypt/backup"
 mntVCBackupDir="$HOME/mnt/vc-backup"
 
-usage() {
-    echo -e "Options: \n- mount \n- umount \n- backup2phone \n- backup2box"
-    exit 1
-}
-
-backup2phone() {
+backup4phone() {
     [ ! -d "$backup4phoneDir" ] && echoRedExit "$backup4phoneDir doesn't exist!"
     if [ -d "$backup4phoneDir" ]; then
         echoBlue "Removing old backup."
@@ -28,7 +23,7 @@ backup2phone() {
     fi
 }
 
-backup2box() {
+backup4box() {
     [ ! -d "$backup4boxDir" ] && echoRedExit "$backup4boxDir doesn't exist!"
 
     if [ ! -f "$mntVCBackupDir/donotdelete" ]; then
@@ -45,16 +40,20 @@ backup2box() {
 
 }
 
+usage() {
+    echo -e "Options: \n--mount or -m \n--umount or -u \n--backup4phone \n--backup4box \n--help or --usage"
+    exit 1
+}
+
 case "$1" in
-    "mount")
+    "--mount" | "-m")
         sudo jmtpfs -o allow_other "$phone" 2>/dev/null
         exit 1 ;;
-    "umount") 
+    "--umount" | '-u') 
         sudo fusermount -u "$phone"
         exit 1 ;;
-    "backup2phone")
-        backup2phone ;;
-    "backup2box")
-        backup2box ;;
+    "--backup4phone") backup4phone ;;
+    "--backup4box") backup4box ;;
+    "--help" | "--usage") usage ;;
     *) usage ;;
 esac
