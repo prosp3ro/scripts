@@ -53,14 +53,16 @@ vcMount() {
         --pim=0 -k "" \
         --protect-hidden=no \
         "$localVCBackup" "$mntVCBackup"
+
+    [ ! -f "$mntVCBackup/donotdelete" ] && exit 1
 }
 
 case "$1" in
   "--standard")
-      vcMount
+      vcMount # if it fails leave because it will still create tar file in ~/mnt/vc-backup/
       standardBackup ;;
   "--img") 
-      vcMount
+      vcMount # if it fails leave because it will still create tar file in ~/mnt/vc-backup/
       imgBackup ;;
   *) usage ;;
 esac

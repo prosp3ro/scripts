@@ -16,10 +16,22 @@ pullDir() {
 
 if [ "$1" == "push" ]; then
     syncDir "$HOME/.local/scripts"
+    echo
+    echo "======"
+    echo
     syncDir "$HOME/.local/synced-doc"
+    echo
+    echo "======"
+    echo
     syncDir "$HOME/.config/nvim"
 elif [ "$1" == "pull" ]; then
     pullDir "$HOME/.local/scripts"
+    echo
+    echo "======"
+    echo
     pullDir "$HOME/.local/synced-doc"
+    echo
+    echo "======"
+    echo
     pullDir "$HOME/.config/nvim"
 fi
