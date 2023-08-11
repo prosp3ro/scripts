@@ -5,7 +5,7 @@
 source config
 isinstalled xdotool || exit
 
-ytSubsDir="$HOME/.local/web/ytsubs"
+ytSubsDir="$HOME/.local/synced-doc/ytsubs"
 
 channelName="$(cat "$ytSubsDir"/* | sed 's/ --.*//' | $DMENU_V -i -p "Choose a channel:")" || exit 1
 
