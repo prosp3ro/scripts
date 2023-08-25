@@ -1,37 +1,51 @@
 #!/usr/bin/env bash
 
-syncDir() {
-    local directory="$1"
-    cd "$directory" || exit 1
+gitPush() {
+    local pushDir="$1"
+
+    echo -e "\e[1;34mCurrent dir: $pushDir\e[0m\n"
+    cd "$pushDir" || exit 1
     git add .
     git commit -m "sync"
     git push
+    echo -e "\n======\n"
 }
 
-pullDir() {
-    local directory="$1"
-    cd "$directory" || exit 1
+gitPull() {
+    local pullDir="$1"
+
+    echo -e "\e[1;34mCurrent dir: $pullDir\e[0m\n"
+    cd "$pullDir" || exit 1
     git pull
+    echo -e "\n======\n"
 }
 
-if [ "$1" == "push" ]; then
-    syncDir "$HOME/.local/scripts"
-    echo
-    echo "======"
-    echo
-    syncDir "$HOME/.local/synced-doc"
-    echo
-    echo "======"
-    echo
-    syncDir "$HOME/.config/nvim"
-elif [ "$1" == "pull" ]; then
-    pullDir "$HOME/.local/scripts"
-    echo
-    echo "======"
-    echo
-    pullDir "$HOME/.local/synced-doc"
-    echo
-    echo "======"
-    echo
-    pullDir "$HOME/.config/nvim"
-fi
+gitStatus() {
+    local statusDir="$1"
+
+    echo -e "\e[1;34mCurrent dir: $statusDir\e[0m\n"
+    cd "$statusDir" || exit 1
+    git status
+    echo -e "\n======\n"
+}
+
+case "$1" in
+    "status")
+        gitStatus "$HOME/.local/scripts"
+        gitStatus "$HOME/.local/synced-doc"
+        gitStatus "$HOME/.config/nvim"
+        ;;
+    "push")
+        gitPush "$HOME/.local/scripts"
+        gitPush "$HOME/.local/synced-doc"
+        gitPush "$HOME/.config/nvim"
+        ;;
+    "pull")
+        gitPull "$HOME/.local/scripts"
+        gitPull "$HOME/.local/synced-doc"
+        gitPull "$HOME/.config/nvim"
+        ;;
+    *)
+        echo "use status/push/pull" && exit 1
+        ;;
+esac
