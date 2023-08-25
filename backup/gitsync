@@ -3,7 +3,7 @@
 gitPush() {
     local pushDir="$1"
 
-    echo -e "\e[1;34mCurrent dir: $pushDir\e[0m\n"
+    echo -e "\e[1;34mCurrent dir: $pushDir\e[0m"
     cd "$pushDir" || exit 1
     git add .
     git commit -m "sync"
@@ -14,7 +14,7 @@ gitPush() {
 gitPull() {
     local pullDir="$1"
 
-    echo -e "\e[1;34mCurrent dir: $pullDir\e[0m\n"
+    echo -e "\e[1;34mCurrent dir: $pullDir\e[0m"
     cd "$pullDir" || exit 1
     git pull
     echo -e "\n======\n"
@@ -23,7 +23,7 @@ gitPull() {
 gitStatus() {
     local statusDir="$1"
 
-    echo -e "\e[1;34mCurrent dir: $statusDir\e[0m\n"
+    echo -e "\e[1;34mCurrent dir: $statusDir\e[0m"
     cd "$statusDir" || exit 1
     git status
     echo -e "\n======\n"
