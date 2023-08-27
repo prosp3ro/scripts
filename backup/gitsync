@@ -5,9 +5,9 @@ gitPush() {
 
     echo -e "\e[1;34mCurrent dir: $pushDir\e[0m"
     cd "$pushDir" || exit 1
-    git add .
+    git add . || exit 1
     git commit -m "sync"
-    git push
+    git push || exit 1
     echo -e "\n======\n"
 }
 
@@ -16,7 +16,7 @@ gitPull() {
 
     echo -e "\e[1;34mCurrent dir: $pullDir\e[0m"
     cd "$pullDir" || exit 1
-    git pull
+    git pull || exit 1
     echo -e "\n======\n"
 }
 
