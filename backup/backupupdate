@@ -50,7 +50,8 @@ imgBackup() {
 vcMount() {
     [ ! -f "$mntVCBackup/donotdelete" ] && sudo veracrypt --display-password \
         -t \
-        --pim=0 -k "" \
+        --pim=0 \
+        -k "" \
         --protect-hidden=no \
         "$localVCBackup" "$mntVCBackup"
 
