@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# ipsFile="$HOME/tmp/ips.txt"
+# [ ! -f "$ipsFile" ] && notify-send "IP Lookup" "$ipsFile doesn't exist." && exit 1
+
+# lookup(){
+#     /usr/bin/curl ipinfo.io -w "\n" | tee -a "$ipsFile"
+# }
+
+# notify-send "IP Lookup" "Current IP address is $(lookup | grep 'ip\":' | sed 's/\  "ip\": "//g;s/",//g')."
+# echo -e "$(date "+%d %b %Y (%A), %H:%M")\n" >> "$ipsFile"
+
+/usr/bin/curl ipinfo.io -w "\n"

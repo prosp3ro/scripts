@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-# shellcheck disable=SC1091
-
-source config
-isinstalled xdotool || exit
-
-selected="$($DMENU_V -i < "$HOME/doc/plsymbols.txt" | awk '{print $2}')"
-xdotool type "$selected"
