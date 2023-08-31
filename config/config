@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC2034
+
+# DMENU="rofi -dmenu"
+# DMENU_V="rofi -dmenu -l 25 -fn Monospace-11"
+DMENU="dmenu"
+DMENU_V="dmenu -l 25 -fn Monospace-11"
+
+isinstalled rofi dmenu dust dunst libnotify || exit
+
+run_dust() { dust -br -d 0 "$@"; }
+runDust() { dust -br -d 0 "$@"; }
+
+echoRedExit() {
+    local message="${1:-An error occurred.}"
+    local status="${2:-1}"
+    printf '\e[1;31m%s\e[0m\n' "$message"
+    exit "$status"
+}
+
+echoRed() {
+    if [ "$1" == "-n" ]; then
+        echo -e "\n\e[1;31m${*:2}" "\e[0m"
+    else
+        echo -e "\e[1;31m$*" "\e[0m"
+    fi
+}
+
+echoBlue() { 
+    if [ "$1" == "-n" ]; then
+        echo -e "\n\e[1;34m${*:2}" "\e[0m"
+    else
+        echo -e "\e[1;34m$*" "\e[0m"
+    fi
+}
+
+echoGreen() { 
+    if [ "$1" == "-n" ]; then
+        echo -e "\n\e[1;32m${*:2}" "\e[0m"
+    else
+        echo -e "\e[1;32m$*" "\e[0m"
+    fi
+}

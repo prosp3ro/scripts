@@ -5,26 +5,22 @@
 source config
 isinstalled veracrypt-console-bin file tar || exit
 
-backupcheckMntDir="$HOME/tmp/backuptest"
+driveBackupFile="$HOME/mnt/dev/backup"
+backuptestDir="$HOME/mnt/tmp"
 tmpDir="$HOME/tmp"
 
-usage() { 
-    echo -e "Options:\n- usb \n- usb2 \n- ext"
-    exit 1
-}
-
-runBackupChecks(){
-    echoBlue "Mounting $driveBackupFile volume to $backupcheckMntDir."
-    [ -f "$backupcheckMntDir/donotdelete" ] && echoRedExit "Looks like something is already mounted in $backupcheckMntDir."
-    [ -f "$driveBackupFile" ] && sudo veracrypt -t --pim=0 -k "" --protect-hidden=no "$driveBackupFile" "$backupcheckMntDir"
+main(){
+    echoBlue "Mounting $driveBackupFile volume to $backuptestDir."
+    [ -f "$backuptestDir/backup" ] && echoRedExit "Looks like something is already mounted in $backuptestDir."
+    [ -f "$driveBackupFile" ] && sudo veracrypt -t --pim=0 -k "" --protect-hidden=no --display-password "$driveBackupFile" "$backuptestDir"
     [ ! -f "$driveBackupFile" ] && echoRedExit "$driveBackupFile doesn't exist."
 
     echoBlue -n "Running tests."
-    ls --color=auto -alh "$backupcheckMntDir"
-    runDust "$backupcheckMntDir" 2>/dev/null
-    file "$backupcheckMntDir/backup.tar.gz"
-    file "$backupcheckMntDir/oldbackup.tar.gz"
-    file "$backupcheckMntDir/img.tar.gz"
+    ls --color=auto -alh "$backuptestDir"
+    runDust "$backuptestDir" 2>/dev/null
+    file "$backuptestDir/backup.tar.gz"
+    file "$backuptestDir/oldbackup.tar.gz"
+    file "$backuptestDir/img.tar.gz"
 
     echoBlue -n "Do you want to copy backup.tar.gz to $tmpDir? [y/N]"
     read -r answer
@@ -35,30 +31,20 @@ runBackupChecks(){
         [ -d "$tmpDir/home" ] && rm -rf "${tmpDir/home:?}"
 
         echoBlue "Copying backup.tar.gz to $tmpDir for further tests."
-        cp -v "$backupcheckMntDir/backup.tar.gz" "$tmpDir"
+        cp -v "$backuptestDir/backup.tar.gz" "$tmpDir"
         cd "$tmpDir" || exit 1
 
         echoBlue "Untaring backup file."
         tar zxf "$tmpDir/backup.tar.gz"
+
+        echoBlue "Check $tmpDir/home directory."
+        ls --color=auto -alh "$tmpDir"
+        echo
     fi
 
     echoBlue "Unmounting $driveBackupFile volume."
-    sudo veracrypt -d "$backupcheckMntDir"
-
-    echoBlue "Check $tmpDir/home."
-
-    [ -f "$backupcheckMntDir/donotdelete" ] && echoRed "Looks like unmounting failed. Do it manually."
+    sudo veracrypt -d "$backuptestDir"
+    [ -f "$backuptestDir/backup" ] && echoRed "Looks like unmounting failed. Do it manually."
 }
 
-case "$1" in
-    "usb") 
-        driveBackupFile="$HOME/mnt/usb/backup"
-        runBackupChecks ;;
-    "usb2") 
-        driveBackupFile="$HOME/mnt/usb2/backup"
-        runBackupChecks ;;
-    "ext") 
-        driveBackupFile="$HOME/mnt/ext/backup"
-        runBackupChecks ;;
-    *) usage ;;
-esac
+main
