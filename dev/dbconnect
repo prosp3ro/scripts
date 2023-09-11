@@ -4,4 +4,4 @@ username="prospero"
 password="prospero"
 dbName="$1"
 
-mysql -u"$username" -p"$password" "$dbName"
+mariadb -u"$username" -p"$password" "$dbName"
