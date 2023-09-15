@@ -11,6 +11,57 @@ gitPush() {
     echo -e "\n======\n"
 }
 
+acericePush() {
+    gitDir="$HOME/.local/git/acerice"
+    workTree="$HOME/"
+
+    directories=(
+        "$HOME/.zprofile"
+        "$HOME/.gitignore"
+        "$HOME/img/background"
+        "$XDG_CONFIG_HOME/alacritty"
+        "$XDG_CONFIG_HOME/awesome"
+        "$XDG_CONFIG_HOME/dunst"
+        "$XDG_CONFIG_HOME/git"
+        "$XDG_CONFIG_HOME/gtk-2.0"
+        "$XDG_CONFIG_HOME/gtk-3.0"
+        "$XDG_CONFIG_HOME/fontconfig"
+        "$XDG_CONFIG_HOME/htop"
+        "$XDG_CONFIG_HOME/i3"
+        "$XDG_CONFIG_HOME/i3blocks"
+        "$XDG_CONFIG_HOME/i3status"
+        "$XDG_CONFIG_HOME/keepmenu"
+        "$XDG_CONFIG_HOME/lazygit"
+        "$XDG_CONFIG_HOME/lf"
+        "$XDG_CONFIG_HOME/mpd"
+        "$XDG_CONFIG_HOME/mpv"
+        "$XDG_CONFIG_HOME/ncmpcpp"
+        "$XDG_CONFIG_HOME/networkmanager-dmenu"
+        "$XDG_CONFIG_HOME/nsxiv"
+        "$XDG_CONFIG_HOME/qt5ct"
+        "$XDG_CONFIG_HOME/tmux"
+        "$XDG_CONFIG_HOME/wget"
+        "$XDG_CONFIG_HOME/x11"
+        "$XDG_CONFIG_HOME/zathura"
+        "$XDG_CONFIG_HOME/zsh"
+        "$XDG_CONFIG_HOME/backup.cfg"
+        "$XDG_CONFIG_HOME/user-dirs.dirs"
+        "$XDG_CONFIG_HOME/user-dirs.locale"
+        "$XDG_CONFIG_HOME/QtProject.conf"
+    )
+
+    cd "$HOME" || exit 1
+
+    for directory in "${directories[@]}"; do
+        git --git-dir="$gitDir" --work-tree="$workTree" add "$directory"
+    done
+
+    git --git-dir="$gitDir" --work-tree="$workTree" add -u
+    git --git-dir="$gitDir" --work-tree="$workTree" commit -m 'sync'
+    git --git-dir="$gitDir" --work-tree="$workTree" push
+    echo -e "\n======\n"
+}
+
 gitPull() {
     local pullDir="$1"
 
@@ -36,15 +87,16 @@ case "$1" in
         gitStatus "$HOME/.config/nvim"
         ;;
     "push")
+        acericePush
         gitPush "$HOME/.local/scripts"
         gitPush "$HOME/.local/synced-doc"
         gitPush "$HOME/.config/nvim"
         ;;
-    "pull")
-        gitPull "$HOME/.local/scripts"
-        gitPull "$HOME/.local/synced-doc"
-        gitPull "$HOME/.config/nvim"
-        ;;
+    # "pull")
+        #     gitPull "$HOME/.local/scripts"
+        #     gitPull "$HOME/.local/synced-doc"
+        #     gitPull "$HOME/.config/nvim"
+        #     ;;
     *)
         echo "use status/push/pull" && exit 1
         ;;
