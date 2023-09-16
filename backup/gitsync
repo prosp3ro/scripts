@@ -66,8 +66,6 @@ acericePush() {
         backupetc
     fi
 
-    echo
-
     # `git ls-files` to show tracked files
     for file in "${files[@]}"; do
         git --git-dir="$gitDir" --work-tree="$workTree" add "$file"
