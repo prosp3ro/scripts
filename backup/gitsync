@@ -50,6 +50,7 @@ acericePush() {
         "$XDG_CONFIG_HOME/QtProject.conf"
     )
 
+    echo -e "\e[1;34mCurrent dir: $HOME\e[0m"
     cd "$HOME" || exit 1
 
     # `git ls-files` to show tracked files
