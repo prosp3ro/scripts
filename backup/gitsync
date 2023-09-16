@@ -59,12 +59,14 @@ acericePush() {
     echoBlue -n "Current dir: $HOME"
     cd "$HOME" || exit 1
 
-    echoBlue -n "Do you want to run backupetc?"
+    echoBlue -n "Do you want to run backupetc? [y/N]"
     read -r answer
 
     if [ "$answer" == "y" ]; then
         backupetc
     fi
+
+    echo
 
     # `git ls-files` to show tracked files
     for file in "${files[@]}"; do
