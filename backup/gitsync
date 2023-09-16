@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 
+# shellcheck disable=SC1091
+
+source config
+
 gitPush() {
     local pushDir="$1"
 
-    echo -e "\e[1;34mCurrent dir: $pushDir\e[0m"
+    echoBlue -n "Current dir: $pushDir"
     cd "$pushDir" || exit 1
     git add . || exit 1
     git commit -m "sync"
@@ -23,6 +27,7 @@ acericePush() {
         "$XDG_CONFIG_HOME/awesome"
         "$XDG_CONFIG_HOME/composer"
         "$XDG_CONFIG_HOME/dunst"
+        "$XDG_CONFIG_HOME/etc"
         "$XDG_CONFIG_HOME/git"
         "$XDG_CONFIG_HOME/gtk-2.0"
         "$XDG_CONFIG_HOME/gtk-3.0"
@@ -51,8 +56,15 @@ acericePush() {
         "$XDG_CONFIG_HOME/QtProject.conf"
     )
 
-    echo -e "\e[1;34mCurrent dir: $HOME\e[0m"
+    echoBlue -n "Current dir: $HOME"
     cd "$HOME" || exit 1
+
+    echoBlue -n "Do you want to run backupetc?"
+    read -r answer
+
+    if [ "$answer" == "y" ]; then
+        backupetc
+    fi
 
     # `git ls-files` to show tracked files
     for file in "${files[@]}"; do
