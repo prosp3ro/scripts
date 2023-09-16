@@ -15,7 +15,7 @@ acericePush() {
     gitDir="$HOME/.local/git/acerice"
     workTree="$HOME/"
 
-    directories=(
+    files=(
         "$HOME/.zprofile"
         "$HOME/.gitignore"
         "$HOME/img/background"
@@ -52,12 +52,12 @@ acericePush() {
 
     cd "$HOME" || exit 1
 
-    for directory in "${directories[@]}"; do
-        git --git-dir="$gitDir" --work-tree="$workTree" add "$directory"
+    # `git ls-files` to show tracked files
+    for file in "${files[@]}"; do
+        git --git-dir="$gitDir" --work-tree="$workTree" add "$file"
     done
 
-    git --git-dir="$gitDir" --work-tree="$workTree" add -u
-    git --git-dir="$gitDir" --work-tree="$workTree" commit -m 'sync'
+    git --git-dir="$gitDir" --work-tree="$workTree" commit -m 'sync' --untracked-files=no
     git --git-dir="$gitDir" --work-tree="$workTree" push
     echo -e "\n======\n"
 }
