@@ -25,6 +25,7 @@ acericePush() {
         "$HOME/img/background"
         "$XDG_CONFIG_HOME/alacritty"
         "$XDG_CONFIG_HOME/awesome"
+        "$XDG_CONFIG_HOME/browser-extensions"
         "$XDG_CONFIG_HOME/composer"
         "$XDG_CONFIG_HOME/dunst"
         "$XDG_CONFIG_HOME/etc"

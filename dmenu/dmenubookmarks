@@ -11,7 +11,7 @@ getSite() {
   # grep -v '^#' $HOME/.local/web/bookmarks/sites.md |
   # sed 1,1d "$HOME/.local/web/bookmarks/sites.md" |
   # cat "$HOME/.local/web/bookmarks/sites.md" |
-    $DMENU_V -i < "$HOME/.local/synced-doc/bookmarks/bookmarks.md" |
+    $DMENU_V -i < "$HOME/doc/bookmarks.md" |
         cut -d' ' -f1
 }
 

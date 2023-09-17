@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 site="$*"
-file="$HOME/.local/synced-doc/bookmarks/bookmarks.md"
+file="$HOME/doc/bookmarks.md"
 
 if grep -q "^$site$" "$file"; then
   echo "Site already exists."
