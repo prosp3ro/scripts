@@ -6,13 +6,14 @@ source config
 isinstalled jmtpfs fusermount veracrypt-console-bin || exit
 
 phone="$HOME/mnt/phone"
-backup4phoneDir="$phone/Internal shared storage/backup4phone"
-backup4boxDir="$phone/Internal shared storage/backup4box"
+backup4phoneDir="$phone/Wewnętrzna pamięć współdzielona/backup4phone"
+backup4boxDir="$phone/Wewnętrzna pamięć współdzielona/backup4box"
 localVCBackupFile="$HOME/.local/veracrypt/backup"
 mntVCBackupDir="$HOME/mnt/vc-backup"
 
 backup4phone() {
     [ ! -d "$backup4phoneDir" ] && echoRedExit "$backup4phoneDir doesn't exist!"
+
     if [ -d "$backup4phoneDir" ]; then
         echoBlue "Removing old backup."
         rm -vrf "${backup4phoneDir:?}"/*
@@ -32,11 +33,10 @@ backup4box() {
     fi
 
     [ ! -d "$mntVCBackupDir/phone" ] && echoRedExit "$mntVCBackupDir/phone doesn't exist!"
-    if [ -d "$mntVCBackupDir/phone" ]; then
-        echoBlue "Copying backup from the phone to the VC volume."
-        # cp -n option is not used because I want it to overwrite all files
-        cp -vR "${backup4boxDir:?}"/* "$mntVCBackupDir/phone"
-    fi
+
+    echoBlue "Copying backup from the phone to the VC volume."
+    # cp -n option is not used because I want it to overwrite all files
+    cp -vR "${backup4boxDir:?}"/* "$mntVCBackupDir/phone"
 
 }
 

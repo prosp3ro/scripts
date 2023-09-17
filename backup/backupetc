@@ -4,8 +4,15 @@
 
 [ -d "$XDG_CONFIG_HOME/etc/httpd" ] && rm -rf "$XDG_CONFIG_HOME/etc/httpd/"
 sudo cp -R /etc/httpd "$XDG_CONFIG_HOME/etc/httpd"
-sudo chown prospero:prospero -R "$XDG_CONFIG_HOME/etc/httpd"
+# sudo chown prospero:prospero -R "$XDG_CONFIG_HOME/etc/httpd"
 
 [ -d "$XDG_CONFIG_HOME/etc/php" ] && rm -rf "$XDG_CONFIG_HOME/etc/php/"
 sudo cp -R /etc/php "$XDG_CONFIG_HOME/etc/php"
-sudo chown prospero:prospero -R "$XDG_CONFIG_HOME/etc/php"
+# sudo chown prospero:prospero -R "$XDG_CONFIG_HOME/etc/php"
+
+[ -f "$XDG_CONFIG_HOME/etc/sudoers" ] && rm -rf "$XDG_CONFIG_HOME/etc/sudoers"
+[ -f "$XDG_CONFIG_HOME/etc/pacman.conf" ] && rm -rf "$XDG_CONFIG_HOME/etc/pacman.conf"
+sudo cp /etc/sudoers "$XDG_CONFIG_HOME/etc"
+sudo cp /etc/pacman.conf "$XDG_CONFIG_HOME/etc"
+
+sudo chown prospero:prospero -R "$XDG_CONFIG_HOME/etc"

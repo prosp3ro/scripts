@@ -27,6 +27,17 @@ case "${args[0]}" in
         ug="$(groups | awk '{print $1}')";
         sudo chown "$user":"$ug" "$MOUNT_DIR/dev"
         ;;
+    "vc-backup") 
+        mntVCBackup="$HOME/mnt/vc-backup"
+        localVCBackup="$HOME/.local/veracrypt/backup"
+
+        [ ! -f "$mntVCBackup/donotdelete" ] && sudo veracrypt --display-password \
+            -t \
+            --pim=0 \
+            -k "" \
+            --protect-hidden=no \
+            "$localVCBackup" "$mntVCBackup"
+        ;;
     "phone") 
         sudo jmtpfs -o allow_other "$MOUNT_DIR/phone" 2>/dev/null
         ;;
