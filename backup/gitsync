@@ -104,7 +104,7 @@ case "$1" in
     "push")
         acericePush
         gitPush "$HOME/.local/scripts"
-        gitPush "$HOME/.local/synced-doc"
+        # gitPush "$HOME/.local/synced-doc"
         gitPush "$HOME/.config/nvim"
         ;;
     # "pull")
