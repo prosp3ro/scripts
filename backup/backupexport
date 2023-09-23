@@ -9,7 +9,6 @@ set -e
 
 mntVCBackupDir="$HOME/mnt/vc-backup"
 backupLocalVolume="$HOME/.local/veracrypt/backup"
-
 mountedDevice="$HOME/mnt/dev"
 
 [ ! -f "$backupLocalVolume" ] && echoRedExit "$backupLocalVolume does not exist."
@@ -32,4 +31,9 @@ echoBlue -n "Info:"
 runDust "$mountedDevice"
 ls --color=auto -alh "$mountedDevice"
 
-echoBlue -n "Run backuptest script to perform tests."
+echoBlue -n "Run backuptest? [y/N]"
+read -r answer
+
+if [ "$answer" == "y" ]; then
+    backuptest
+fi

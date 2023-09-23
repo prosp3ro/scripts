@@ -29,13 +29,6 @@ standardBackup() {
 
     echoBlue -n "$HOME/doc:"
     runDust "$HOME/doc"
-
-    echoBlue -n "Run backuptest? [y/N]"
-    read -r answer
-
-    if [ "$answer" == "y" ]; then
-        backuptest
-    fi
 }
 
 imgBackup() {
