@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# TODO add cronjobs
+
 [ ! -d "$XDG_CONFIG_HOME/etc" ] && mkdir -p "$XDG_CONFIG_HOME/etc"
 
 [ -d "$XDG_CONFIG_HOME/etc/httpd" ] && rm -rf "$XDG_CONFIG_HOME/etc/httpd/"
