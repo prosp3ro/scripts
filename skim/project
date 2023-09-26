@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-# project search
-# used in .zshrc
-
 isinstalled fd skim || exit
 
 case "$1" in
@@ -12,5 +9,6 @@ case "$1" in
     *) exit 1 ;;
 esac
 
-export SKIM_DEFAULT_COMMAND='fd -d 1 --type directory -E node_modules'
-cd "$dir" && cd "$(sk --reverse)" || exit 1
+export SKIM_DEFAULT_COMMAND='fd -d 1 --type d'
+cd "$dir" || exit 1
+cd "$(sk --reverse)" || exit 1
