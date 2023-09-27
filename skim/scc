@@ -7,7 +7,7 @@ scriptsDir="$HOME/.local/scripts"
 export SKIM_DEFAULT_COMMAND='fd -d 2'
 
 cd "$scriptsDir" || exit 1
-script=$(sk --reverse)
+script=$(sk --reverse --height 15)
 
 if [ "$script" ]; then
     nvim "$script" || exit 1

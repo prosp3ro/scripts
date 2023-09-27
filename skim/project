@@ -12,7 +12,7 @@ esac
 export SKIM_DEFAULT_COMMAND='fd -d 1 --type d'
 cd "$projectsDir" || exit 1
 
-project=$(sk --reverse)
+project=$(sk --reverse --height 15)
 
 if [ "$project" ]; then
     cd "$project" || exit 1
