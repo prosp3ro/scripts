@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 
+# shellcheck disable=SC2088
+
 isinstalled fd skim || exit
 
-case "$1" in
-    "git") projectsDir="$HOME/.local/git" ;;
-    "src") projectsDir="$HOME/.local/src" ;;
+projectsDir=$(printf "~/.local/git\n~/.local/src\nsrv/http" | sk --reverse)
+
+case "$projectsDir" in
+    "~/.local/git") projectsDir="$HOME/.local/git" ;;
+    "~/.local/src") projectsDir="$HOME/.local/src" ;;
     "srv") projectsDir="/srv/http" ;;
     *) exit 1 ;;
 esac
