@@ -16,5 +16,5 @@ project=$(sk --reverse --height 15)
 
 if [ "$project" ]; then
     cd "$project" || exit 1
-    nvim .
+    nvim
 fi
