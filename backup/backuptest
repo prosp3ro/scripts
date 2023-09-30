@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # shellcheck disable=SC1091
+# shellcheck disable=SC2115
 
 source config
 isinstalled veracrypt-console-bin file tar || exit
@@ -28,11 +29,10 @@ main(){
     if [ "$answer" == "y" ]; then
         echoBlue "Deleting old tar file and directory."
         [ -f "$tmpDir/backup.tar.gz" ] && rm -vrf "$tmpDir/backup.tar.gz"
-        [ -d "$tmpDir/home" ] && rm -rf "${tmpDir/home:?}"
+        [ -d "$tmpDir/home" ] && rm -rf "$tmpDir/home"
 
         echoBlue "Copying backup.tar.gz to $tmpDir for further tests."
         cp -v "$backuptestDir/backup.tar.gz" "$tmpDir"
-        cd "$tmpDir" || exit 1
 
         echoBlue "Untaring backup file."
         tar zxf "$tmpDir/backup.tar.gz"
