@@ -36,6 +36,7 @@ main(){
 
         echoBlue "Untaring backup file."
         tar zxf "$tmpDir/backup.tar.gz"
+        [ ! -d "$tmpDir/home" ] && tar zxf "$tmpDir/backup.tar.gz"
 
         echoBlue "Check $tmpDir/home directory."
         ls --color=auto -alh "$tmpDir"
