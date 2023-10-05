@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+isinstalled maim || exit
+
+[ ! -d "$HOME/tmp/maim" ] && mkdir -p "$HOME/tmp/maim" && notify-send "$0" "$HOME/tmp/maim directory created."
+filename="$HOME/tmp/maim/$(date "+%d-%B-%A-%H-%M-%S").png"
+
+maim --hidecursor --format png "$filename"
+notify-send "Image location" "$filename"
