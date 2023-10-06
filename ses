@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [ ! "$1" ]; then
+    exit 1
+fi
+
+tmux -f "$XDG_CONFIG_HOME/tmux/tmux.conf" new-session -s "$1" || tmux -f "$XDG_CONFIG_HOME/tmux/tmux.conf" attach-session -t "$1"
