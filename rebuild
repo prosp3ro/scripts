@@ -4,7 +4,7 @@ locationDir="$HOME/.local/git"
 # locationDir="$HOME/.local/src"
 
 usage() {
-    echo -e "Options: \n- dmenu \n- dwm \n- st \n- nsxiv"
+    echo -e "dmenu/dwm/dwmblocks-async/st/nsxiv"
     exit 1
 }
 
@@ -18,7 +18,7 @@ case "$1" in
         sudo make install
         kill -HUP "$(pgrep -u "$USER" "\bdwm$")" ;;
 
-    "dwmblocks") 
+    "dwmblocks-async") 
         echo "rebuilding dwmblocks-async..."
         cd "$locationDir/dwmblocks-async" || exit 1
 

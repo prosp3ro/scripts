@@ -107,6 +107,9 @@ case "$1" in
         gitPush "$HOME/.local/scripts"
         # gitPush "$HOME/.local/synced-doc"
         gitPush "$HOME/.config/nvim"
+        gitPush "$HOME/.local/git/dwm"
+        gitPush "$HOME/.local/git/dwmblocks-async"
+        gitPush "$HOME/.local/git/st"
         ;;
     # "pull")
         #     gitPull "$HOME/.local/scripts"

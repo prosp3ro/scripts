@@ -3,7 +3,7 @@
 for battery in /sys/class/power_supply/BAT?*; do
 	[ -n "${capacity+x}" ] && printf " "
 	capacity=$(/usr/bin/cat "$battery/capacity")
-	[ "$capacity" -le 30 ] && warn="❗" && notify-send -u critical "Low battery!" "$capacity%"
-	[ "$capacity" -gt 95 ] && notify-send "Battery level is at $lvl%."
+	[ "$capacity" -le 20 ] && warn="❗" && notify-send -u critical "Low battery!" "$capacity%"
+	# [ "$capacity" -gt 99 ] && notify-send "Battery level is at $capacity%."
 	printf "🔋%s%d%%" "$warn" "$capacity"; unset warn
 done && exit 0
