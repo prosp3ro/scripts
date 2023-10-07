@@ -6,4 +6,5 @@ bgsLocation="$HOME/img/background"
 
 [ -z "$1" ] && echo "Image not selected."
 cp "$1" "$bgsLocation"
-xwallpaper --zoom "$bgsLocation"
+# xwallpaper --zoom "$bgsLocation"
+xwallpaper --stretch "$bgsLocation"

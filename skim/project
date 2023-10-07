@@ -9,13 +9,15 @@ case "$1" in
     *) exit 1 ;;
 esac
 
-export SKIM_DEFAULT_COMMAND='fd -d 1 --type d'
+# export SKIM_DEFAULT_COMMAND='fd -d 1 --type d'
+export FZF_DEFAULT_COMMAND='fd -d 1 --type d'
 cd "$projectsDir" || exit 1
 
-project=$(sk --reverse --height 15)
+project=$(fzf --reverse --height 20)
 
 if [ "$project" ]; then
     cd "$project" || exit 1
+    # echo -e "\n\n"
     ls --color=auto -al
     # nvim
 fi

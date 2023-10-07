@@ -4,11 +4,12 @@
 
 source config
 
-case "$(printf "lock\\nkill awesome\\nkill i3\\nreboot\\npoweroff" | $DMENU -i )" in
-    # "lock") i3lock -c "#000000" -f ;;
-    "lock") betterlockscreen -l ;;
-    "kill awesome") kill -TERM "$(pgrep -u "$USER" "\bawesome$")" ;;
-    "kill i3") kill -TERM "$(pgrep -u "$USER" "\bi3$")" ;;
+case "$(printf "lock\\nleave dwm\\nleave i3\\nleave awesome\\nreboot\\npoweroff" | $DMENU -i )" in
+    "lock") i3lock -c "#000000" -f ;;
+    # "lock") betterlockscreen -l ;;
+    "leave dwm") kill -TERM "$(pgrep -u "$USER" "\bdwm$")" ;;
+    "leave i3") kill -TERM "$(pgrep -u "$USER" "\bi3$")" ;;
+    "leave awesome") kill -TERM "$(pgrep -u "$USER" "\bawesome$")" ;;
     "reboot") systemctl reboot -i ;;
     "poweroff") systemctl poweroff -i ;;
     *) exit 1 ;;

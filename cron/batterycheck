@@ -3,7 +3,7 @@
 while true
 do
     lvl="$(cat /sys/class/power_supply/BAT1/capacity)"
-    [ "$lvl" -le 20 ] && notify-send -u critical "Low battery! $lvl%."
-    # [ "$lvl" -gt 95 ] && notify-send "Battery level is at $lvl%." && sleep 10m
+    [ "$lvl" -le 30 ] && notify-send -u critical "Low battery! $lvl%."
+    [ "$lvl" -gt 98 ] && notify-send "Battery level is at $lvl%." && sleep 10m
     sleep 5m
 done

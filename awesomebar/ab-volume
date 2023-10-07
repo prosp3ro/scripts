@@ -1,5 +1,0 @@
-#!/bin/sh
-
-[ "$(pamixer --get-mute)" = true ] && echo "Vol: Muted" && exit
-vol="$(pamixer --get-volume)"
-echo "Vol: $vol%"

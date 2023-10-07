@@ -1,9 +1,9 @@
 #!/bin/sh
 
 if [[ "$(bluetoothctl info)" != "Missing device address argument" ]]; then
-    icon="🎧"
+    text="(b)"
 else
-    icon="🔵"
+    text="(s)"
 fi
 
-printf "$icon"
+printf "$text"

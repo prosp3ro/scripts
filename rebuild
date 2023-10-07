@@ -18,6 +18,19 @@ case "$1" in
         sudo make install
         kill -HUP "$(pgrep -u "$USER" "\bdwm$")" ;;
 
+    "dwmblocks") 
+        echo "rebuilding dwmblocks-async..."
+        cd "$locationDir/dwmblocks-async" || exit 1
+
+        echo -n "type y to make file -> "
+        read -r answer
+        if [ "$answer" == "y" ]; then
+            sudo make install
+        fi
+
+        kill -HUP "$(pgrep -u "$USER" "\bdwmblocks$")"
+        dwmblocks & ;;
+
     "st")
         cd "$locationDir/st" || exit 1
         sudo make install ;;
