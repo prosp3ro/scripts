@@ -1,5 +1,11 @@
 #!/bin/sh
 
-[ "$(pamixer --get-mute)" = true ] && echo "🔇" && exit
+if [ "$(bluetoothctl info)" != "Missing device address argument" ]; then
+    icon="🎧"
+else
+    icon="🔊"
+fi
+
+[ "$(pamixer --get-mute)" = true ] && echo "$icon❗Muted" && exit
 vol="$(pamixer --get-volume)"
-echo "🔊$vol%"
+echo "$icon$vol%"
