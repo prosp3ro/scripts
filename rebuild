@@ -15,7 +15,7 @@ case "$1" in
 
     "dwm") 
         cd "$locationDir/dwm" || exit 1
-        sudo make install
+        sudo make install || exit 1
         kill -HUP "$(pgrep -u "$USER" "\bdwm$")" ;;
 
     "dwmblocks-async") 
@@ -25,7 +25,7 @@ case "$1" in
         echo -n "type y to make file -> "
         read -r answer
         if [ "$answer" == "y" ]; then
-            sudo make install
+            sudo make install || exit 1
         fi
 
         kill -HUP "$(pgrep -u "$USER" "\bdwmblocks$")"
