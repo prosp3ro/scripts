@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ "$(bluetoothctl info)" != "Missing device address argument" ]; then
+if [ "$(bluetoothctl info | head -n 1)" != "Missing device address argument" ]; then
     icon="🎧"
 else
     icon="🔊"

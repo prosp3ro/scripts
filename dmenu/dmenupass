@@ -7,5 +7,5 @@
 
 source config
 
-# $DMENU -P -p "$1" <&- && echo
-$DMENU -p "$1" <&- && echo
+$DMENU -P -p "$1" <&- && echo
+# $DMENU -p "$1" <&- && echo
