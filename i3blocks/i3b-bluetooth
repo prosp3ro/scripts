@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-[ "$(bluetoothctl info)" != "Missing device address argument" ] && icon="🎧" || icon="🔵"
-echo "$icon"

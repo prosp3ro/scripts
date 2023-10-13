@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-case "$(cat /sys/class/net/w*/operstate 2>/dev/null)" in
-	down) wifiicon="IP PRV: " ;;
-	up) wifiicon="$(awk '/^\s*w/ { print "IP: PRV " }' /proc/net/wireless)" ;;
-esac
-
-echo "$wifiicon$(ip route get 8.8.8.8 2>/dev/null|grep -Eo 'src [0-9.]+'|grep -Eo '[0-9.]+')"
