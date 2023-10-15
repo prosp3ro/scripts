@@ -1,3 +1,21 @@
 #!/usr/bin/env bash
 
-free --mebi | sed -n '2{p;q}' | awk '{printf ("📀%2.2fG/%2.2fG\n", ( $3 / 1024), ($2 / 1024))}'
+# free --mebi | sed -n '2{p;q}' | awk '{printf ("📀%2.2fG/%2.2fG\n", ( $3 / 1024), ($2 / 1024))}'
+
+memory_info=$(free --mebi | sed -n '2{p;q}')
+total_memory=$(echo "$memory_info" | awk '{print $2}')
+used_memory=$(echo "$memory_info" | awk '{print $3}')
+
+formatted_total=$(bc <<< "scale=2; $total_memory / 1024")
+formatted_used=$(bc <<< "scale=2; $used_memory / 1024")
+
+mem="${formatted_used}G/${formatted_total}G"
+
+if (( $(bc <<< "$formatted_used >= 5.00") )); then
+    echo "📀❗$mem"
+elif (( $(bc <<< "$formatted_used >= 7.00") )); then
+    echo "📀❗$mem"
+    notify-send -u critical "Low memory!" "Used memory: ${mem}G."
+else
+    echo "📀$mem"
+fi
