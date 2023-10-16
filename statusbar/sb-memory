@@ -10,12 +10,13 @@ formatted_total=$(bc <<< "scale=2; $total_memory / 1024")
 formatted_used=$(bc <<< "scale=2; $used_memory / 1024")
 
 mem="${formatted_used}G/${formatted_total}G"
+icon="🎟"
 
 if (( $(bc <<< "$formatted_used >= 5.00") )); then
-    echo "📀❗$mem"
+    echo "${icon}❗$mem"
 elif (( $(bc <<< "$formatted_used >= 7.00") )); then
-    echo "📀❗$mem"
+    echo "${icon}❗$mem"
     notify-send -u critical "Low memory!" "Used memory: ${mem}G."
 else
-    echo "📀$mem"
+    echo "${icon}$mem"
 fi
