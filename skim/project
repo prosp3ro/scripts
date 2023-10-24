@@ -13,7 +13,7 @@ esac
 export FZF_DEFAULT_COMMAND='fd -d 1 --type d'
 cd "$projectsDir" || exit 1
 
-project=$(fzf --reverse --height 20)
+project=$(fzf --reverse)
 
 if [ "$project" ]; then
     cd "$project" || exit 1
