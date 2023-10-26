@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
 
-# TODO add cronjobs
-
 [ ! -d "$XDG_CONFIG_HOME/etc" ] && mkdir -p "$XDG_CONFIG_HOME/etc"
 
 [ -d "$XDG_CONFIG_HOME/etc/httpd" ] && rm -rf "$XDG_CONFIG_HOME/etc/httpd/"
 sudo cp -R /etc/httpd "$XDG_CONFIG_HOME/etc/httpd"
-# sudo chown prospero:prospero -R "$XDG_CONFIG_HOME/etc/httpd"
 
 [ -d "$XDG_CONFIG_HOME/etc/php" ] && rm -rf "$XDG_CONFIG_HOME/etc/php/"
 sudo cp -R /etc/php "$XDG_CONFIG_HOME/etc/php"
-# sudo chown prospero:prospero -R "$XDG_CONFIG_HOME/etc/php"
+
+[ -d "$XDG_CONFIG_HOME/etc/nginx" ] && rm -rf "$XDG_CONFIG_HOME/etc/nginx/"
+sudo cp -R /etc/nginx "$XDG_CONFIG_HOME/etc/nginx"
 
 [ -f "$XDG_CONFIG_HOME/etc/sudoers" ] && rm -rf "$XDG_CONFIG_HOME/etc/sudoers"
-[ -f "$XDG_CONFIG_HOME/etc/pacman.conf" ] && rm -rf "$XDG_CONFIG_HOME/etc/pacman.conf"
 sudo cp /etc/sudoers "$XDG_CONFIG_HOME/etc"
+
+[ -f "$XDG_CONFIG_HOME/etc/pacman.conf" ] && rm -rf "$XDG_CONFIG_HOME/etc/pacman.conf"
 sudo cp /etc/pacman.conf "$XDG_CONFIG_HOME/etc"
 
 sudo chown prospero:prospero -R "$XDG_CONFIG_HOME/etc"
