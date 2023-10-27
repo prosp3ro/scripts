@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+isinstalled fzf || exit
+
+pacman -Q | fzf --reverse

@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-isinstalled fd skim || exit
+isinstalled fd fzf || exit
 
 scriptsDir="$HOME/.local/scripts"
 
-export SKIM_DEFAULT_COMMAND='fd -d 2'
+export FZF_DEFAULT_COMMAND='fd -d 2'
 
 cd "$scriptsDir" || exit 1
-script=$(sk --reverse --height 15)
+script=$(fzf --reverse --height 15)
 
 if [ "$script" ]; then
     nvim "$script" || exit 1

@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-isinstalled paru skim || exit
-
-export SKIM_DEFAULT_OPTIONS=""
-
-paru -Slq |
-    sk -m --preview "cat <(paru -Si {1}) <(paru -Fl {1} | awk \"{print \$2}\")" |
-    xargs -ro  paru -S
