@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-isinstalled skim || exit
-
-file=$(pacman -Qq | sk --height 40 --reverse)
-
-sudo pacman -R "$file"

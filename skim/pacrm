@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+isinstalled fzf || exit
+
+file=$(pacman -Qq | fzf --reverse)
+
+# ask if also remove dependencies and configs
+sudo pacman -R "$file"
