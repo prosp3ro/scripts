@@ -102,6 +102,7 @@ case "$1" in
         gitStatus "$HOME/.local/git/dwm"
         gitStatus "$HOME/.local/git/dwmblocks-async"
         gitStatus "$HOME/.local/git/st-enhanced"
+        gitStatus "$HOME/.local/git/dmenu-enhanced"
         gitStatus "$HOME/.config/nvim"
         ;;
     "push")
@@ -111,6 +112,7 @@ case "$1" in
         gitPush "$HOME/.local/git/dwm"
         gitPush "$HOME/.local/git/dwmblocks-async"
         gitPush "$HOME/.local/git/st-enhanced"
+        gitPush "$HOME/.local/git/dmenu-enhanced"
         ;;
     # "pull")
         #     gitPull "$HOME/.local/scripts"
