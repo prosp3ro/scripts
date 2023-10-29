@@ -33,7 +33,7 @@ case "$1" in
         dwmblocks & ;;
 
     "st")
-        cd "$locationDir/st" || exit 1
+        cd "$locationDir/st-enhanced" || exit 1
         sudo make install ;;
 
     "nsxiv") 
