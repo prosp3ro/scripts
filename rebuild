@@ -11,7 +11,7 @@ usage() {
 case "$1" in
     "dmenu") 
         cd "$locationDir/dmenu-enhanced" || exit 1
-        sudo make install ;;
+        sudo make clean install ;;
 
     "dwm") 
         # echo "my dwm has built in refresh patch" ;;
