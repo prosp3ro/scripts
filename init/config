@@ -2,10 +2,8 @@
 
 # shellcheck disable=SC2034
 
-# DMENU="rofi -dmenu"
-# DMENU_V="rofi -dmenu -l 25 -fn Monospace-11"
 DMENU="dmenu"
-DMENU_V="dmenu -l 25 -fn Monospace-11"
+DMENU_V="dmenu -l 20"
 
 isinstalled rofi dmenu dust dunst libnotify || exit
 
