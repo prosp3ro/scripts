@@ -2,4 +2,4 @@
 
 isinstalled expac bat || exit
 
-expac '%m %n' -H 'G' | sort -n -r | bat
+expac '%m %n' -H 'G' | sort -n -r | bat --style=numbers,grid
