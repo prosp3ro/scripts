@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+sudo mariadb -e "show databases;" || exit 1
