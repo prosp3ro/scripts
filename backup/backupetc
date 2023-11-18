@@ -17,4 +17,7 @@ sudo cp /etc/sudoers "$XDG_CONFIG_HOME/etc"
 [ -f "$XDG_CONFIG_HOME/etc/pacman.conf" ] && rm -rf "$XDG_CONFIG_HOME/etc/pacman.conf"
 sudo cp /etc/pacman.conf "$XDG_CONFIG_HOME/etc"
 
+[ -f "$XDG_CONFIG_HOME/etc/hosts" ] && rm -rf "$XDG_CONFIG_HOME/etc/hosts"
+sudo cp /etc/hosts "$XDG_CONFIG_HOME/etc"
+
 sudo chown prospero:prospero -R "$XDG_CONFIG_HOME/etc"
