@@ -14,8 +14,9 @@ icon="🎟"
 
 if (( $(bc <<< "$formatted_used >= 5.00") )); then
     echo "${icon}❗$mem"
-elif (( $(bc <<< "$formatted_used >= 7.00") )); then
+elif (( $(bc <<< "$formatted_used >= 6.80") )); then
     echo "${icon}❗$mem"
+    mpv --volume=70 "$HOME/doc/sounds/cute-notification.mp3"
     notify-send -u critical "Low memory!" "Used memory: ${mem}G."
 else
     echo "${icon}$mem"
