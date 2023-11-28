@@ -4,6 +4,6 @@
 
 file="$1"
 touch "$file"
-echo -e "#!/usr/bin/env bash\n" >> "$file"
+echo -e "#!/usr/bin/env bash\n\n" >> "$file"
 chmod +x "$file"
 nvim +3 "$file"

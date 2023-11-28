@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+notify-send -t 60000 "🖳 System data" "Battery level: $(sb-bat)
+Memory: $(sb-memory)
+Volume: $(sb-volume)
+Hour: $(date "+%H:%M")"
