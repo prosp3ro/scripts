@@ -12,7 +12,7 @@ formatted_used=$(bc <<< "scale=2; $used_memory / 1024")
 mem="${formatted_used}G/${formatted_total}G"
 icon="🎟"
 
-if (( $(bc <<< "$formatted_used >= 6.50") )); then
+if (( $(bc <<< "$formatted_used >= 7.10") )); then
     echo "${icon}❗$mem"
     mpv --volume=70 "$HOME/doc/sounds/cute-notification.mp3" 1>/dev/null
     notify-send -u critical "Low memory!" "Used memory: ${mem}G."
