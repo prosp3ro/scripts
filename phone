@@ -6,10 +6,15 @@ source config
 isinstalled jmtpfs fusermount veracrypt-console-bin || exit
 
 phone="$HOME/mnt/phone"
-backup4phoneDir="$phone/Wewnętrzna pamięć współdzielona/backup4phone"
-backup4boxDir="$phone/Wewnętrzna pamięć współdzielona/backup4box"
+backup4phoneDir="$phone/Internal shared storage/backup4phone"
+backup4boxDir="$phone/Internal shared storage/backup4box"
 localVCBackupFile="$HOME/.local/veracrypt/backup"
 mntVCBackupDir="$HOME/mnt/vc-backup"
+
+usage() {
+    echo -e "Options: \n--mount or -m \n--umount or -u \n--backup4phone \n--backup4box \n--help or --usage"
+    exit 1
+}
 
 backup4phone() {
     [ ! -d "$backup4phoneDir" ] && echoRedExit "$backup4phoneDir doesn't exist!"
@@ -21,6 +26,7 @@ backup4phone() {
         echoBlue -n "Copying files to the phone."
         # cp -n option is not used because I want it to overwrite all files
         cp -vR "$XDG_DOCUMENTS_DIR/keepass" "$backup4phoneDir"
+        cp -vR "$XDG_DOCUMENTS_DIR/bookmarks.md" "$backup4phoneDir"
         cp -vR "$XDG_DOCUMENTS_DIR/praca" "$backup4phoneDir"
     fi
 }
@@ -39,11 +45,6 @@ backup4box() {
     # cp -n option is not used because I want it to overwrite all files
     cp -vR "${backup4boxDir:?}"/* "$mntVCBackupDir/phone"
 
-}
-
-usage() {
-    echo -e "Options: \n--mount or -m \n--umount or -u \n--backup4phone \n--backup4box \n--help or --usage"
-    exit 1
 }
 
 case "$1" in
