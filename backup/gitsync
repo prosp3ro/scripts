@@ -56,6 +56,7 @@ acericePush() {
         "$XDG_CONFIG_HOME/user-dirs.dirs"
         "$XDG_CONFIG_HOME/user-dirs.locale"
         "$XDG_CONFIG_HOME/QtProject.conf"
+        "$XDG_CONFIG_HOME/rofi"
     )
 
     echoBlue "Current dir: $HOME"
