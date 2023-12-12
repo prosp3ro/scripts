@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+playlist_url="$(cat "$HOME/doc/lofiplaylist")"
+videos=$(yt-dlp --get-id --get-title --skip-download "$playlist_url" 2>/dev/null)
+
+# Parse video IDs and titles
+video_ids=()
+video_titles=()
+while read -r id title; do
+    video_ids+=("$id")
+    video_titles+=("$title")
+done <<< "$videos"
+
+# Get a random index
+random_index=$((RANDOM % ${#video_ids[@]}))
+
+# Get the random video ID and title
+random_video_id="${video_ids[$random_index]}"
+random_video_title="${video_titles[$random_index]}"
+
+# Print the selected video's title
+echo "Playing: $random_video_title"
+
+# Pick a random video and play its audio
+mpv --no-video --volume=20 --ytdl-format=bestaudio "https://www.youtube.com/watch?v=$random_video_id"
