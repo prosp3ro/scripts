@@ -2,7 +2,7 @@
 
 newMusicDir="$HOME/music/new-juice"
 baseMusicDir="$HOME/music/juice-wrld"
-phoneMusicDir="$HOME/mnt/phone/Karta SD/music/juice-wrld"
+phoneMusicDir="$HOME/mnt/phone/SD card/music/juice-wrld"
 
 case "$1" in
     "newtophone")
