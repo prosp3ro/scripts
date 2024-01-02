@@ -5,11 +5,14 @@ sudo pacman -Sc
 
 [ ! -d "$HOME/tmp" ] && mkdir "$HOME/tmp"
 cp -R "$XDG_CACHE_HOME/keepassxc" "$HOME/tmp/keepassxc"
+cp -R "$XDG_CACHE_HOME/zsh" "$HOME/tmp/zsh"
 
 if ! rm -rf "${XDG_CACHE_HOME:?}/"*; then
   echo "Error: failed to remove cache directory contents" >&2
   rm -rf "$HOME/tmp/keepassxc"
+  rm -rf "$HOME/tmp/zsh"
   exit 1
 fi
 
 mv "$HOME/tmp/keepassxc" "$XDG_CACHE_HOME/keepassxc"
+mv "$HOME/tmp/zsh" "$XDG_CACHE_HOME/zsh"
