@@ -11,12 +11,14 @@ backuptestDir="$HOME/mnt/tmp"
 tmpDir="$HOME/tmp"
 
 main(){
+    [ ! -d "$backuptestDir" ] && mkdir -p "$backuptestDir"
+
     echoBlue "Mounting $driveBackupFile volume to $backuptestDir."
     [ -f "$backuptestDir/backup" ] && echoRedExit "Looks like something is already mounted in $backuptestDir."
-    [ -f "$driveBackupFile" ] && sudo veracrypt -t --pim=0 -k "" --protect-hidden=no --display-password "$driveBackupFile" "$backuptestDir"
+    [ -f "$driveBackupFile" ] && sudo veracrypt -t --pim=0 -k "" --protect-hidden=no "$driveBackupFile" "$backuptestDir"
     [ ! -f "$driveBackupFile" ] && echoRedExit "$driveBackupFile doesn't exist."
 
-    echoBlue -n "Running tests."
+    echoBlue "Running tests."
     ls --color=auto -alh "$backuptestDir"
     runDust "$backuptestDir" 2>/dev/null
     file "$backuptestDir/backup.tar.gz"
@@ -35,8 +37,7 @@ main(){
         cp -v "$backuptestDir/backup.tar.gz" "$tmpDir"
 
         echoBlue "Untaring backup file."
-        tar zxf "$tmpDir/backup.tar.gz"
-        [ ! -d "$tmpDir/home" ] && tar zxf "$tmpDir/backup.tar.gz"
+        tar zxf "$tmpDir/backup.tar.gz" -C "$tmpDir"
 
         echoBlue "Check $tmpDir/home directory."
         ls --color=auto -alh "$tmpDir"
