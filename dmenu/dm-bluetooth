@@ -11,22 +11,25 @@ bluetoothConnect(){
     bluetoothctl connect "$deviceMacAddress"
 }
 
-case "$(printf "disconnect\\nconnect\\npower status\\npower on\\npower off" | $DMENU_V -i -p "Select option:")" in
-    "disconnect")
+case "$(printf "disconnect current device\\nconnect to sony headphones\\nconnect\\nbluetooth status\\nenable bluetooth\\ndisable bluetooth" | $DMENU_V -i -p "Select option:")" in
+    "disconnect current device")
         bluetoothctl disconnect
+        ;;
+    "connect to sony headphones")
+        bluetoothctl connect "00:18:09:7F:41:6E"
         ;;
     "connect")
         bluetoothConnect
         ;;
-    "power status")
+    "bluetooth status")
         notify-send "Bluetooth" "$(bluetoothctl show | grep 'Powered' | sed 's/	//g')."
         ;;
-    "power on")
+    "enable bluetooth")
         bluetoothctl power on
-        notify-send "Bluetooth powered on."
+        notify-send "Bluetooth enabled."
         ;;
-    "power off")
+    "disable bluetooth")
         bluetoothctl power off
-        notify-send "Bluetooth powered off."
+        notify-send "Bluetooth disabled."
         ;;
 esac
