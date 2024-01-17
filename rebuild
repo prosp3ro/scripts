@@ -30,7 +30,7 @@ case "$1" in
         fi
 
         if [ "$(pgrep -u "$USER" "\bdwmblocks$")" ]; then
-            kill -HUP "$(pgrep -u "$USER" "\bdwmblocks$")"
+            killall dwmblocks
         fi
 
         dwmblocks & ;;
