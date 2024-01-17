@@ -5,55 +5,36 @@
 source config
 isinstalled setxkbmap xset xinput xmodmap || exit
 
-keyboardLayout=""
-zowieMouseName="Kingsis Corporation ZOWIE Gaming mouse"
-logitechMouseName="Logitech Wireless Mouse"
-dellMouseName="PixArt Dell MS116 USB Optical Mouse"
-defenderMouseName="2.4G Wireless Optical Mouse  Mouse"
-touchpadName="ELAN0501:01 04F3:3060 Touchpad"
+touchpad="ELAN0501:01 04F3:3060 Touchpad"
 
-select_keyboard_layout() {
-    keyboardLayout="$1"
-}
+setxkbmap
+setxkbmap -option caps:escape
+xset r rate 320 70
+xmodmap -e 'keycode 135 = Super_R'
 
-remap_keys() {
-    setxkbmap
-    setxkbmap -option caps:escape
-    xset r rate 320 70
-    xmodmap -e 'keycode 135 = Super_R'
-    xinput --set-prop "$zowieMouseName" "libinput Accel Speed" "-1"
-    # xinput --set-prop "$logitechMouseName" "libinput Accel Speed" "-1"
-    # xinput --set-prop "$dellMouseName" "libinput Accel Speed" "-1"
-    # xinput --set-prop "$defenderMouseName" "libinput Accel Speed" "-1"
-    xinput --set-prop "$touchpadName" "libinput Tapping Enabled" "1"
-    xinput --set-prop "$touchpadName" "libinput Natural Scrolling Enabled" "1"
-}
+# Touchpad
+xinput --set-prop "$touchpad" "libinput Tapping Enabled" "1"
+xinput --set-prop "$touchpad" "libinput Natural Scrolling Enabled" "1"
+
+# Mouse
+xinput --set-prop "Kingsis Corporation ZOWIE Gaming mouse" "libinput Accel Speed" "-1" # zowie
+# xinput --set-prop "2.4G Wireless Optical Mouse  Mouse" "libinput Accel Speed" "-1" # defender
+# xinput --set-prop "Logitech Wireless Mouse" "libinput Accel Speed" "-1" # logitech (old one)
 
 case "$1" in
-    "dmenu")
-        select_keyboard_layout "$(printf "us\\npl" | dmenu -i -p "Choose a keyboard layout:")"
-        ;;
     "us")
-        select_keyboard_layout "us"
+        setxkbmap us
+        xmodmap -e 'clear mod1'
+        xmodmap -e 'add mod1 = Alt_L'
+        xmodmap -e 'add mod4 = Alt_R'
+        notify-send "Switched to US keyboard."
         ;;
     "pl")
-        select_keyboard_layout "pl"
+        setxkbmap pl
+        notify-send "Switched to POLISH keyboard."
         ;;
     *)
-        echo "Invalid argument. Usage: $0 [dmenu|us|pl]"
+        echo "Invalid argument. Usage: $0 [us|pl]"
         exit 1
         ;;
 esac
-
-remap_keys
-
-if [ "$keyboardLayout" == "us" ]; then
-    setxkbmap us
-    xmodmap -e 'clear mod1'
-    xmodmap -e 'add mod1 = Alt_L'
-    xmodmap -e 'add mod4 = Alt_R'
-elif [ "$keyboardLayout" == "pl" ]; then
-    setxkbmap pl
-fi
-
-notify-send "Remap completed."

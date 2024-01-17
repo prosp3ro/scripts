@@ -29,7 +29,10 @@ case "$1" in
             sudo make install || exit 1
         fi
 
-        kill -HUP "$(pgrep -u "$USER" "\bdwmblocks$")"
+        if [ "$(pgrep -u "$USER" "\bdwmblocks$")" ]; then
+            kill -HUP "$(pgrep -u "$USER" "\bdwmblocks$")"
+        fi
+
         dwmblocks & ;;
 
     "st")
