@@ -2,6 +2,6 @@
 
 isinstalled bat fzf || exit
 
-cmd=$(fzf --height 20 --reverse < "$XDG_CONFIG_HOME/zsh/history")
+cmd=$(fzf --height 20 --reverse < "$XDG_CACHE_HOME/zsh/history")
 
 xdotool type "$cmd"

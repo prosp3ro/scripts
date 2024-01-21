@@ -1,7 +1,8 @@
 #!/bin/sh
 
 case "$(cat /sys/class/net/w*/operstate 2>/dev/null)" in
-	down) wifiicon="🛜❗No network" ;;
+	down) wifiicon="🛜No network" ;;
+	# down) wifiicon="🛜❗No network" ;;
 	up) wifiicon="$(awk '/^\s*w/ { print "🛜" }' /proc/net/wireless)" ;;
 esac
 
