@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-sed -i '1,10000d' "$XDG_CACHE_HOME/zsh/history"
-echo "Shell history cleared."
