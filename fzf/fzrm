@@ -4,5 +4,11 @@ isinstalled fzf || exit
 
 file=$(pacman -Qq | fzf --reverse)
 
-# ask if also remove dependencies and configs
-sudo pacman -R "$file"
+option=$(echo -e "R\\nRn\\nRs\\nRns" | fzf --reverse --header "Chose pacman option:")
+
+case "$option" in
+    "R") sudo pacman -R "$file" ;;
+    "Rn") sudo pacman -Rn "$file" ;;
+    "Rs") sudo pacman -Rs "$file" ;;
+    "Rns") sudo pacman -Rns "$file" ;;
+esac
