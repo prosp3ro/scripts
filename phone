@@ -6,45 +6,53 @@ source config
 isinstalled jmtpfs fusermount veracrypt-console-bin || exit
 
 phone="$HOME/mnt/phone"
-backup4phoneDir="$phone/Internal shared storage/backup4phone"
-backup4boxDir="$phone/Internal shared storage/backup4box"
+backupToPhoneDir="$phone/Internal storage/backup-from-pc"
+backupToPCDir="$phone/Internal storage/backup-to-pc"
 localVCBackupFile="$HOME/.local/veracrypt/backup"
 mntVCBackupDir="$HOME/mnt/vc-backup"
 
 usage() {
-    echo -e "Options: \n--mount or -m \n--umount or -u \n--backup4phone \n--backup4box \n--help or --usage"
+    echo -e "Options: \n--mount or -m \n--umount or -u \n--backup-to-phone \n--backup-to-pc \n--help or --usage"
     exit 1
 }
 
-backup4phone() {
-    [ ! -d "$backup4phoneDir" ] && echoRedExit "$backup4phoneDir doesn't exist!"
+backup-to-phone() {
+    [ ! -d "$backupToPhoneDir" ] && echoRedExit "$backupToPhoneDir doesn't exist!"
 
-    if [ -d "$backup4phoneDir" ]; then
-        echoBlue "Removing old backup."
-        rm -vrf "${backup4phoneDir:?}"/*
+    if [ -d "$backupToPhoneDir" ]; then
+        echoBlue "Removing old backup from phone directory."
+        rm -vrf "${backupToPhoneDir:?}"/*
 
         echoBlue -n "Copying files to the phone."
         # cp -n option is not used because I want it to overwrite all files
-        cp -vR "$XDG_DOCUMENTS_DIR/keepass" "$backup4phoneDir"
-        cp -vR "$XDG_DOCUMENTS_DIR/bookmarks.md" "$backup4phoneDir"
-        cp -vR "$XDG_DOCUMENTS_DIR/praca" "$backup4phoneDir"
+        cp -vR "$XDG_DOCUMENTS_DIR/keepass" "$backupToPhoneDir"
+        # cp -vR "$XDG_DOCUMENTS_DIR/bookmarks.md" "$backupToPhoneDir"
+        cp -vR "$XDG_DOCUMENTS_DIR/praca" "$backupToPhoneDir"
     fi
 }
 
-backup4box() {
-    [ ! -d "$backup4boxDir" ] && echoRedExit "$backup4boxDir doesn't exist!"
+backup-to-pc() {
+    echoBlue "This option will overwrite everything from $mntVCBackupDir/phone directory. Do you want to proceed? [Y/n]"
+    read -r answer
+
+    if [ "$answer" != "y" ]; then
+        echoRedExit "Exiting script."
+    fi
+
+    [ ! -d "$backupToPCDir" ] && echoRedExit "$backupToPCDir doesn't exist!"
 
     if [ ! -f "$mntVCBackupDir/donotdelete" ]; then
         echoBlue "Mounting backup VeraCrypt volume."
         sudo veracrypt --pim=0 -k "" --protect-hidden=no "$localVCBackupFile" "$mntVCBackupDir"
     fi
 
+    [ ! -f "$mntVCBackupDir/donotdelete" ] && echoRedExit "Mounting failed."
+
     [ ! -d "$mntVCBackupDir/phone" ] && echoRedExit "$mntVCBackupDir/phone doesn't exist!"
 
     echoBlue "Copying backup from the phone to the VC volume."
     # cp -n option is not used because I want it to overwrite all files
-    cp -vR "${backup4boxDir:?}"/* "$mntVCBackupDir/phone"
-
+    cp -vR "${backupToPCDir:?}"/* "$mntVCBackupDir/phone"
 }
 
 case "$1" in
@@ -54,8 +62,8 @@ case "$1" in
     "--umount" | '-u') 
         sudo fusermount -u "$phone"
         exit 1 ;;
-    "--backup4phone") backup4phone ;;
-    "--backup4box") backup4box ;;
+    "--backup-to-phone") backup-to-phone ;;
+    "--backup-to-pc") backup-to-pc ;;
     "--help" | "--usage") usage ;;
     *) usage ;;
 esac

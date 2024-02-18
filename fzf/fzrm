@@ -2,9 +2,11 @@
 
 isinstalled fzf || exit
 
-file=$(pacman -Qq | fzf --reverse)
+file=$(pacman -Qq | fzf)
+# file=$(pacman -Qq | fzf --reverse)
 
-option=$(echo -e "R\\nRn\\nRs\\nRns" | fzf --reverse --header "Chose pacman option:")
+option=$(echo -e "R\\nRn\\nRs\\nRns" | fzf --header "Chose pacman option:")
+# option=$(echo -e "R\\nRn\\nRs\\nRns" | fzf --reverse --header "Chose pacman option:")
 
 case "$option" in
     "R") sudo pacman -R "$file" ;;

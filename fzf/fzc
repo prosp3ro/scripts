@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+isinstalled composer fzf || exit
+
+composer show --all -n |
+    fzf -m | xargs -ro echo

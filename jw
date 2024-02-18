@@ -17,6 +17,6 @@ case "$1" in
         echo "Deleting all new songs."
         rm -vrf "${newMusicDir:?}"/*
         ;;
-    *) echo "Wrong argument."
+    *) echo "usage: newtophone/newtobase/delnew"
         ;;
 esac

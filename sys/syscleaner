@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-paru -Sc
 sudo pacman -Sc
+paru -Sc
 
 [ ! -d "$HOME/tmp" ] && mkdir "$HOME/tmp"
 cp -R "$XDG_CACHE_HOME/keepassxc" "$HOME/tmp/keepassxc"
