@@ -4,9 +4,10 @@
 
 source config
 
-case "$(printf "lock\\nrebuild dwm\\nlogout\\nreboot\\npoweroff" | $DMENU -i )" in
+case "$(printf "turn screen off\\nlock\\nrebuild dwm\\nlogout\\nreboot\\npoweroff" | $DMENU -i )" in
     # "lock") i3lock -c "#000000" -f ;;
     # "lock") i3lock -c "#000000" -f ;;
+    "turn screen off") xset dpms force off ;;
     "lock") betterlockscreen -l ;;
     "rebuild dwm") rebuild dwm ;;
     "logout") pkill X ;;

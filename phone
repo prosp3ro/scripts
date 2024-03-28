@@ -27,7 +27,7 @@ backup-to-phone() {
         # cp -n option is not used because I want it to overwrite all files
         cp -vR "$XDG_DOCUMENTS_DIR/keepass" "$backupToPhoneDir"
         # cp -vR "$XDG_DOCUMENTS_DIR/bookmarks.md" "$backupToPhoneDir"
-        cp -vR "$XDG_DOCUMENTS_DIR/praca" "$backupToPhoneDir"
+        cp -vR "$XDG_DOCUMENTS_DIR/work" "$backupToPhoneDir"
     fi
 }
 
