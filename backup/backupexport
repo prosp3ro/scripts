@@ -5,35 +5,51 @@
 source config
 isinstalled veracrypt-console-bin mountpoint || exit
 
-set -e 
+set -e
 
 mntVCBackupDir="$HOME/mnt/vc-backup"
 backupLocalVolume="$HOME/.local/veracrypt/backup"
-mountedDevice="$HOME/mnt/dev"
 
-[ ! -f "$backupLocalVolume" ] && echoRedExit "$backupLocalVolume does not exist."
-[ ! -f "$mountedDevice/backup" ] && echoRedExit "$mountedDevice is probably not mounted."
+main() {
+    mountedDevice="$HOME/mnt/$1"
 
-if mountpoint -q "$mntVCBackupDir"; then
-    echoBlue "Unmounting VeraCrypt volume."
-    sudo veracrypt -d "$mntVCBackupDir"
+    echo "$1" > "$HOME/doc/last-backup-device.txt"
 
-    mountpoint -q "$mntVCBackupDir" && echoRedExit "Error: $mntVCBackupDir is still mounted."
-fi
+    [ ! -f "$backupLocalVolume" ] && echoRedExit "$backupLocalVolume does not exist."
+    [ ! -f "$mountedDevice/backup" ] && echoRedExit "$mountedDevice is probably not mounted."
 
-echoBlue "Replacing old backup file."
-mv -v "$mountedDevice/backup" "$mountedDevice/backup-old"
+    if mountpoint -q "$mntVCBackupDir"; then
+        echoBlue "Unmounting VeraCrypt volume."
+        sudo veracrypt -d "$mntVCBackupDir"
 
-echoBlue -n "Copying current backup file to $mountedDevice."
-cp -v "$backupLocalVolume" "$mountedDevice"
+        mountpoint -q "$mntVCBackupDir" && echoRedExit "Error: $mntVCBackupDir is still mounted."
+    fi
 
-echoBlue -n "Info:"
-runDust "$mountedDevice"
-ls --color=auto -alh "$mountedDevice"
+    echoBlue "Replacing old backup file."
+    mv -v "$mountedDevice/backup" "$mountedDevice/backup-old"
 
-echoBlue -n "Run backuptest? [y/N]"
-read -r answer
+    echoBlue -n "Copying current backup file to $mountedDevice."
+    cp -v "$backupLocalVolume" "$mountedDevice"
 
-if [ "$answer" == "y" ]; then
-    backuptest
-fi
+    echoBlue -n "Info:"
+    runDust "$mountedDevice"
+    ls --color=auto -alh "$mountedDevice"
+
+    echoBlue -n "Run backuptest? [y/N]"
+    read -r answer
+
+    if [ "$answer" == "y" ]; then
+        backuptest
+    fi
+}
+
+case "$1" in
+    "usb1")
+        main "usb1" ;;
+    "usb2")
+        main "usb2" ;;
+    "last")
+        cat "$HOME/doc/last-backup-device.txt" ;;
+    *)
+        echo "usage: usb1/usb2/last";
+esac
