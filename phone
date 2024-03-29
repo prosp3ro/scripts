@@ -28,7 +28,7 @@ backup-to-phone() {
         cp -vR "$XDG_DOCUMENTS_DIR/keepass" "$backupToPhoneDir"
         # cp -vR "$XDG_DOCUMENTS_DIR/bookmarks.md" "$backupToPhoneDir"
         cp -vR "$XDG_DOCUMENTS_DIR/work" "$backupToPhoneDir"
-        cp -vR "$XDG_DOCUMENTS_DIR/badania" "$backupToPhoneDir"
+        cp -vR "$XDG_DOCUMENTS_DIR/tests" "$backupToPhoneDir"
     fi
 }
 
