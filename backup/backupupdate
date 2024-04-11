@@ -10,7 +10,7 @@ backupConfig="$XDG_CONFIG_HOME/backup.cfg"
 [ ! -f "$backupConfig" ] && echoRedExit "$backupConfig file doesn't exist"
 
 usage() {
-    echo -e "Options: \n--standard \n--img"
+    echo -e "Options: \n- standard or s \n- img"
     exit 1
 }
 
@@ -59,11 +59,11 @@ vcMount() {
 }
 
 case "$1" in
-  "--standard")
-      vcMount # if it fails leave because it will still create tar file in ~/mnt/vc-backup/
+  "standard" | "s" )
+      vcMount
       standardBackup ;;
-  "--img") 
-      vcMount # if it fails leave because it will still create tar file in ~/mnt/vc-backup/
+  "img") 
+      vcMount
       imgBackup ;;
   *) usage ;;
 esac

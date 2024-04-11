@@ -12,7 +12,7 @@ localVCBackupFile="$HOME/.local/veracrypt/backup"
 mntVCBackupDir="$HOME/mnt/vc-backup"
 
 usage() {
-    echo -e "Options: \n--mount or -m \n--umount or -u \n--backup-to-phone \n--backup-to-pc \n--help or --usage"
+    echo -e "Options: \nmount or m \numount or u \nbackup-to-phone \nbackup-to-pc"
     exit 1
 }
 
@@ -57,14 +57,13 @@ backup-to-pc() {
 }
 
 case "$1" in
-    "--mount" | "-m")
+    "mount" | "m")
         sudo jmtpfs -o allow_other "$phone" 2>/dev/null
         exit 1 ;;
-    "--umount" | '-u') 
+    "umount" | 'u') 
         sudo fusermount -u "$phone"
         exit 1 ;;
-    "--backup-to-phone") backup-to-phone ;;
-    "--backup-to-pc") backup-to-pc ;;
-    "--help" | "--usage") usage ;;
+    "backup-to-phone") backup-to-phone ;;
+    "backup-to-pc") backup-to-pc ;;
     *) usage ;;
 esac
