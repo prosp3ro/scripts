@@ -98,8 +98,16 @@ gitStatus() {
     echo -e "\n======\n"
 }
 
+acericeStatus() {
+    echo -e "\e[1;34mAcerice status:\e[0m"
+    cd || exit 1
+    git --git-dir="$HOME/.local/git/acerice" --work-tree="$HOME/" status --untracked-files=no
+    echo -e "\n======\n"
+}
+
 case "$1" in
     "status")
+        acericeStatus
         gitStatus "$HOME/.local/scripts"
         gitStatus "$HOME/.local/git/dwm"
         gitStatus "$HOME/.local/git/dwmblocks-async"
