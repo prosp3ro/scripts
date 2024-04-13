@@ -3,7 +3,7 @@
 case "$(cat /sys/class/net/w*/operstate 2>/dev/null)" in
 	down)
         printf "❌No network" ;;
-	# up) printf "$(awk '/^\s*w/ { print "🛜" }' /proc/net/wireless)" ;;
+	# up) printf "$(awk '/^\s*w/ { print "📶" }' /proc/net/wireless)" ;;
     up)
-        printf "📡$(nmcli device show wlp3s0 | awk -F':' '/GENERAL.CONNECTION/ {gsub(/^ +/, "", $2); print $2}') ($(ip route get 8.8.8.8 2>/dev/null|grep -Eo 'src [0-9.]+'|grep -Eo '[0-9.]+'))" ;;
+        printf "📶$(nmcli device show wlp3s0 | awk -F':' '/GENERAL.CONNECTION/ {gsub(/^ +/, "", $2); print $2}') ($(ip route get 8.8.8.8 2>/dev/null|grep -Eo 'src [0-9.]+'|grep -Eo '[0-9.]+'))" ;;
 esac

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+usage="$(vnstat -i wlp3s0 --oneline | grep 'wlp3s0' | awk -F';' '{print $6}')"
+
+echo "Used: $usage"
