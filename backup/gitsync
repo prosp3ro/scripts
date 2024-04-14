@@ -20,8 +20,10 @@ acericePush() {
     workTree="$HOME/"
 
     files=(
-        "$HOME/.zprofile"
         "$HOME/.gitignore"
+        "$XDG_CONFIG_HOME/YouTube Music/config.json"
+
+        "$HOME/.zprofile"
         "$HOME/img/background"
         "$XDG_CONFIG_HOME/alacritty"
         "$XDG_CONFIG_HOME/awesome"
@@ -58,7 +60,9 @@ acericePush() {
         "$XDG_CONFIG_HOME/QtProject.conf"
         "$XDG_CONFIG_HOME/rofi"
         "$XDG_CONFIG_HOME/npm"
-        "$XDG_CONFIG_HOME/YouTube Music/config.json"
+        "$XDG_CONFIG_HOME/VSCodium/User/snippets"
+        "$XDG_CONFIG_HOME/VSCodium/User/keybindings.json"
+        "$XDG_CONFIG_HOME/VSCodium/User/settings.json"
     )
 
     echoBlue "Current dir: $HOME"
