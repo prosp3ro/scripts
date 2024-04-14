@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+isinstalled vnstat || exit
+
 usage="$(vnstat -i wlp3s0 --oneline | grep 'wlp3s0' | awk -F';' '{print $6}')"
 
 echo "🧩$usage"
