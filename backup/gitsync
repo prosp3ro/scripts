@@ -58,6 +58,7 @@ acericePush() {
         "$XDG_CONFIG_HOME/QtProject.conf"
         "$XDG_CONFIG_HOME/rofi"
         "$XDG_CONFIG_HOME/npm"
+        "$XDG_CONFIG_HOME/YouTube Music/config.json"
     )
 
     echoBlue "Current dir: $HOME"
