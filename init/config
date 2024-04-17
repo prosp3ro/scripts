@@ -40,3 +40,11 @@ echoGreen() {
         echo -e "\e[1;32m$*" "\e[0m"
     fi
 }
+
+echoYellow() { 
+    if [ "$1" == "-n" ]; then
+        echo -e "\n\e[1;33m${*:2}" "\e[0m"
+    else
+        echo -e "\e[1;33m$*" "\e[0m"
+    fi
+}
