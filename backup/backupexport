@@ -48,8 +48,10 @@ case "$1" in
         main "usb1" ;;
     "usb2")
         main "usb2" ;;
+    "ext")
+        main "ext" ;;
     "last")
         cat "$HOME/doc/last-backup-device.txt" ;;
     *)
-        echo "usage: usb1/usb2/last";
+        echo "usage: usb1/usb2/ext/last";
 esac

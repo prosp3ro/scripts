@@ -21,7 +21,6 @@ acericePush() {
 
     files=(
         "$HOME/.gitignore"
-        "$XDG_CONFIG_HOME/YouTube Music/config.json"
 
         "$HOME/.zprofile"
         "$HOME/img/background"
