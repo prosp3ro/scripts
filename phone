@@ -20,6 +20,9 @@ backup-to-phone() {
     [ ! -d "$backupToPhoneDir" ] && echoRedExit "$backupToPhoneDir doesn't exist!"
 
     if [ -d "$backupToPhoneDir" ]; then
+        now=$(date "+%d %B %Y [%A] %H:%M")
+        echo "$now => phone" >> "$HOME/doc/last-backup-device.txt"
+
         echoBlue "Removing old backup from phone directory."
         rm -vrf "${backupToPhoneDir:?}"/*
 
@@ -60,7 +63,7 @@ case "$1" in
     "mount" | "m")
         sudo jmtpfs -o allow_other "$phone" 2>/dev/null
         exit 1 ;;
-    "umount" | 'u') 
+    "umount" | 'u')
         sudo fusermount -u "$phone"
         exit 1 ;;
     "backup-to-phone") backup-to-phone ;;
