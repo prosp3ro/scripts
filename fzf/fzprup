@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+isinstalled bat fzf paru || exit
+
+package=$(paru -Qmu | awk '{print $1}' | fzf --height 20 --reverse)
+
+echo -n "Do you want to upgrade $package? [y/N]: "
+read -r answer
+
+if [ "$answer" == "y" ]; then
+    paru -S "$package"
+fi

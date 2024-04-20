@@ -23,7 +23,7 @@ case "$1" in
         echo "rebuilding dwmblocks-async..."
         cd "$locationDir/dwmblocks-async" || exit 1
 
-        echo -n "type y to make file -> "
+        echo -n "type y to make file: "
         read -r answer
         if [ "$answer" == "y" ]; then
             sudo make install || exit 1
