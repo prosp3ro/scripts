@@ -14,10 +14,13 @@ case "$1" in
         sudo make clean install ;;
 
     "dwm") 
-        # echo "my dwm has built in refresh patch" ;;
+        # notify-send "my dwm has built in refresh patch" ;;
         cd "$locationDir/dwm" || exit 1
         sudo make install || exit 1
         kill -HUP "$(pgrep -u "$USER" "\bdwm$")" ;;
+        # kill -TERM dwmpid ;;
+        # kill -HUP dwm ;;
+        # notify-send "Remember to reload dwm" ;;
 
     "dwmblocks-async") 
         echo "rebuilding dwmblocks-async..."

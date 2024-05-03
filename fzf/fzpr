@@ -3,5 +3,6 @@
 isinstalled paru fzf || exit
 
 paru -Slq |
-    fzf -m --preview "cat <(paru -Si {1}) <(paru -Fl {1} | awk \"{print \$2}\")" |
+    # fzf -m --preview "cat <(paru -Si {1}) <(paru -Fl {1} | awk \"{print \$2}\")" |
+    fzf -m --preview "cat <(paru -Si {1})" |
     xargs -ro paru -S
