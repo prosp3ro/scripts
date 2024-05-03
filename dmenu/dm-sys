@@ -10,6 +10,7 @@ case "$(printf "turn screen off\\nlock\\nrebuild dwm\\nlogout\\nreboot\\npowerof
     "turn screen off") xset dpms force off ;;
     "lock") betterlockscreen -l ;;
     "rebuild dwm") rebuild dwm ;;
+    "rebuild dwm2") rebuild dwm2 ;;
     "logout") pkill X ;;
     # "leave i3") kill -TERM "$(pgrep -u "$USER" "\bi3$")" ;;
     # "leave awesome") kill -TERM "$(pgrep -u "$USER" "\bawesome$")" ;;

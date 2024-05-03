@@ -4,8 +4,18 @@ locationDir="$HOME/.local/git"
 # locationDir="$HOME/.local/src"
 
 usage() {
-    echo -e "dmenu/dwm/dwmblocks-async/st/nsxiv"
+    echo -e "dmenu/dwm/dwm2/dwmblocks-async/st/nsxiv"
     exit 1
+}
+
+rebuild_dwm() {
+    # notify-send "my dwm has built in refresh patch" ;;
+    cd "$locationDir/$1" || exit 1
+    sudo make install || exit 1
+    kill -HUP "$(pgrep -u "$USER" "\bdwm$")"
+    # kill -TERM dwmpid ;;
+    # kill -HUP dwm ;;
+    # notify-send "Remember to reload dwm" ;;
 }
 
 case "$1" in
@@ -14,13 +24,10 @@ case "$1" in
         sudo make clean install ;;
 
     "dwm") 
-        # notify-send "my dwm has built in refresh patch" ;;
-        cd "$locationDir/dwm" || exit 1
-        sudo make install || exit 1
-        kill -HUP "$(pgrep -u "$USER" "\bdwm$")" ;;
-        # kill -TERM dwmpid ;;
-        # kill -HUP dwm ;;
-        # notify-send "Remember to reload dwm" ;;
+        rebuild_dwm "dwm" ;;
+
+    "dwm2") 
+        rebuild_dwm "dwm2" ;;
 
     "dwmblocks-async") 
         echo "rebuilding dwmblocks-async..."
