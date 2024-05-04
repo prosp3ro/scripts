@@ -4,7 +4,7 @@ locationDir="$HOME/.local/git"
 # locationDir="$HOME/.local/src"
 
 usage() {
-    echo -e "dmenu/dwm/dwm2/dwmblocks-async/st/nsxiv"
+    echo -e "dmenu/dwm/moonwm/dwmblocks-async/st/nsxiv"
     exit 1
 }
 
@@ -26,8 +26,8 @@ case "$1" in
     "dwm") 
         rebuild_dwm "dwm" ;;
 
-    "dwm2") 
-        rebuild_dwm "dwm2" ;;
+    "moonwm") 
+        rebuild_dwm "moonwm" ;;
 
     "dwmblocks-async") 
         echo "rebuilding dwmblocks-async..."
