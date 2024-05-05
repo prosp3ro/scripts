@@ -4,7 +4,7 @@
 
 source config
 
-case "$(printf "turn screen off\\nlock\\nrebuild dwm\\nlogout\\nreboot\\npoweroff" | $DMENU -i )" in
+case "$(printf "turn screen off\\nlock\\nrebuild moonwm\\nlogout\\nreboot\\npoweroff" | $DMENU -i )" in
     # "lock") i3lock -c "#000000" -f ;;
     # "lock") i3lock -c "#000000" -f ;;
     "turn screen off") xset dpms force off ;;
