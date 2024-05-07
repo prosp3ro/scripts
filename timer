@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+isinstalled termdown || exit
+
+volume_lvl="50"
+song="$HOME/music/juice-wrld/Juice WRLD - Afterlife V2.mp3"
+
+[ "$(pamixer --get-mute)" = true ] && echo "volume is muted!" && exit
+[ "$(bluetoothctl info | head -n 1)" != "Missing device address argument" ] && echo "headphones detected!" && exit
+
+termdown "$1" && mpv --volume="$volume_lvl" "$song"
