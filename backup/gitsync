@@ -124,7 +124,7 @@ case "$1" in
         acericePush
         gitPush "$HOME/.local/scripts"
         gitPush "$HOME/.config/nvim"
-        gitPush "$HOME/.local/git/dwm"
+        gitPush "$HOME/.local/git/moonwm"
         gitPush "$HOME/.local/git/dwmblocks-async"
         gitPush "$HOME/.local/git/st-enhanced"
         gitPush "$HOME/.local/git/dmenu-enhanced"
