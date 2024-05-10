@@ -11,10 +11,14 @@ mntVCBackupDir="$HOME/mnt/vc-backup"
 backupLocalVolume="$HOME/.local/veracrypt/backup"
 
 main() {
-    mountedDevice="$HOME/mnt/$1"
+    echo -n "Run backupupdate? [y/N] "
+    read -r answer
 
-    now=$(date "+%d %B %Y [%A] %H:%M")
-    echo "$now => $1" >> "$HOME/doc/last-backup-device.txt"
+    if [ "$answer" == "y" ]; then
+        backupupdate standard || exit
+    fi
+
+    mountedDevice="$HOME/mnt/$1"
 
     [ ! -f "$backupLocalVolume" ] && echoRedExit "$backupLocalVolume does not exist."
     [ ! -f "$mountedDevice/backup" ] && echoRedExit "$mountedDevice is probably not mounted."
@@ -35,6 +39,9 @@ main() {
     echoBlue -n "Info:"
     runDust "$mountedDevice"
     ls --color=auto -alh "$mountedDevice"
+
+    now=$(date "+%d %B %Y [%A] %H:%M")
+    echo "$now => $1" >> "$HOME/doc/last-backup-device.txt"
 
     echoBlue -n "Run backuptest? [y/N]"
     read -r answer

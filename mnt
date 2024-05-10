@@ -15,19 +15,23 @@ checking_drives() {
 # lsblk -no "fstype" "/dev/sdb1"
 
 case "${args[0]}" in
-    "usb") 
+    "usb1")
         checking_drives
-        sudo mount -t vfat "/dev/sdb1" "$MOUNT_DIR/dev" -o rw,umask=0000
+        sudo mount -t vfat "/dev/sdb1" "$MOUNT_DIR/usb1" -o rw,umask=0000
+        ;;
+    "usb2")
+        checking_drives
+        sudo mount -t vfat "/dev/sdb1" "$MOUNT_DIR/usb2" -o rw,umask=0000
         ;;
     # ntfs
     "ext")
         checking_drives;
-        sudo mount "/dev/sdb1" "$MOUNT_DIR/dev";
+        sudo mount "/dev/sdb1" "$MOUNT_DIR/ext";
         user="$(whoami)";
         ug="$(groups | awk '{print $1}')";
-        sudo chown "$user":"$ug" "$MOUNT_DIR/dev"
+        sudo chown "$user":"$ug" "$MOUNT_DIR/ext"
         ;;
-    "vc-backup") 
+    "vc-backup")
         mntVCBackup="$HOME/mnt/vc-backup"
         localVCBackup="$HOME/.local/veracrypt/backup"
 
@@ -38,10 +42,10 @@ case "${args[0]}" in
             --protect-hidden=no \
             "$localVCBackup" "$mntVCBackup"
         ;;
-    "phone") 
+    "phone")
         sudo jmtpfs -o allow_other "$MOUNT_DIR/phone" 2>/dev/null
         ;;
-    *) 
+    *)
         echo "Wrong argument."
         exit 1
         ;;
