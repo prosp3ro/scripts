@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
-isinstalled sensors || exit
+isinstalled sensors rg || exit
 
-notify-send "CPU temp" "$( sensors | grep 'Core' | awk '{print $1 $2 $3}' )"
+echo 'just use sensors'
+
+sensors | rg 'Core'

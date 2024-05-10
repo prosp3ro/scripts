@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+isinstalled sensors || exit
+
+notify-send "CPU temp" "$( sensors | grep 'Core' | awk '{print $1 $2 $3}' )"
