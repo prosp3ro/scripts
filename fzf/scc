@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 
+source config
 isinstalled fd fzf || exit
-
-scriptsDir="$HOME/.local/scripts"
 
 export FZF_DEFAULT_COMMAND='fd -d 2'
 
-cd "$scriptsDir" || exit 1
+cd "$SCRIPTS_DIR" || exit 1
 script=$(fzf --reverse --height 15)
 
 if [ "$script" ]; then

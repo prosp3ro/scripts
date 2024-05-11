@@ -7,7 +7,7 @@ fi
 
 dbName="$1"
 
-mariadbUser="prospero"
+mariadbUser=$USER
 mariadbHost="localhost"
 
 sudo mariadb -e "create database $dbName;" || exit 1

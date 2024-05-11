@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-username="prospero"
-password="prospero"
+username=$USER
+password=$USER
 dbName="$1"
 
 mariadb -u"$username" -p"$password" "$dbName"

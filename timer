@@ -3,7 +3,7 @@
 isinstalled termdown || exit
 
 volume_lvl="50"
-song="$HOME/music/ringtone.mp3"
+song="$HOME/doc/sounds/ringtone.mp3"
 
 [ "$(pamixer --get-mute)" = true ] && echo "Volume is muted!" && exit
 # [ "$(bluetoothctl info | head -n 1)" != "Missing device address argument" ] && echo "headphones detected!" && exit

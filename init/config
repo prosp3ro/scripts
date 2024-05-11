@@ -5,6 +5,8 @@
 DMENU="dmenu"
 DMENU_V="dmenu -l 20"
 
+SCRIPTS_DIR="$HOME/.local/scripts"
+
 isinstalled rofi dmenu dust dunst libnotify || exit
 
 run_dust() { dust -br -d 0 "$@"; }

@@ -435,14 +435,14 @@ def usage(purple='\033[35m'):
 def check():
 	platform = os.system('which pacman > /dev/null 2>&1')
 	if platform == 0:
-		with open('/home/prospero/tmp/ghostnet.log','r') as logf:
+		with open('/tmp/ghostnet.log','r') as logf:
 			if logf.readline() == "checked=True":
 				pass
 				logf.close()
 			else:
 				log('[{0}] Install some require programs to run this script'.format(timed()),resp=True,end=True)
 				os.system('sudo pacman -Sy tor macchanger bleachbit --noconfirm')
-				with open('/home/prospero/tmp/ghostnet.log','w') as logf:
+				with open('/tmp/ghostnet.log','w') as logf:
 					logf.write('checked=True')
 					logf.close()
 	else:

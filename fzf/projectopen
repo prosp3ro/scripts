@@ -4,11 +4,11 @@
 
 isinstalled fd skim || exit
 
-projectsDir=$(printf "~/.local/git\n~/.local/src\nsrv/http" | sk --reverse)
+projectsDir=$(printf "git\nsrc\nsrv" | sk --reverse)
 
 case "$projectsDir" in
-    "~/.local/git") projectsDir="$HOME/.local/git" ;;
-    "~/.local/src") projectsDir="$HOME/.local/src" ;;
+    "git") projectsDir="$HOME/.local/git" ;;
+    "src") projectsDir="$HOME/.local/src" ;;
     "srv") projectsDir="/srv/http" ;;
     *) exit 1 ;;
 esac

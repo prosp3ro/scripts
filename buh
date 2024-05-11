@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-(tr -d "\n" | xclip -selection clipboard) < "$HOME/doc/buh"

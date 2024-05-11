@@ -1,25 +1,23 @@
 #!/usr/bin/env bash
 
-scriptsDir="$HOME/.local/scripts"
-
 activate74(){
-    ln -s "/usr/bin/php74" "$scriptsDir/php"
-    ln -s "/usr/bin/phpize74" "$scriptsDir/phpize"
+    ln -s "/usr/bin/php74" "$SCRIPTS_DIR/php"
+    ln -s "/usr/bin/phpize74" "$SCRIPTS_DIR/phpize"
 
     echo "PHP 7.4 version activated."
 }
 
 activateLatest(){
-    ln -s "/usr/bin/php" "$scriptsDir/php"
-    ln -s "/usr/bin/phpize" "$scriptsDir/phpize"
+    ln -s "/usr/bin/php" "$SCRIPTS_DIR/php"
+    ln -s "/usr/bin/phpize" "$SCRIPTS_DIR/phpize"
 
     echo "Latest PHP version activated."
 }
 
 main(){
-    if [[ -f "$scriptsDir/php" ]]; then
-        rm "$scriptsDir/php"
-        rm "$scriptsDir/phpize"
+    if [[ -f "$SCRIPTS_DIR/php" ]]; then
+        rm "$SCRIPTS_DIR/php"
+        rm "$SCRIPTS_DIR/phpize"
 
         case "$1" in
             "74") activate74 ;;
@@ -27,7 +25,7 @@ main(){
             *) exit 1 ;;
         esac
     else
-        echo "$scriptsDir/php or $scriptsDir/phpize don't exist."
+        echo "$SCRIPTS_DIR/php or $SCRIPTS_DIR/phpize don't exist."
     fi
 }
 

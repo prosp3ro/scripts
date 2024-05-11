@@ -11,12 +11,9 @@ bluetoothConnect(){
     bluetoothctl connect "$deviceMacAddress"
 }
 
-case "$(printf "disconnect current device\\nconnect to sony headphones\\nconnect\\nbluetooth status\\nenable bluetooth\\ndisable bluetooth" | $DMENU_V -i -p "Select option:")" in
+case "$(printf "disconnect current device\\nconnect\\nbluetooth status\\nenable bluetooth\\ndisable bluetooth" | $DMENU_V -i -p "Select option:")" in
     "disconnect current device")
         bluetoothctl disconnect
-        ;;
-    "connect to sony headphones")
-        bluetoothctl connect "00:18:09:7F:41:6E"
         ;;
     "connect")
         bluetoothConnect
