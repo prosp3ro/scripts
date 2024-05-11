@@ -8,7 +8,6 @@ isinstalled veracrypt-console-bin mountpoint || exit
 set -e
 
 mntVCBackupDir="$HOME/mnt/vc-backup"
-backupLocalVolume="$HOME/.local/veracrypt/backup"
 
 main() {
     echo -n "Run backupupdate? [y/N] "
@@ -20,7 +19,7 @@ main() {
 
     mountedDevice="$HOME/mnt/$1"
 
-    [ ! -f "$backupLocalVolume" ] && echoRedExit "$backupLocalVolume does not exist."
+    [ ! -f "$VC_BACKUP" ] && echoRedExit "$VC_BACKUP does not exist."
     [ ! -f "$mountedDevice/backup" ] && echoRedExit "$mountedDevice is probably not mounted."
 
     if mountpoint -q "$mntVCBackupDir"; then
@@ -34,7 +33,7 @@ main() {
     mv -v "$mountedDevice/backup" "$mountedDevice/backup-old"
 
     echoBlue -n "Copying current backup file to $mountedDevice."
-    cp -v "$backupLocalVolume" "$mountedDevice"
+    cp -v "$VC_BACKUP" "$mountedDevice"
 
     echoBlue -n "Info:"
     runDust "$mountedDevice"

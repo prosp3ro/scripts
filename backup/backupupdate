@@ -4,7 +4,6 @@ source config
 isinstalled veracrypt-console-bin tar || exit
 
 mntVCBackup="$HOME/mnt/vc-backup"
-localVCBackup="$HOME/.local/veracrypt/backup"
 
 backupConfig="$XDG_CONFIG_HOME/backup.cfg"
 [ ! -f "$backupConfig" ] && echoRedExit "$backupConfig file doesn't exist"
@@ -53,7 +52,7 @@ vcMount() {
         --pim=0 \
         -k "" \
         --protect-hidden=no \
-        "$localVCBackup" "$mntVCBackup"
+        "$VC_BACKUP" "$mntVCBackup"
 
     [ ! -f "$mntVCBackup/donotdelete" ] && exit 1
 }

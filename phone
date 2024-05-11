@@ -8,7 +8,6 @@ isinstalled jmtpfs fusermount veracrypt-console-bin || exit
 phone="$HOME/mnt/phone"
 backupToPhoneDir="$phone/Internal storage/backup-from-pc"
 backupToPCDir="$phone/Internal storage/backup-to-pc"
-localVCBackupFile="$HOME/.local/veracrypt/backup"
 mntVCBackupDir="$HOME/mnt/vc-backup"
 
 usage() {
@@ -31,7 +30,7 @@ backup-to-phone() {
         cp -vR "$XDG_DOCUMENTS_DIR/keepass" "$backupToPhoneDir"
         # cp -vR "$XDG_DOCUMENTS_DIR/bookmarks.md" "$backupToPhoneDir"
         cp -vR "$XDG_DOCUMENTS_DIR/work" "$backupToPhoneDir"
-        cp -vR "$XDG_DOCUMENTS_DIR/tests" "$backupToPhoneDir"
+        cp -vR "$XDG_DOCUMENTS_DIR/health" "$backupToPhoneDir"
     fi
 }
 
@@ -47,7 +46,7 @@ backup-to-pc() {
 
     if [ ! -f "$mntVCBackupDir/donotdelete" ]; then
         echoBlue "Mounting backup VeraCrypt volume."
-        sudo veracrypt --pim=0 -k "" --protect-hidden=no "$localVCBackupFile" "$mntVCBackupDir"
+        sudo veracrypt --pim=0 -k "" --protect-hidden=no "$VC_BACKUP" "$mntVCBackupDir"
     fi
 
     [ ! -f "$mntVCBackupDir/donotdelete" ] && echoRedExit "Mounting failed."
