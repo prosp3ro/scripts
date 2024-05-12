@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-
-sessions=$(tmux list-sessions | cut -d':' -f1)
-
-# add fzf

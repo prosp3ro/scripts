@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# TODO add fzf
+# sessions=$(tmux list-sessions | cut -d':' -f1)

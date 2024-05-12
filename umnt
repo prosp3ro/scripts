@@ -27,7 +27,7 @@ case "${args[0]}" in
       checkDir "usb1"
       ;;
   "usb2")
-      unmount "usb1"
+      unmount "usb2"
       checkDir "usb2"
       ;;
   "ext")
