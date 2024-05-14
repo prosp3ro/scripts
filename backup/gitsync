@@ -60,7 +60,6 @@ dotfilesPush() {
         "$XDG_CONFIG_HOME/VSCodium/User/snippets"
         "$XDG_CONFIG_HOME/VSCodium/User/keybindings.json"
         "$XDG_CONFIG_HOME/VSCodium/User/settings.json"
-        "$XDG_DATA_HOME/dwm"
     )
 
     echoBlue "Current dir: $HOME"

@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+if ! pgrep -x "st" >/dev/null; then
+    st -c st-dev -t tmux -e ses main &
+fi
+
+if ! pgrep -x "obsidian" >/dev/null; then
+    obsidian &
+fi
+
+if ! pgrep -f "brave-browser-nightly" >/dev/null; then
+    brave-browser-nightly --class=B1 &
+fi
