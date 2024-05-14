@@ -48,11 +48,11 @@ main(){
     [ -f "$backuptestDir/backup" ] && echoRed "[!] Looks like unmounting failed. Do it manually."
 }
 
-echoBlue "Which dir in $HOME/mnt? [usb/usb2/ext]"
+echoBlue "Which dir in $HOME/mnt? [usb1/usb2/ext]"
 read -rp "Enter your choice: " answer
 
-if [[ "$answer" != "usb" && "$answer" != "usb2" && "$answer" != "ext" ]]; then
-    echoRedExit "[!] Only usb/usb2/ext allowed."
+if [[ "$answer" != "usb1" && "$answer" != "usb2" && "$answer" != "ext" ]]; then
+    echoRedExit "[!] Only usb1/usb2/ext allowed."
 fi
 
 driveBackupFile="$HOME/mnt/$answer/backup"
