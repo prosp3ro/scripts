@@ -18,7 +18,7 @@ standardBackup() {
     mv -v "$mntVCBackup/backup.tar.gz" "$mntVCBackup/oldbackup.tar.gz"
 
     echoBlue -n "Creating new backup tar archive."
-    tar -zcf "$mntVCBackup/backup.tar.gz" $( < "$backupConfig") || echoRedExit "tar command failed"
+    tar -czf "$mntVCBackup/backup.tar.gz" -T "$backupConfig" || echoRedExit "tar command failed"
 
     echoBlue -n "Backup info:"
     runDust "$mntVCBackup"
@@ -54,7 +54,8 @@ vcMount() {
         --protect-hidden=no \
         "$VC_BACKUP" "$mntVCBackup"
 
-    [ ! -f "$mntVCBackup/donotdelete" ] && exit 1
+    [ ! -f "$mntVCBackup/donotdelete" ] && echoRedExit "$mntVCBackup isn't mounted or donotdelete file doesn't exist."
+    [ ! -f "$mntVCBackup/backup.tar.gz" ] && echoRedExit "$mntVCBackup/backup.tar.gz doesn't exist!"
 }
 
 case "$1" in
