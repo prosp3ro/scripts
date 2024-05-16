@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# source config
+
+currentDate=$(date "+%d %B %Y")
+cal="$HOME/doc/cal"
+
+today_task() {
+    # use ripgrep
+    cat "$cal" | grep "$currentDate"
+}
+
+if today_task 1>/dev/null; then
+    # notify-send message after ---
+    # play a sound
+    echo "works"
+
+    # i need some indications of how many times notification was send
+    # and stop after sometime
+fi

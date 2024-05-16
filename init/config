@@ -20,6 +20,11 @@ echoRedExit() {
     exit "$status"
 }
 
+dump() {
+    printf '\e[1;31m%s\e[0m\n' "$*"
+    exit
+}
+
 echoRed() {
     if [ "$1" == "-n" ]; then
         echo -e "\n\e[1;31m${*:2}" "\e[0m"
