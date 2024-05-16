@@ -7,8 +7,6 @@ isinstalled veracrypt-console-bin mountpoint || exit
 
 set -e
 
-mntVCBackupDir="$HOME/mnt/vc-backup"
-
 main() {
     echo -n "Run backupupdate? [y/N] "
     read -r answer
@@ -22,11 +20,11 @@ main() {
     [ ! -f "$VC_BACKUP" ] && echoRedExit "$VC_BACKUP does not exist."
     [ ! -f "$mountedDevice/backup" ] && echoRedExit "$mountedDevice is probably not mounted."
 
-    if mountpoint -q "$mntVCBackupDir"; then
+    if mountpoint -q "$VC_BACKUP_MNT_DIR"; then
         echoBlue "Unmounting VeraCrypt volume."
-        sudo veracrypt -d "$mntVCBackupDir"
+        sudo veracrypt -d "$VC_BACKUP_MNT_DIR"
 
-        mountpoint -q "$mntVCBackupDir" && echoRedExit "Error: $mntVCBackupDir is still mounted."
+        mountpoint -q "$VC_BACKUP_MNT_DIR" && echoRedExit "Error: $VC_BACKUP_MNT_DIR is still mounted."
     fi
 
     echoBlue "Replacing old backup file."

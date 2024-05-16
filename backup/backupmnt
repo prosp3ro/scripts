@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+source config
+isinstalled veracrypt-console-bin tar || exit
+
+[ ! -f "$VC_BACKUP_MNT_DIR/donotdelete" ] && sudo veracrypt --display-password \
+    -t \
+    --pim=0 \
+    -k "" \
+    --protect-hidden=no \
+    "$VC_BACKUP" "$VC_BACKUP_MNT_DIR"
+
+[ ! -f "$VC_BACKUP_MNT_DIR/donotdelete" ] && echoRedExit "$VC_BACKUP_MNT_DIR isn't mounted or donotdelete file doesn't exist."
