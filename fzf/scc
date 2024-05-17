@@ -3,7 +3,7 @@
 source config
 isinstalled fd fzf || exit
 
-export FZF_DEFAULT_COMMAND='fd -d 2'
+export FZF_DEFAULT_COMMAND='fd -d 2 --no-ignore'
 
 cd "$SCRIPTS_DIR" || exit 1
 script=$(fzf --reverse --height 15)

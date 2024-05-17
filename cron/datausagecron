@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+source config
+
+usage="$(vnstat -i wlp3s0 --oneline | grep 'wlp3s0' | awk -F';' '{print $6}')"
+dump $usage
+
+# while true
+# do
+#     sleep 5m
+# done

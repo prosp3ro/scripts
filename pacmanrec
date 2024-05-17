@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+grep -i installed /var/log/pacman.log | tail -n 100 | less

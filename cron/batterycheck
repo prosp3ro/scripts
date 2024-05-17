@@ -2,8 +2,8 @@
 
 while true
 do
-    lvl="$(cat /sys/class/power_supply/BAT1/capacity)"
-    [ "$lvl" -le 30 ] && notify-send -u critical "Low battery! $lvl%."
-    [ "$lvl" -gt 98 ] && notify-send "Battery level is at $lvl%." && sleep 10m
+    capacity="$(cat /sys/class/power_supply/BAT1/capacity)"
+    [ "$capacity" -le 20 ] && mpv --volume=80 "$HOME/doc/sounds/low-battery.mp3" 1>/dev/null && notify-send -u critical "Low battery!" "Battery level is at $capacity%."
+    [ "$capacity" -gt 98 ] && notify-send "Battery level is at $capacity%." && sleep 10m
     sleep 5m
 done
