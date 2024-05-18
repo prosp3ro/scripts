@@ -9,6 +9,8 @@ SCRIPTS_DIR="$HOME/.local/scripts"
 VC_BACKUP="$HOME/.local/backup"
 VC_BACKUP_MNT_DIR="$HOME/mnt/vc-backup"
 
+NOTIFICATION_SOUNDS_DIR="$HOME/doc/sounds"
+
 isinstalled rofi dmenu dust dunst libnotify || exit
 
 run_dust() { dust -br -d 0 "$@"; }

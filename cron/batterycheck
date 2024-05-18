@@ -1,9 +1,17 @@
 #!/usr/bin/env bash
 
+source config
+
 while true
 do
     capacity="$(cat /sys/class/power_supply/BAT1/capacity)"
-    [ "$capacity" -le 20 ] && mpv --volume=80 "$HOME/doc/sounds/low-battery.mp3" 1>/dev/null && notify-send -u critical "Low battery!" "Battery level is at $capacity%."
-    [ "$capacity" -gt 98 ] && notify-send "Battery level is at $capacity%." && sleep 10m
+
+    if [ "$capacity" -le 20 ]; then
+        # TODO if screen is turned off, turn it on
+        mpv --volume=80 "$NOTIFICATION_SOUNDS_DIR/low-battery.mp3" 1>/dev/null
+        notify-send -u critical "Low battery!" "Battery level is at $capacity%."
+    fi
+
+    [ "$capacity" -gt 98 ] && notify-send "Battery full" "Battery level is at $capacity%." && sleep 10m
     sleep 5m
 done
