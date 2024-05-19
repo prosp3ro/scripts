@@ -7,8 +7,8 @@ isinstalled rofi dmenu dust dunst libnotify || exit
 DMENU="dmenu"
 DMENU_V="dmenu -l 20"
 
-DEV_SCRIPTS_DIR="$HOME/.local/scripts"
-DEV_DEV_SCRIPTS_DIR="$DEV_SCRIPTS_DIR/dev"
+SCRIPTS_DIR="$HOME/.local/scripts"
+DEV_SCRIPTS_DIR="$DEV_SCRIPTS_DIR/dev"
 
 VC_BACKUP="$HOME/.local/backup"
 VC_BACKUP_MNT_DIR="$HOME/mnt/vc-backup"
