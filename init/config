@@ -2,16 +2,22 @@
 
 # shellcheck disable=SC2034
 
+isinstalled rofi dmenu dust dunst libnotify || exit
+
 DMENU="dmenu"
 DMENU_V="dmenu -l 20"
 
-SCRIPTS_DIR="$HOME/.local/scripts"
+DEV_SCRIPTS_DIR="$HOME/.local/scripts"
+DEV_DEV_SCRIPTS_DIR="$DEV_SCRIPTS_DIR/dev"
+
 VC_BACKUP="$HOME/.local/backup"
 VC_BACKUP_MNT_DIR="$HOME/mnt/vc-backup"
 
 NOTIFICATION_SOUNDS_DIR="$HOME/doc/sounds"
-
-isinstalled rofi dmenu dust dunst libnotify || exit
+LOW_BAT_SOUND="$NOTIFICATION_SOUNDS_DIR/low-battery.mp3"
+NET_USAGE_SOUND="$NOTIFICATION_SOUNDS_DIR/net-usage.wav"
+LOW_MEM_SOUND="$NOTIFICATION_SOUNDS_DIR/low-memory.mp3"
+RINGTONE="$NOTIFICATION_SOUNDS_DIR/ringtone.mp3"
 
 run_dust() { dust -br -d 0 "$@"; }
 runDust() { dust -br -d 0 "$@"; }

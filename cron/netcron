@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+source config
+
+# usage="$(vnstat -i wlp3s0 --oneline | awk -F';' '{print $6}' | cut -d ' ' -f 1)"
+# usage=$(vnstat -i wlp3s0 --oneline | awk -F';' '{split($6, a, " "); print a[1]}')
+
+while true
+do
+    usage="$(vnstat -i wlp3s0 --oneline | awk -F';' '{print $6}')"
+    unit="$(echo "$usage" | cut -d ' ' -f2)"
+
+    if [ "$unit" == "GiB" ]; then
+        data="$(echo "$usage" | cut -d ' ' -f1)"
+
+        if (( $(bc <<< "$data >= 5.00") )); then
+            notify-send -u critical "Data usage alert" "You have used $usage of data."
+            mpv --volume=50 "$NET_USAGE_SOUND" 1>/dev/null
+            exit
+        fi
+    fi
+
+    sleep 30m
+done

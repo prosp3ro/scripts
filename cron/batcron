@@ -8,10 +8,10 @@ do
 
     if [ "$capacity" -le 20 ]; then
         # TODO if screen is turned off, turn it on
-        mpv --volume=80 "$NOTIFICATION_SOUNDS_DIR/low-battery.mp3" 1>/dev/null
+        mpv --volume=80 "$LOW_BAT_SOUND" 1>/dev/null
         notify-send -u critical "Low battery!" "Battery level is at $capacity%."
     fi
 
-    [ "$capacity" -gt 98 ] && notify-send "Battery full" "Battery level is at $capacity%." && sleep 10m
-    sleep 5m
+    # [ "$capacity" -gt 98 ] && notify-send "Battery full" "Battery level is at $capacity%." && sleep 10m
+    sleep 1m
 done

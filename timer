@@ -4,7 +4,6 @@ source config
 isinstalled termdown || exit
 
 volume_lvl="50"
-ringtone="$NOTIFICATION_SOUNDS_DIR/ringtone.mp3"
 
 [ "$(pamixer --get-mute)" = true ] && echo "Volume is muted!" && exit
 # [ "$(bluetoothctl info | head -n 1)" != "Missing device address argument" ] && echo "headphones detected!" && exit
@@ -18,4 +17,4 @@ if [ "$(bluetoothctl info | head -n 1)" != "Missing device address argument" ]; 
     fi
 fi
 
-termdown "$1" && mpv --volume="$volume_lvl" "$ringtone"
+termdown "$1" && mpv --volume="$volume_lvl" "$RINGTONE"

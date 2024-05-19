@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source config
+
 # free --mebi | sed -n '2{p;q}' | awk '{printf ("📀%2.2fG/%2.2fG\n", ( $3 / 1024), ($2 / 1024))}'
 
 memory_info=$(free --mebi | sed -n '2{p;q}')
@@ -12,10 +14,10 @@ formatted_used=$(bc <<< "scale=2; $used_memory / 1024")
 mem="${formatted_used}GiB/${formatted_total}GiB"
 icon="🧠"
 
-if (( $(bc <<< "$formatted_used >= 7.10") )); then
+if (( $(bc <<< "$formatted_used >= 6.90") )); then
     echo "${icon}❗$mem"
-    mpv --volume=70 "$NOTIFICATION_SOUNDS_DIR/cute-notification.mp3" 1>/dev/null
     notify-send -u critical "Low memory!" "${formatted_used}GiB is used by system."
+    mpv --volume=70 "$LOW_MEM_SOUND" 1>/dev/null
 else
     echo "${icon}$mem"
 fi
