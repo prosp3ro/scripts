@@ -18,10 +18,12 @@ case "${args[0]}" in
     "usb1")
         checking_drives
         sudo mount -t vfat "/dev/sdb1" "$MOUNT_DIR/usb1" -o rw,umask=0000
+        ls --color=auto -al "$MOUNT_DIR/usb1"
         ;;
     "usb2")
         checking_drives
         sudo mount -t vfat "/dev/sdb1" "$MOUNT_DIR/usb2" -o rw,umask=0000
+        ls --color=auto -al "$MOUNT_DIR/usb2"
         ;;
     # ntfs
     "ext")
@@ -30,13 +32,16 @@ case "${args[0]}" in
         user="$(whoami)";
         ug="$(groups | awk '{print $1}')";
         sudo chown "$user":"$ug" "$MOUNT_DIR/ext"
+        ls --color=auto -al "$MOUNT_DIR/ext"
         ;;
     "phone")
         sudo jmtpfs -o allow_other "$MOUNT_DIR/phone" 2>/dev/null
+        ls --color=auto -al "$MOUNT_DIR/phone"
         ;;
     "tmp")
         checking_drives
         sudo mount -t vfat "/dev/sdb1" "$MOUNT_DIR/tmp" -o rw,umask=0000
+        ls --color=auto -al "$MOUNT_DIR/tmp"
         ;;
     *)
         echo "Wrong argument."

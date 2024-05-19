@@ -4,5 +4,5 @@
 # [[ ! -f "$priorityItems" ]] && notify-send "$0" "$priorityItems doesn't exist!"
 # dmenu_run -hp "$(< $priorityItems)"
 
-priorityItems="brave,nightly,chromium,ferdium,librewolf,firefox,obsidian"
+priorityItems="brave,chromium,ferdium,librewolf,firefox,obsidian"
 dmenu_run -hp "$priorityItems"
