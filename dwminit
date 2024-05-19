@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 
-while true; do
-    # dwm 2> "$HOME/.local/share/dwm.log"
-    dwm >/dev/null 2>&1
+dwmblocks &
+
+while :; do
+	ssh-agent dwm
 done
+
+# while true; do
+#     # dwm 2> "$HOME/.local/share/dwm.log"
+#     dwm >/dev/null 2>&1
+# done
+
+# while type dwm >/dev/null ; do dwm && continue || break ; done
