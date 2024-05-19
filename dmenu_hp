@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# priorityItems="$XDG_CONFIG_HOME/dmenu-highpriority.csv"
+# [[ ! -f "$priorityItems" ]] && notify-send "$0" "$priorityItems doesn't exist!"
+# dmenu_run -hp "$(< $priorityItems)"
+
+priorityItems="brave,nightly,chromium,ferdium,librewolf,firefox,obsidian"
+dmenu_run -hp "$priorityItems"
