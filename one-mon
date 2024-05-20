@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
 
 onescreen() {
+    # Get all possible displays
+    allposs=$(xrandr -q | grep "connected")
+
 	xrandr --output "$1" --auto --scale 1.0x1.0 $(echo "$allposs" | grep -v "\b$1" | awk '{print "--output", $1, "--off"}' | paste -sd ' ' -)
 }
 
-# Get all possible displays
-allposs=$(xrandr -q | grep "connected")
+hdmi=$(xrandr -q | grep "connected" | grep "HDMI")
 
-onescreen "HDMI1"
+if [ "$hdmi" ]; then
+    screen="$(echo $hdmi | cut -d' ' -f1)"
+    onescreen "$screen"
+fi
