@@ -193,9 +193,13 @@ def rescan_cb(dev, res, data):
     """Callback for rescan_wifi. Just for notifications
 
     """
-    if dev.request_scan_finish(res) is True:
-        notify("Wifi scan running.")
-    else:
+    # if dev.request_scan_finish(res) is True:
+    #     notify("Wifi scan running...")
+    # else:
+    #     notify("Wifi scan failed", urgency="critical")
+    # LOOP.quit()
+
+    if not dev.request_scan_finish(res) is True:
         notify("Wifi scan failed", urgency="critical")
     LOOP.quit()
 
