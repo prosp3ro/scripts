@@ -39,7 +39,7 @@ def dmenu_cmd(num_lines, prompt="Networks:"):
         conf = False
     if not conf:
         # res = [dmenu_command, "-i", "-l", str(num_lines), "-p", str(prompt)]
-        res = [dmenu_command, "-i", "-fn", "Monospace-11", "-l", "25", "-p", str(prompt)]
+        res = [dmenu_command, "-i", "-fn", "Monospace-10", "-l", "25", "-p", str(prompt)]
     else:
         args_dict = dict(args)
         if "dmenu_command" in args_dict:

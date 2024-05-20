@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+isinstalled libnotify dunst || exit
+
+processName="$1"
+
+PIDFILE="/tmp/$processName.pid"
+
+if [ -e "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
+    notify-send -t 10000 "$processName is already running"
+    exit 1
+fi
+
+echo $$ > "$PIDFILE"
+
+cleanup() {
+    rm -f "$PIDFILE"
+}
+
+trap cleanup EXIT
