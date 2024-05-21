@@ -5,9 +5,10 @@ source config
 while true
 do
     capacity="$(cat /sys/class/power_supply/BAT1/capacity)"
+    status="$(cat /sys/class/power_supply/BAT1/status)"
 
-    if [ "$capacity" -le 20 ]; then
-        # TODO if screen is turned off, turn it on
+    if [ "$capacity" -le 20 ] && [ "$status" == "Discharging" ]; then
+        xset dpms force on
         notify-send -u critical "Low battery!" "Battery level is at $capacity%."
         mpv --volume=80 "$LOW_BAT_SOUND" 1>/dev/null
     fi
