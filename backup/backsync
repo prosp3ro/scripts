@@ -8,11 +8,11 @@ isinstalled veracrypt-console-bin mountpoint || exit
 set -e
 
 main() {
-    echo -n "Run backupupdate? [y/N] "
+    echo -n "Run backnew? [y/N] "
     read -r answer
 
     if [ "$answer" == "y" ]; then
-        backupupdate standard || exit
+        backnew standard || exit
     fi
 
     mountedDevice="$HOME/mnt/$1"
@@ -40,11 +40,11 @@ main() {
     now=$(date "+%d %B %Y [%A] %H:%M")
     echo "$now => $1" >> "$HOME/doc/last-backup-device.txt"
 
-    echoBlue -n "Run backuptest? [y/N]"
+    echoBlue -n "Run backtest? [y/N]"
     read -r answer
 
     if [ "$answer" == "y" ]; then
-        backuptest
+        backtest
     fi
 }
 

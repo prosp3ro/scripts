@@ -19,6 +19,8 @@ NET_USAGE_SOUND="$NOTIFICATION_SOUNDS_DIR/net-usage.wav"
 LOW_MEM_SOUND="$NOTIFICATION_SOUNDS_DIR/low-memory.mp3"
 RINGTONE="$NOTIFICATION_SOUNDS_DIR/ringtone.mp3"
 
+TMP_DIR="$HOME/tmp"
+
 run_dust() { dust -br -d 0 "$@"; }
 runDust() { dust -br -d 0 "$@"; }
 

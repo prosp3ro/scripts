@@ -48,10 +48,10 @@ imgBackup() {
 
 case "$1" in
   "standard" | "s" )
-      backupmnt
+      backmnt
       standardBackup ;;
   "img") 
-      backupmnt
+      backmnt
       imgBackup ;;
   *) usage ;;
 esac

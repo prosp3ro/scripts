@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1091
+# shellcheck disable=SC2115
+
+source config
+isinstalled veracrypt-console-bin file tar || exit
+
+vc_tmp_mount_dir="$HOME/mnt/tmp"
+
+backup_test(){
+    [ ! -d "$vc_tmp_mount_dir" ] && mkdir -p "$vc_tmp_mount_dir"
+
+    echoBlue -n "Mounting $drive_backup_file volume to $vc_tmp_mount_dir."
+    [ -f "$vc_tmp_mount_dir/backup" ] && echoRedExit "[!] Looks like something is already mounted in $vc_tmp_mount_dir."
+    [ -f "$drive_backup_file" ] && sudo veracrypt -t --pim=0 -k "" --protect-hidden=no --display-password "$drive_backup_file" "$vc_tmp_mount_dir"
+    [ ! -f "$drive_backup_file" ] && echoRedExit "[!] $drive_backup_file doesn't exist."
+
+    echoBlue -n "Running tests."
+    ls --color=auto -alh "$vc_tmp_mount_dir"
+    runDust "$vc_tmp_mount_dir" 2>/dev/null
+    file "$vc_tmp_mount_dir/backup.tar.gz"
+    file "$vc_tmp_mount_dir/oldbackup.tar.gz"
+    file "$vc_tmp_mount_dir/img.tar.gz"
+
+    echoBlue -n "Do you want to copy backup.tar.gz to $TMP_DIR? [y/N]"
+    read -rp "Answer: " answer
+
+    if [ "$answer" == "y" ]; then
+        echoYellow "=> Deleting old tar file and directory..."
+        [ -f "$TMP_DIR/backup.tar.gz" ] && rm -vrf "$TMP_DIR/backup.tar.gz"
+        [ -d "$TMP_DIR/home" ] && rm -rf "$TMP_DIR/home"
+
+        echoYellow "=> Copying backup.tar.gz to $TMP_DIR for further tests..."
+        cp -v "$vc_tmp_mount_dir/backup.tar.gz" "$TMP_DIR"
+
+        echoYellow "=> Untaring backup file..."
+        tar zxf "$TMP_DIR/backup.tar.gz" -C "$TMP_DIR"
+
+        echoBlue -n "Check $TMP_DIR/home directory."
+        ls --color=auto -alh "$TMP_DIR"
+        echo
+    fi
+
+    echoYellow "Unmounting $drive_backup_file volume..."
+    sudo veracrypt -d "$vc_tmp_mount_dir"
+    [ -f "$vc_tmp_mount_dir/backup" ] && echoRed "[!] Looks like unmounting failed. Do it manually."
+}
+
+echoBlue "Which dir in $HOME/mnt? [usb1/usb2/ext]"
+read -rp "Enter your choice: " answer
+
+if [[ "$answer" != "usb1" && "$answer" != "usb2" && "$answer" != "ext" ]]; then
+    echoRedExit "[!] Only usb1/usb2/ext allowed."
+fi
+
+drive_backup_file="$HOME/mnt/$answer/backup"
+
+backup_test

@@ -65,11 +65,11 @@ dotfilesPush() {
     echoBlue "Current dir: $HOME"
     cd "$HOME" || exit 1
 
-    echoBlue -n "Do you want to run backupetc? [y/N]"
+    echoBlue -n "Do you want to run backetc? [y/N]"
     read -r answer
 
     if [ "$answer" == "y" ]; then
-        backupetc
+        backetc
     fi
 
     # `git ls-files` to show tracked files
