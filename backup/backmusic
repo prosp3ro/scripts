@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+source config
+isinstalled dust || exit
+
+MUSIC_DIR="$HOME/music"
+MUSIC_TAR_FILE="$MUSIC_DIR/music.tar.gz"
+MOUNTED_DRIVE="$HOME/mnt/ext"
+
+backup_music() {
+    cd "$MUSIC_DIR" || exit
+
+    dust -br -d 1 "$MUSIC_DIR"
+    echo
+    read -rp "Do you want to continue? [y/N]: " answer
+
+    if [ "$answer" != "y" ]; then
+        exit
+    fi
+
+    echo
+
+    if [ -f "$MUSIC_TAR_FILE" ]; then
+        echoBlue -a1 "Removing $MUSIC_TAR_FILE"
+        rm -rf "$MUSIC_TAR_FILE"
+    fi
+
+    echoBlue -a1 "Creating new tar archive..."
+    tar czf "$MUSIC_TAR_FILE" "$MUSIC_DIR/*" || echoRedExit "Exiting."
+
+    echoGreen -n "File successfully created."
+}
+
+case "$1" in
+  "new") 
+      backup_music ;;
+  "sync" ) ;;
+  *) echo "new/sync" ;;
+esac

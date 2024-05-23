@@ -47,6 +47,12 @@ echoRed() {
 echoBlue() { 
     if [ "$1" == "-n" ]; then
         echo -e "\n\e[1;34m${*:2}" "\e[0m"
+    elif [ "$1" == "-a1" ]; then
+        echo -e "=> \e[1;34m${*:2}" "\e[0m"
+    elif [ "$1" == "-a2" ]; then
+        echo -e "==> \e[1;34m${*:2}" "\e[0m"
+    elif [ "$1" == "-a3" ]; then
+        echo -e "===> \e[1;34m${*:2}" "\e[0m"
     else
         echo -e "\e[1;34m$*" "\e[0m"
     fi
