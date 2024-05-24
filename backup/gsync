@@ -9,7 +9,7 @@ gitPush() {
 
     if [ ! -d "$pushDir" ]; then
         echo "Directory $pushDir doesn't exist."
-        echo -e "\n======\n"
+        echo -e "\n================================\n"
         return
     fi
 
@@ -18,7 +18,7 @@ gitPush() {
     git add . || exit 1
     git commit -m "sync"
     git push || exit 1
-    echo -e "\n======\n"
+    echo -e "\n================================\n"
 }
 
 dotfilesPush() {
@@ -86,7 +86,7 @@ dotfilesPush() {
 
     git --git-dir="$gitDir" --work-tree="$workTree" commit -m 'sync' --untracked-files=no
     git --git-dir="$gitDir" --work-tree="$workTree" push
-    echo -e "\n======\n"
+    echo -e "\n================================\n"
 }
 
 gitPull() {
@@ -95,7 +95,7 @@ gitPull() {
     echo -e "\e[1;34mCurrent dir: $pullDir\e[0m"
     cd "$pullDir" || exit 1
     git pull || exit 1
-    echo -e "\n======\n"
+    echo -e "\n================================\n"
 }
 
 gitStatus() {
@@ -104,14 +104,14 @@ gitStatus() {
     echo -e "\e[1;34mCurrent dir: $statusDir\e[0m"
     cd "$statusDir" || exit 1
     git status
-    echo -e "\n======\n"
+    echo -e "\n================================\n"
 }
 
 dotfilesStatus() {
     echo -e "\e[1;34mdotfiles status:\e[0m"
     cd || exit 1
     git --git-dir="$HOME/.local/git/dotfiles" --work-tree="$HOME/" status --untracked-files=no
-    echo -e "\n======\n"
+    echo -e "\n================================\n"
 }
 
 case "$1" in

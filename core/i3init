@@ -4,4 +4,4 @@ pgrep -f batcron > /dev/null || batcron
 pgrep -f memcron > /dev/null || memcron
 pgrep -f netcron > /dev/null || netcron
 
-exec i3
+i3
