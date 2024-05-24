@@ -3,6 +3,10 @@
 source config
 isinstalled termdown || exit
 
+if [ ! -f "$RINGTONE" ]; then
+    echoRedExit "$RINGTONE not found."
+fi
+
 volume_lvl="50"
 
 [ "$(pamixer --get-mute)" = true ] && echo "Volume is muted!" && exit

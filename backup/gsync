@@ -7,6 +7,12 @@ source config
 gitPush() {
     local pushDir="$1"
 
+    if [ ! -d "$pushDir" ]; then
+        echo "Directory $pushDir doesn't exist."
+        echo -e "\n======\n"
+        return
+    fi
+
     echoBlue "Current dir: $pushDir"
     cd "$pushDir" || exit 1
     git add . || exit 1
@@ -18,6 +24,10 @@ gitPush() {
 dotfilesPush() {
     gitDir="$HOME/.local/git/dotfiles"
     workTree="$HOME/"
+
+    if [ ! -d "$gitDir" ]; then
+        echoRedExit "Directory $gitDir doesn't exist."
+    fi
 
     files=(
         "$HOME/.gitignore"
@@ -57,9 +67,6 @@ dotfilesPush() {
         "$XDG_CONFIG_HOME/user-dirs.locale"
         "$XDG_CONFIG_HOME/rofi"
         "$XDG_CONFIG_HOME/npm"
-        "$XDG_CONFIG_HOME/VSCodium/User/snippets"
-        "$XDG_CONFIG_HOME/VSCodium/User/keybindings.json"
-        "$XDG_CONFIG_HOME/VSCodium/User/settings.json"
     )
 
     echoBlue "Current dir: $HOME"
@@ -110,6 +117,7 @@ dotfilesStatus() {
 case "$1" in
     "status")
         dotfilesStatus
+        # TODO for loop
         gitStatus "$HOME/.local/scripts"
         gitStatus "$HOME/.local/git/moonwm"
         gitStatus "$HOME/.local/git/dwmblocks-async"
@@ -119,6 +127,7 @@ case "$1" in
         ;;
     "push")
         dotfilesPush
+        # TODO for loop
         gitPush "$HOME/.local/scripts"
         gitPush "$HOME/.config/nvim"
         gitPush "$HOME/.local/git/moonwm"

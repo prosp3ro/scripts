@@ -3,6 +3,11 @@
 source config
 isinstalled fd fzf || exit
 
+if [ ! -d "$SCRIPTS_DIR" ]; then
+    echo "$SCRIPTS_DIR doesn't exist!"
+    exit 1
+fi
+
 export FZF_DEFAULT_COMMAND='fd -d 2 --no-ignore'
 
 cd "$SCRIPTS_DIR" || exit 1

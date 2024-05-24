@@ -9,6 +9,11 @@ case "$1" in
     *) exit 1 ;;
 esac
 
+if [ ! -d "$projectsDir" ]; then
+    echo "$projectsDir doesn't exist!"
+    exit 1
+fi
+
 # export SKIM_DEFAULT_COMMAND='fd -d 1 --type d'
 export FZF_DEFAULT_COMMAND='fd -d 1 --type d'
 cd "$projectsDir" || exit 1

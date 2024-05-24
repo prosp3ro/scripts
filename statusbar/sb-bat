@@ -15,8 +15,12 @@ for battery in /sys/class/power_supply/BAT?*; do
         *) exit 1 ;;
     esac
     capacity="$(cat "$battery/capacity" 2>&1)"
-    # Will make a warn variable if discharging and low
-    [ "$status" = "🔋" ] && [ "$capacity" -le 20 ] && warn="❗" && mpv --volume=80 "$LOW_BAT_SOUND" 1>/dev/null && notify-send -u critical "Low battery!" "Battery level is at $capacity%."
-    # Prints the info
+
+    if [ "$status" = "🔋" ] && [ "$capacity" -le 20 ]; then
+        warn="❗"
+        mpv --volume=80 "$LOW_BAT_SOUND" 1>/dev/null || notify-send --critical "$0" "$LOW_BAT_SOUND not found."
+        notify-send -u critical "Low battery!" "Battery level is at $capacity%."
+    fi
+
     printf "%s%s%d%%" "$status" "$warn" "$capacity"; unset warn
 done && printf "\\n"

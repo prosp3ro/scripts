@@ -2,7 +2,7 @@
 
 # shellcheck disable=SC2034
 
-isinstalled rofi dmenu dust dunst libnotify || exit
+isinstalled dmenu dust dunst libnotify || exit
 
 DMENU="dmenu"
 DMENU_V="dmenu -l 20"

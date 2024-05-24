@@ -26,13 +26,13 @@ do
 
         # if (( $(bc <<< "$data >= 5.00") )); then
         #     notify-send -u critical "Data usage alert" "You have used $usage of data."
-        #     mpv --volume=50 "$NET_USAGE_SOUND" 1>/dev/null
+        #     mpv --volume=50 "$NET_USAGE_SOUND" 1>/dev/null || notify-send --critical "$0" "$NET_USAGE_SOUND not found."
         #     exit
         # fi
 
         if (( $(echo "$data >= $THRESHOLD" | bc -l) )); then
             notify-send -u critical "Data usage alert" "You have used $usage of data."
-            mpv --volume=50 "$NET_USAGE_SOUND" >/dev/null 2>&1
+            mpv --volume=50 "$NET_USAGE_SOUND" >/dev/null 2>&1  || notify-send --critical "$0" "$NET_USAGE_SOUND not found."
             exit
         fi
     fi

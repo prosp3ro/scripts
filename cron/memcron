@@ -10,7 +10,7 @@ do
 
     if (( $(bc <<< "$formatted_used >= 6.90") )); then
         notify-send -u critical "Low memory!" "${formatted_used}GiB is used by system."
-        mpv --volume=70 "$LOW_MEM_SOUND" 1>/dev/null
+        mpv --volume=70 "$LOW_MEM_SOUND" 1>/dev/null || notify-send --critical "$0" "$LOW_MEM_SOUND not found."
         sleep 1s
         notify-send -t 5000 "Memory hungry processes" "$(ps axch -o cmd:15,%mem --sort=-%mem | head)"
     fi
