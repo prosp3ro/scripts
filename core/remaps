@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1091
+
+source config
+isinstalled setxkbmap xset xinput xmodmap || exit
+
+# xinput list
+touchpad="ELAN0501:01 04F3:3060 Touchpad"
+# mouse="Kingsis Corporation ZOWIE Gaming mouse"
+
+remap() {
+    setxkbmap
+    setxkbmap -option caps:escape
+    xset r rate 320 70
+    xmodmap -e 'keycode 135 = Super_R'
+
+    # Touchpad
+    xinput --set-prop "$touchpad" "libinput Tapping Enabled" "1"
+    xinput --set-prop "$touchpad" "libinput Natural Scrolling Enabled" "1"
+
+    # Mouse
+    xinput --set-prop "Kingsis Corporation ZOWIE Gaming mouse" "libinput Accel Speed" "-1"
+    xinput --set-prop "2.4G Wireless Optical Mouse  Mouse" "libinput Accel Speed" "-1"
+}
+
+if [ "$1" == "eng" ]; then
+    value="eng"
+elif [ $# -eq 0 ]; then
+    value=$(echo -e "eng\npl" | $DMENU)
+fi
+
+case "$value" in
+    "eng")
+        remap
+        setxkbmap us
+        xmodmap -e 'clear mod1'
+        xmodmap -e 'add mod1 = Alt_L'
+        xmodmap -e 'add mod4 = Alt_R'
+        notify-send "Switched to ENG keyboard."
+        ;;
+    "pl")
+        remap
+        setxkbmap pl
+        notify-send "Switched to POLISH keyboard."
+        ;;
+esac
