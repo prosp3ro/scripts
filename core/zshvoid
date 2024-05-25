@@ -1,0 +1,5 @@
+#!/bin/zsh
+
+HISTFILE=
+HISTSIZE=0
+SAVEHIST=0
