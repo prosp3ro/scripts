@@ -13,6 +13,7 @@ main() {
 
     if [ "$answer" == "y" ]; then
         backnew standard || exit
+        echo -e "\nCreating new backup finished.\n"
     fi
 
     mountedDevice="$HOME/mnt/$1"
