@@ -16,7 +16,7 @@ do
 
     if [ "$usageDate" != "$currentDate" ]; then
         sleep 10m
-        break
+        continue
     fi
 
     unit="$(echo "$usage" | cut -d ' ' -f2)"
