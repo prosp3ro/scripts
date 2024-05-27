@@ -44,7 +44,8 @@ backup_test(){
 
     echoYellow "Unmounting $drive_backup_file volume..."
     sudo veracrypt -d "$vc_tmp_mount_dir"
-    [ -f "$vc_tmp_mount_dir/backup" ] && echoRed "[!] Looks like unmounting failed. Do it manually."
+    [ -f "$vc_tmp_mount_dir/backup" ] && echoRedExit "[!] Looks like unmounting failed. Do it manually."
+    ls --color=auto -alh "$vc_tmp_mount_dir"
 }
 
 echoBlue "Which dir in $HOME/mnt? [usb1/usb2/ext]"
