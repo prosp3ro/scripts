@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
-sudo pacman -Sc
 paru -Sc
 
 [ ! -d "$HOME/tmp" ] && mkdir "$HOME/tmp"
 cp -R "$XDG_CACHE_HOME/keepassxc" "$HOME/tmp/keepassxc"
 cp -R "$XDG_CACHE_HOME/zsh" "$HOME/tmp/zsh"
+
+rm -rf "$XDG_CONFIG_HOME/zsh/.zcompcache"
+rm -rf "$XDG_CONFIG_HOME/zsh/.zcompdump"*
 
 if ! rm -rf "${XDG_CACHE_HOME:?}/"*; then
   echo "Error: failed to remove cache directory contents" >&2
