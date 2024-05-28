@@ -3,6 +3,11 @@
 source config
 isinstalled termdown || exit
 
+if [ ! "$1" ]; then
+    termdown
+    exit
+fi
+
 if [ ! -f "$RINGTONE" ]; then
     echoRedExit "$RINGTONE not found."
 fi
