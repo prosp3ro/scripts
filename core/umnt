@@ -17,7 +17,7 @@ unmount() {
 }
 
 checkDir() {
-    echo -e "Dir: $MOUNT_DIR/$1\n"
+    echo "Dir: $MOUNT_DIR/$1"
     ls --color=auto -al "$MOUNT_DIR/$1"
 }
 
