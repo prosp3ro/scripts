@@ -1,3 +1,8 @@
 #!/usr/bin/env bash
 
+if [ "$1" == "--bare" ]; then
+    git clone --bare "git@github.com:$2"
+    exit
+fi
+
 git clone "git@github.com:$1"
