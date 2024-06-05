@@ -150,10 +150,12 @@ case "$1" in
     "pushdf")
         dotfilesPush
         ;;
-    # "pull")
-        #     gitPull "$HOME/.local/scripts"
-        #     gitPull "$HOME/.config/nvim"
-        #     ;;
+    "statusdf")
+        git --git-dir="$HOME/.local/git/dotfiles" --work-tree="$HOME/" status --untracked-files=no
+        ;;
+    "pulldf")
+        git --git-dir="$HOME/.local/git/dotfiles" --work-tree="$HOME/" pull
+        ;;
     *)
         echo "use status/push/pull/pushdf" && exit 1
         ;;
