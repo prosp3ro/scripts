@@ -22,6 +22,7 @@ remap() {
     # Mouse
     xinput --set-prop "Kingsis Corporation ZOWIE Gaming mouse" "libinput Accel Speed" "-1"
     xinput --set-prop "2.4G Wireless Optical Mouse  Mouse" "libinput Accel Speed" "-1"
+    xinput --set-prop "pointer:Logitech USB Receiver Mouse" "libinput Accel Speed" "-1"
 }
 
 if [ "$1" == "eng" ]; then
