@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-isinstalled fd skim || exit
+isinstalled fd fzf || exit
 
 case "$1" in
     "git") projectsDir="$HOME/.local/git" ;;
