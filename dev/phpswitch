@@ -2,15 +2,15 @@
 
 source config
 
-activate71(){
+activate74(){
     if [[ -f "$DEV_SCRIPTS_DIR/php" ]]; then
-        rm "$DEV_SCRIPTS_DIR/php"
-        rm "$DEV_SCRIPTS_DIR/phpize"
+        sudo rm "$DEV_SCRIPTS_DIR/php"
+        sudo rm "$DEV_SCRIPTS_DIR/phpize"
 
-        ln -s "/usr/bin/php71" "$DEV_SCRIPTS_DIR/php"
-        ln -s "/usr/bin/phpize71" "$DEV_SCRIPTS_DIR/phpize"
+        sudo ln -sf "/usr/bin/php74" "$DEV_SCRIPTS_DIR/php"
+        sudo ln -sf "/usr/bin/phpize74" "$DEV_SCRIPTS_DIR/phpize"
 
-        echo "PHP 7.1 version activated."
+        echo "PHP 7.4 version activated."
     else
         echo "$DEV_SCRIPTS_DIR/php or $DEV_SCRIPTS_DIR/phpize don't exist."
     fi
@@ -18,11 +18,11 @@ activate71(){
 
 activateLatest(){
     if [[ -f "$DEV_SCRIPTS_DIR/php" ]]; then
-        rm "$DEV_SCRIPTS_DIR/php"
-        rm "$DEV_SCRIPTS_DIR/phpize"
+        sudo rm "$DEV_SCRIPTS_DIR/php"
+        sudo rm "$DEV_SCRIPTS_DIR/phpize"
 
-        ln -s "/usr/bin/php" "$DEV_SCRIPTS_DIR/php"
-        ln -s "/usr/bin/phpize" "$DEV_SCRIPTS_DIR/phpize"
+        sudo ln -sf "/usr/bin/php" "$DEV_SCRIPTS_DIR/php"
+        sudo ln -sf "/usr/bin/phpize" "$DEV_SCRIPTS_DIR/phpize"
 
         echo "Latest PHP version activated."
     else
@@ -31,7 +31,7 @@ activateLatest(){
 }
 
 case "$1" in
-    "71") activate71 ;;
+    "74") activate74 ;;
     "latest") activateLatest ;;
     *) exit 1 ;;
 esac
