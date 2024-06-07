@@ -8,6 +8,9 @@ sudo cp -R /etc/httpd "$XDG_CONFIG_HOME/etc/httpd"
 [ -d "$XDG_CONFIG_HOME/etc/php" ] && rm -rf "$XDG_CONFIG_HOME/etc/php/"
 sudo cp -R /etc/php "$XDG_CONFIG_HOME/etc/php"
 
+[ -d "$XDG_CONFIG_HOME/etc/php74" ] && rm -rf "$XDG_CONFIG_HOME/etc/php74/"
+sudo cp -R /etc/php74 "$XDG_CONFIG_HOME/etc/php74"
+
 [ -d "$XDG_CONFIG_HOME/etc/nginx" ] && rm -rf "$XDG_CONFIG_HOME/etc/nginx/"
 sudo cp -R /etc/nginx "$XDG_CONFIG_HOME/etc/nginx"
 
