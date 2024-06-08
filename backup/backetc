@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+GROUP="$(id -gn)"
+
 [ ! -d "$XDG_CONFIG_HOME/etc" ] && mkdir -p "$XDG_CONFIG_HOME/etc"
 
 [ -d "$XDG_CONFIG_HOME/etc/httpd" ] && rm -rf "$XDG_CONFIG_HOME/etc/httpd/"
@@ -23,4 +25,4 @@ sudo cp /etc/pacman.conf "$XDG_CONFIG_HOME/etc"
 # [ -f "$XDG_CONFIG_HOME/etc/hosts" ] && rm -rf "$XDG_CONFIG_HOME/etc/hosts"
 # sudo cp /etc/hosts "$XDG_CONFIG_HOME/etc"
 
-sudo chown $USER:$USER -R "$XDG_CONFIG_HOME/etc"
+sudo chown $USER:$GROUP -R "$XDG_CONFIG_HOME/etc"

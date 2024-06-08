@@ -2,36 +2,50 @@
 
 source config
 
-activate74(){
-    if [[ -f "$DEV_SCRIPTS_DIR/php" ]]; then
-        sudo rm "$DEV_SCRIPTS_DIR/php"
-        sudo rm "$DEV_SCRIPTS_DIR/phpize"
+BIN_DIR="$HOME/.local/bin"
+# GROUP="$(id -gn)"
 
-        sudo ln -sf "/usr/bin/php74" "$DEV_SCRIPTS_DIR/php"
-        sudo ln -sf "/usr/bin/phpize74" "$DEV_SCRIPTS_DIR/phpize"
-
-        echo "PHP 7.4 version activated."
-    else
-        echo "$DEV_SCRIPTS_DIR/php or $DEV_SCRIPTS_DIR/phpize don't exist."
-    fi
+del_old_links() {
+    [ -f "$BIN_DIR/php" ] && sudo rm "$BIN_DIR/php"
+    [ -f "$BIN_DIR/phpize" ] && sudo rm "$BIN_DIR/phpize"
 }
 
-activateLatest(){
-    if [[ -f "$DEV_SCRIPTS_DIR/php" ]]; then
-        sudo rm "$DEV_SCRIPTS_DIR/php"
-        sudo rm "$DEV_SCRIPTS_DIR/phpize"
+# it's a symlink, won't work this way
+# change_ownership() {
+#     sudo chown "$USER:$GROUP" "$BIN_DIR/php"
+#     sudo chown "$USER:$GROUP" "$BIN_DIR/phpize"
+# }
 
-        sudo ln -sf "/usr/bin/php" "$DEV_SCRIPTS_DIR/php"
-        sudo ln -sf "/usr/bin/phpize" "$DEV_SCRIPTS_DIR/phpize"
+print_info() {
+    ls --color=auto -al "$BIN_DIR/php" "$BIN_DIR/phpize"
+    echo -e "\nExec zsh to refresh"
+}
 
-        echo "Latest PHP version activated."
-    else
-        echo "$DEV_SCRIPTS_DIR/php or $DEV_SCRIPTS_DIR/phpize don't exist."
-    fi
+activate_v74() {
+    del_old_links
+
+    sudo ln -sf "/usr/bin/php74" "$BIN_DIR/php" || exit 1
+    sudo ln -sf "/usr/bin/phpize74" "$BIN_DIR/phpize" || exit 1
+
+    # change_ownership
+    print_info
+}
+
+activate_v8() {
+    del_old_links
+
+    sudo ln -sf "/usr/bin/php" "$BIN_DIR/php" || exit 1
+    sudo ln -sf "/usr/bin/phpize" "$BIN_DIR/phpize" || exit 1
+
+    # change_ownership
+    print_info
 }
 
 case "$1" in
-    "74") activate74 ;;
-    "latest") activateLatest ;;
-    *) exit 1 ;;
+    "74")
+        activate_v74
+        ;;
+    "8")
+        activate_v8
+        ;;
 esac
