@@ -36,7 +36,6 @@ dotfiles_push() {
 
 dotfiles_pull() {
     [ ! -d "$DOTFILES_GIT_DIR" ] && echo -e "\e[1;31m$DOTFILES_GIT_DIR\e[0m doesn't exist" && exit 1
-    [ ! -f "$DOTFILES_BACKUP_FILE" ] && echo -e "\e[1;31m$DOTFILES_BACKUP_FILE\e[0m doesn't exist" && exit 1
 
     echo -e "Working dir: \e[1;32m$GIT_WORK_TREE\e[0m"
     cd "$GIT_WORK_TREE" || exit 1
