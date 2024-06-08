@@ -1,28 +1,59 @@
 #!/usr/bin/env bash
 
+set -e  # Exit immediately if a command exits with a non-zero status
+
 GROUP="$(id -gn)"
+ETC_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/etc"
 
-[ ! -d "$XDG_CONFIG_HOME/etc" ] && mkdir -p "$XDG_CONFIG_HOME/etc"
+backup_etc() {
+    local HOST_ETC_DIR="$1"
+    
+    mkdir -p "$HOST_ETC_DIR"
 
-[ -d "$XDG_CONFIG_HOME/etc/httpd" ] && rm -rf "$XDG_CONFIG_HOME/etc/httpd/"
-sudo cp -R /etc/httpd "$XDG_CONFIG_HOME/etc/httpd"
+    local DIRS_TO_BACKUP=("httpd" "php" "php74" "nginx")
+    for dir in "${DIRS_TO_BACKUP[@]}"; do
+        if [ -d "$HOST_ETC_DIR/$dir" ]; then
+            rm -rf "$HOST_ETC_DIR/$dir"
+        fi
+        if [ -d "/etc/$dir" ]; then
+            sudo cp -R "/etc/$dir" "$HOST_ETC_DIR/$dir"
+        fi
+    done
 
-[ -d "$XDG_CONFIG_HOME/etc/php" ] && rm -rf "$XDG_CONFIG_HOME/etc/php/"
-sudo cp -R /etc/php "$XDG_CONFIG_HOME/etc/php"
+    local FILES_TO_BACKUP=("sudoers" "pacman.conf" "hosts")
+    for file in "${FILES_TO_BACKUP[@]}"; do
+        if [ -f "$HOST_ETC_DIR/$file" ]; then
+            rm -f "$HOST_ETC_DIR/$file"
+        fi
+        if [ -f "/etc/$file" ]; then
+            sudo cp "/etc/$file" "$HOST_ETC_DIR/"
+        fi
+    done
+}
 
-[ -d "$XDG_CONFIG_HOME/etc/php74" ] && rm -rf "$XDG_CONFIG_HOME/etc/php74/"
-sudo cp -R /etc/php74 "$XDG_CONFIG_HOME/etc/php74"
+confirm_action() {
+    local action="$1"
+    echo "Are you sure '$action' is right on this system?"
+    read -rp "Answer [y/N]: " answer
+    if [ "$answer" != "y" ]; then
+        exit 1
+    fi
+}
 
-[ -d "$XDG_CONFIG_HOME/etc/nginx" ] && rm -rf "$XDG_CONFIG_HOME/etc/nginx/"
-sudo cp -R /etc/nginx "$XDG_CONFIG_HOME/etc/nginx"
+backup_and_chown() {
+    local system="$1"
+    HOST_ETC_DIR="$ETC_DIR/$system"
+    backup_etc "$HOST_ETC_DIR"
+    sudo chown -R "$USER:$GROUP" "$ETC_DIR"
+}
 
-[ -f "$XDG_CONFIG_HOME/etc/sudoers" ] && rm -rf "$XDG_CONFIG_HOME/etc/sudoers"
-sudo cp /etc/sudoers "$XDG_CONFIG_HOME/etc"
-
-[ -f "$XDG_CONFIG_HOME/etc/pacman.conf" ] && rm -rf "$XDG_CONFIG_HOME/etc/pacman.conf"
-sudo cp /etc/pacman.conf "$XDG_CONFIG_HOME/etc"
-
-# [ -f "$XDG_CONFIG_HOME/etc/hosts" ] && rm -rf "$XDG_CONFIG_HOME/etc/hosts"
-# sudo cp /etc/hosts "$XDG_CONFIG_HOME/etc"
-
-sudo chown $USER:$GROUP -R "$XDG_CONFIG_HOME/etc"
+case "$1" in
+    "moon" | "arch")
+        confirm_action "$1"
+        backup_and_chown "$1"
+        ;;
+    *)
+        echo "Usage: $0 {moon|arch}"
+        exit 1
+        ;;
+esac

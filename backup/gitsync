@@ -4,24 +4,7 @@
 
 source config
 
-GIT_BACKUP_FILE="$XDG_CONFIG_HOME/gitbackup.cfg"
-
-gitPush() {
-    local pushDir="$1"
-
-    if [ ! -d "$pushDir" ]; then
-        echo "Directory $pushDir doesn't exist."
-        echo -e "\n================================\n"
-        return
-    fi
-
-    echoBlue "Current dir: $pushDir"
-    cd "$pushDir" || exit 1
-    git add . || exit 1
-    git commit -m "sync"
-    git push || exit 1
-    echo -e "\n================================\n"
-}
+DOTFILES_BACKUP_FILE="$XDG_CONFIG_HOME/gitbackup.cfg"
 
 dotfilesPush() {
     gitDir="$HOME/.local/git/$1"
@@ -31,8 +14,8 @@ dotfilesPush() {
         echoRedExit "Directory $gitDir doesn't exist."
     fi
 
-    # files=$(sed "s/\$HOME/\/home\/$USER/g;s/\$XDG_CONFIG_HOME/\/home\/$USER\/\.config/g" $GIT_BACKUP_FILE)
-    files=$(sed "/^#/d;s/\$HOME/\/home\/$USER/g;s/\$XDG_CONFIG_HOME/\/home\/$USER\/\.config/g" $GIT_BACKUP_FILE)
+    # files=$(sed "s/\$HOME/\/home\/$USER/g;s/\$XDG_CONFIG_HOME/\/home\/$USER\/\.config/g" $DOTFILES_BACKUP_FILE)
+    files=$(sed "/^#/d;s/\$HOME/\/home\/$USER/g;s/\$XDG_CONFIG_HOME/\/home\/$USER\/\.config/g" $DOTFILES_BACKUP_FILE)
 
     # for file in "${files[@]}"; do
     #     echo $file
@@ -42,13 +25,6 @@ dotfilesPush() {
 
     echoBlue "Current dir: $HOME"
     cd "$HOME" || exit 1
-
-    echoBlue -n "Do you want to run backetc? [y/N]"
-    read -r answer
-
-    if [ "$answer" == "y" ]; then
-        backetc
-    fi
 
     # `git ls-files` to show tracked files
     # for file in "${files[@]}"; do
@@ -69,52 +45,71 @@ gitPull() {
     echo -e "\n================================\n"
 }
 
-gitStatus() {
-    local statusDir="$1"
-
-    echo -e "\e[1;34mCurrent dir: $statusDir\e[0m"
-    cd "$statusDir" || exit 1
-    git status
-    echo -e "\n================================\n"
-}
-
 dotfilesStatus() {
-    echo -e "\e[1;34mdotfiles status:\e[0m"
+    echo -e "dotfiles status:"
     cd || exit 1
     git --git-dir="$HOME/.local/git/dotfiles" --work-tree="$HOME/" status --untracked-files=no
     echo -e "\n================================\n"
 }
 
+git_status() {
+    local dir="$1"
+
+    if [ ! -d "$dir" ]; then
+        echo -e "\e[1;31m$dir\e[0m doesn't exist"
+        echo
+        return
+    fi
+
+    echo -e "\e[1;32m$dir\e[0m"
+    cd "$dir" || exit 1
+    git status -s
+    echo
+}
+
+git_push() {
+    local dir="$1"
+
+    if [ ! -d "$dir" ]; then
+        echo -e "\e[1;31m$dir\e[0m doesn't exist"
+        echo
+        return
+    fi
+
+    echo -e "\e[1;32m$dir\e[0m"
+    cd "$dir" || exit 1
+    git add -A || exit 1
+    git commit -m "sync"
+    git push || exit 1
+    echo
+}
+
 case "$1" in
     "status")
-        # TODO for loop
-        gitStatus "$HOME/.local/scripts"
-        gitStatus "$HOME/.local/git/moonwm"
-        gitStatus "$HOME/.local/git/dwmblocks-async"
-        gitStatus "$HOME/.local/git/st-enhanced"
-        gitStatus "$HOME/.local/git/dmenu-enhanced"
-        gitStatus "$HOME/.config/nvim"
+        git_status "$HOME/.local/scripts"
+        git_status "$HOME/.local/git/moonwm"
+        # git_status "$HOME/.local/git/dwmblocks-async"
+        git_status "$HOME/.local/git/st-enhanced"
+        git_status "$HOME/.local/git/dmenu-enhanced"
+        git_status "$HOME/.local/git/work"
+        git_status "$HOME/.local/git/unix_bootstrap"
+        git_status "$HOME/.config/nvim"
         ;;
-    "push-dfwork")
-        dotfilesPush "dotfiles-work"
+    "push")
+        git_push "$HOME/.local/scripts"
+        git_push "$HOME/.local/git/moonwm"
+        # git_push "$HOME/.local/git/dwmblocks-async"
+        git_push "$HOME/.local/git/st-enhanced"
+        git_push "$HOME/.local/git/dmenu-enhanced"
+        git_push "$HOME/.local/git/work"
+        git_push "$HOME/.local/git/unix_bootstrap"
+        git_push "$HOME/.config/nvim"
         ;;
     "push-df")
         dotfilesPush "dotfiles"
         ;;
-    "push")
-        # TODO for loop
-        gitPush "$HOME/.local/scripts"
-        gitPush "$HOME/.config/nvim"
-        gitPush "$HOME/.local/git/moonwm"
-        gitPush "$HOME/.local/git/dwmblocks-async"
-        gitPush "$HOME/.local/git/st-enhanced"
-        gitPush "$HOME/.local/git/dmenu-enhanced"
-        ;;
     "status-df")
         git --git-dir="$HOME/.local/git/dotfiles" --work-tree="$HOME/" status --untracked-files=no
-        ;;
-    "status-dfwork")
-        git --git-dir="$HOME/.local/git/dotfiles-work" --work-tree="$HOME/" status --untracked-files=no
         ;;
     # "pulldf")
     #     git --git-dir="$HOME/.local/git/dotfiles" --work-tree="$HOME/" pull
