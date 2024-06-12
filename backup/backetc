@@ -10,7 +10,7 @@ backup_etc() {
     
     mkdir -p "$HOST_ETC_DIR"
 
-    local DIRS_TO_BACKUP=("httpd" "php" "php74" "nginx")
+    local DIRS_TO_BACKUP=("httpd" "php" "php74" "nginx", "webapps")
     for dir in "${DIRS_TO_BACKUP[@]}"; do
         if [ -d "$HOST_ETC_DIR/$dir" ]; then
             rm -rf "$HOST_ETC_DIR/$dir"
