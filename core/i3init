@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-if [ "$HOST" = "moon" ]; then
+# if [ "$HOST" = "moon" ]; then
+if [ "$(hostname)" = "moon" ]; then
     pgrep -f batcron > /dev/null || batcron &
     pgrep -f memcron > /dev/null || memcron &
     pgrep -f netcron > /dev/null || netcron &
