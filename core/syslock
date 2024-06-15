@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+pkill -u "$USER" -USR1 dunst
+sleep 0.1
+betterlockscreen -l
+pkill -u "$USER" -USR2 dunst
