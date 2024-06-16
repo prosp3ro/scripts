@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+source config
+isinstalled fd fzf || exit
+
+if [ ! -d "$HOME/.local/bin" ]; then
+    echo "$HOME/.local/bin doesn't exist!"
+    exit 1
+fi
+
+export FZF_DEFAULT_COMMAND='fd -d 2 --no-ignore'
+
+cd "$HOME/.local/bin" || exit 1
+script=$(fzf --reverse --height 15)
+
+if [ "$script" ]; then
+    nvim "$script" || exit 1
+fi
