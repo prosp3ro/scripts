@@ -6,8 +6,7 @@ if [ -z "$1" ]; then
 fi
 
 dbName="$1"
-
-mariadbUser=$USER
+read -rp "Database username: " mariadbUser
 mariadbHost="localhost"
 
 sudo mariadb -e "create database $dbName;" || exit 1

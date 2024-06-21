@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+source config
+isinstalled fd fzf || exit
+
+export FZF_DEFAULT_COMMAND='fd --no-ignore'
+
+file=$(fzf --reverse --height 15)
+
+if [ "$file" ]; then
+    nvim "$file" || exit 1
+fi

@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-username=$USER
-password=$USER
-dbName="$1"
-
-mariadb -u"$username" -p"$password" "$dbName"

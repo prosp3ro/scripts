@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+read -rp "Database username: " user
+read -rp "Database user password: " password
+
+dbName="$1"
+
+mariadb -u"$user" -p"$password" "$dbName"
