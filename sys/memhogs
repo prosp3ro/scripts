@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-notify-send "Memory hogs" "$(ps axch -o cmd:15,%mem --sort=-%mem | head)"
+ps -eo pid,%mem,comm --sort=-%mem | head -n 15
+# notify-send -t 10000 "Memory hogs" "$(ps axch -o cmd:15,%mem --sort=-%mem | head)"

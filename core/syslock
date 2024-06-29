@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-killall -SIGUSR1 dunst
-sleep 0.1
-i3lock -c 000000
-killall -SIGUSR2 dunst
