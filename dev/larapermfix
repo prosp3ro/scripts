@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# if [ ! "$1" ]; then
+#     exit 1 
+# fi
+
+# sudo chown $USER:$1 -R 
+
+if [ ! -d "./storage" ]; then
+    echo "storage directory not found"
+    exit 1
+fi
+
+ sudo chmod -R o+w "./storage"
+ sudo chmod -R 775 "./storage"
