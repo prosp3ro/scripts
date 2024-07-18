@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
 docker compose down -v
-sail build --no-cache
-sail up
+./vendor/bin/sail build --no-cache
+./vendor/bin/sail up
