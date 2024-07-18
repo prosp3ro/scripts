@@ -13,7 +13,9 @@ case "$(printf "lock\\nrebuild moonwm\\nlogout\\nreboot\\npoweroff" | $DMENU -i 
         # export XSECURELOCK_COMPOSITE_OBSCURER=0
         export XSECURELOCK_PASSWORD_PROMPT="asterisks"
         export XSECURELOCK_DISCARD_FIRST_KEYPRESS=0
+        killall -9 xcompmgr
         xsecurelock
+        xcompmgr &
         ;;
     # "turn screen off") xset dpms force off ;;
     # "rebuild dwm") rebuild dwm ;;
