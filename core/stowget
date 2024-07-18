@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-cd "$HOME/.local/git/dotfiles" || exit 1
-stow -t "$HOME" .
