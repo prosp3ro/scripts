@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+isinstalled xclip || exit
+
+if [ ! "$1" ]; then
+    echo "Number of characters wasn't specified."
+    exit 1
+fi
+
+echo "$(tr -dc 'A-Za-z0-9!"#$%&'\''()*+,-./:;<=>?@[\]^_`{|}~' </dev/urandom | head -c $1; echo)" | tr -d "\n" | xclip -selection clipboard
