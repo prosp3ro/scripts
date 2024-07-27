@@ -8,7 +8,7 @@ do
     used_memory=$(echo "$memory" | awk '{print $3}')
     formatted_used=$(bc <<< "scale=2; $used_memory / 1024")
 
-    if (( $(bc <<< "$formatted_used >= 6.90") )); then
+    if (( $(bc <<< "$formatted_used >= 5.90") )); then
         notify-send -u critical "Low memory!" "${formatted_used}GiB is used by system."
         mpv --volume=70 "$LOW_MEM_SOUND" 1>/dev/null || notify-send --critical "$0" "$LOW_MEM_SOUND not found."
         sleep 1s
