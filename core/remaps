@@ -7,6 +7,7 @@ isinstalled setxkbmap xset xinput xmodmap || exit
 
 # xinput list
 touchpad="ELAN0501:01 04F3:3060 Touchpad"
+touchpad_tp="SynPS/2 Synaptics TouchPad"
 # mouse="Kingsis Corporation ZOWIE Gaming mouse"
 
 remap() {
@@ -18,6 +19,8 @@ remap() {
     # Touchpad
     xinput --set-prop "$touchpad" "libinput Tapping Enabled" "1"
     xinput --set-prop "$touchpad" "libinput Natural Scrolling Enabled" "1"
+    xinput --set-prop "$touchpad_tp" "libinput Natural Scrolling Enabled" "1"
+    xinput --set-prop "$touchpad_tp" "libinput Accel Speed" "0.5"
 
     # Mouse
     xinput --set-prop "Kingsis Corporation ZOWIE Gaming mouse" "libinput Accel Speed" "-1"
