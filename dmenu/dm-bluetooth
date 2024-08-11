@@ -5,25 +5,43 @@
 source config
 isinstalled shuf nsxiv shuf bluetoothctl || exit
 
-bluetoothConnect(){
+bluetooth_connect(){
     deviceInfo=$(bluetoothctl devices Trusted | $DMENU_V -i -p "Select option:") || exit 1
     deviceMacAddress=$(echo "$deviceInfo" | awk '{print $2}')
     bluetoothctl connect "$deviceMacAddress"
 }
 
-case "$(printf "disconnect current device\\npair\\nconnect\\nbluetooth status\\nenable bluetooth\\ndisable bluetooth" | $DMENU_V -i -p "Select option:")" in
+menu_options="disconnect current device\n"
+menu_options+="pair\n"
+menu_options+="connect\n"
+menu_options+="status\n"
+menu_options+="restart\n"
+menu_options+="enable bluetooth\n"
+menu_options+="disable bluetooth"
+
+selection="$(printf "$menu_options" | $DMENU_V -i -p "Select option:")"
+
+case "$selection" in
     "disconnect current device")
         bluetoothctl disconnect
         ;;
     "pair")
-        # TODO
-        bluetoothConnect
+        # TODO: Implement pairing functionality
+        # bluetooth_connect
         ;;
     "connect")
-        bluetoothConnect
+        bluetooth_connect
         ;;
-    "bluetooth status")
-        notify-send "Bluetooth" "$(bluetoothctl show | grep 'Powered' | sed 's/	//g')."
+    "status")
+        status=$(bluetoothctl show | grep 'Powered' | sed 's/	//g')
+        notify-send "Bluetooth" "$status."
+        ;;
+    "restart")
+        if sudo systemctl restart bluetooth; then
+            notify-send "Bluetooth restarted."
+        else
+            notify-send "Bluetooth" "Something went wrong."
+        fi
         ;;
     "enable bluetooth")
         bluetoothctl power on
