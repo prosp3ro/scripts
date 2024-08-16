@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+isinstalled nmcli libnotify || exit
+
+WIRED_CONNECTION="Wired connection 1"
+WIFI_CONNECTION="blablabla"
+
+set_default_connection() {
+    local CONNECTION="$1"
+    local OTHER_CONNECTION="$2"
+
+    nmcli connection up "$CONNECTION"
+    nmcli connection down "$OTHER_CONNECTION"
+
+    # nmcli connection modify "$CONNECTION" ipv4.route-metric 100
+    # nmcli connection modify "$OTHER_CONNECTION" ipv4.route-metric 600
+}
+
+if [ "$1" == "wired" ]; then
+    set_default_connection "$WIRED_CONNECTION" "$WIFI_CONNECTION"
+    notify-send "Wired connection is now the default."
+elif [ "$1" == "wifi" ]; then
+    set_default_connection "$WIFI_CONNECTION" "$WIRED_CONNECTION"
+    notify-send "Wi-Fi connection is now the default."
+else
+    echo "Usage: $0 {wired|wifi}"
+    exit 1
+fi

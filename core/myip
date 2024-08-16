@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# ip="$(curl -s ipinfo.io | jq)"
+curl -s ipinfo.io | jq
+
+# echo "$ip"
