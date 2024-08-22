@@ -13,6 +13,7 @@ declare -A GIT_DIRS=(
     ["unix_bootstrap"]="$HOME/.local/git/unix_bootstrap"
     ["nvim"]="$HOME/.config/nvim"
     ["dotfiles"]="$HOME/.local/git/dotfiles"
+    ["server-files"]="$HOME/.local/git/server-files"
 )
 
 # Dotfiles specific variables
