@@ -7,6 +7,7 @@
 # selection" which opens arandr.
 
 source config
+isinstalled bc || exit
 
 twoscreen() { # If multi-monitor is selected and there are two screens.
 
