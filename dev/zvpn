@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1091
+
+# source config
+isinstalled nmcli || exit
+
+# active_vpn_connections() {
+#     nmcli con show --active | grep -i vpn
+# }
+
+# if [ "$(active_vpn_connections)" ]; then
+# fi
+
+connection=""
+
+case "$1" in
+    srv)
+        connection="zlansrv"
+        ;;
+    dmz)
+        connection="zlandmz"
+        ;;
+    -d|--down)
+        case "$2" in
+            srv)
+                connection="zlansrv"
+                ;;
+            dmz)
+                connection="zlandmz"
+                ;;
+        esac
+
+        if [ -n "$connection" ]; then
+            nmcli connection down id "$connection"
+        fi
+
+        exit 0
+        ;;
+    *)
+        echo "Invalid option"
+        exit 1
+        ;;
+esac
+
+if [ -n "$connection" ]; then
+    nmcli connection up id "$connection"
+fi
