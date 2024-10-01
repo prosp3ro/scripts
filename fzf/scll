@@ -3,14 +3,16 @@
 source config
 isinstalled fd fzf || exit
 
-if [ ! -d "$HOME/.local/bin" ]; then
-    echo "$HOME/.local/bin doesn't exist!"
+dir="$HOME/.local/scripts/personal"
+
+if [ ! -d "$dir" ]; then
+    echo "$dir doesn't exist!"
     exit 1
 fi
 
 export FZF_DEFAULT_COMMAND='fd -d 2 --no-ignore'
 
-cd "$HOME/.local/bin" || exit 1
+cd "$dir" || exit 1
 script=$(fzf --reverse --height 15)
 
 if [ "$script" ]; then
