@@ -2,52 +2,24 @@
 
 isinstalled fd fzf || exit
 
-# case "$1" in
-#     "git") projectsDir="$HOME/.local/git" ;;
-#     "src") projectsDir="$HOME/.local/src" ;;
-#     "srv") projectsDir="/srv/http" ;;
-#     *) exit 1 ;;
-# esac
-
-# if [ ! -d "$projectsDir" ]; then
-#     echo "$projectsDir doesn't exist!"
-#     exit 1
-# fi
-
-# # export SKIM_DEFAULT_COMMAND='fd -d 1 --type d'
-# export FZF_DEFAULT_COMMAND='fd -d 1 --type d'
-# cd "$projectsDir" || exit 1
-
-# project=$(fzf --reverse)
-
-# if [ "$project" ]; then
-#     cd "$project" || exit 1
-#     # echo -e "\n\n"
-#     ls --color=auto -al
-#     # nvim
-# fi
-
-
-fzf_command() {
+fzf_min() {
     fzf --reverse --height 10
 }
 
-projects_location=$(echo -e "git\ngit new\nlocal\nhttp" | fzf_command)
+projects_location="$(echo -e "git\ngit new\nlocal\nhttp" | fzf_min)"
 
 case "$projects_location" in
-    "git") projects_dir="$HOME/.local/git" ;;
-    "git new") projects_dir="$HOME/.local/projects/git" ;;
-    "local") projects_dir="$HOME/.local/projects/local" ;;
-    "http") projects_dir="/srv/http" ;;
-    *) exit 1 ;;
+    "git") cd "$HOME/.local/git" || return ;;
+    "git new") cd "$HOME/.local/projects/git" || return ;;
+    "local") cd "$HOME/.local/projects/local" || return ;;
+    "http") cd "/srv/http" || return ;;
+    *) return ;;
 esac
 
-cd "$projects_dir" || exit 1
-
-# export SKIM_DEFAULT_COMMAND='fd -d 1 --type d'
+# # export SKIM_DEFAULT_COMMAND='fd -d 1 --type d'
 export FZF_DEFAULT_COMMAND='fd -d 1 --type d'
 
-project="$(fzf_command)"
+project="$(fzf_min)"
 
 if [ "$project" ]; then
     cd "$project" || exit 1
