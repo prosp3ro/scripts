@@ -6,14 +6,14 @@ source config
 
 declare -A GIT_DIRS=(
     ["scripts"]="$HOME/.local/scripts"
-    ["moonwm"]="$HOME/.local/git/moonwm"
-    ["st-enhanced"]="$HOME/.local/git/st-enhanced"
-    ["dmenu-enhanced"]="$HOME/.local/git/dmenu-enhanced"
-    ["work"]="$HOME/.local/git/work"
-    ["unix_bootstrap"]="$HOME/.local/git/unix_bootstrap"
+    # ["moonwm"]="$HOME/.local/git/projects/moonwm"
+    ["st-enhanced"]="$HOME/.local/projects/git/st-enhanced"
+    ["dmenu-enhanced"]="$HOME/.local/projects/git/dmenu-enhanced"
+    ["work"]="$HOME/.local/projects/git/work"
+    # ["unix_bootstrap"]="$HOME/.local/projects/git/unix_bootstrap"
     ["nvim"]="$HOME/.config/nvim"
     ["dotfiles"]="$HOME/.local/git/dotfiles"
-    ["server-files"]="$HOME/.local/git/server-files"
+    ["server-files"]="$HOME/.local/projects/git/server-files"
 )
 
 # Dotfiles specific variables

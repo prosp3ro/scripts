@@ -6,13 +6,13 @@ fzf_min() {
     fzf --reverse --height 10
 }
 
-projects_location="$(echo -e "git\ngit new\nlocal\nhttp" | fzf_min)"
+projects_location="$(echo -e "git\nlocal\nhttp\nold git" | fzf_min)"
 
 case "$projects_location" in
-    "git") cd "$HOME/.local/git" || return ;;
-    "git new") cd "$HOME/.local/projects/git" || return ;;
+    "git") cd "$HOME/.local/projects/git" || return ;;
     "local") cd "$HOME/.local/projects/local" || return ;;
     "http") cd "/srv/http" || return ;;
+    "old git") cd "$HOME/.local/git" || return ;;
     *) return ;;
 esac
 
@@ -24,6 +24,6 @@ project="$(fzf_min)"
 if [ "$project" ]; then
     cd "$project" || exit 1
     # echo -e "\n\n"
-    ls --color=auto -a
+    ls --color=auto -al
     # nvim
 fi
