@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-locationDir="$HOME/.local/git"
+locationDir="$HOME/.local/projects/git"
 # locationDir="$HOME/.local/src"
 
 usage() {
