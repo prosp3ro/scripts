@@ -9,10 +9,10 @@ declare -A GIT_DIRS=(
     # ["moonwm"]="$HOME/.local/git/projects/moonwm"
     ["st-enhanced"]="$HOME/.local/projects/git/st-enhanced"
     ["dmenu-enhanced"]="$HOME/.local/projects/git/dmenu-enhanced"
-    ["work"]="$HOME/.local/projects/git/work"
+    # ["work"]="$HOME/.local/projects/git/work"
     # ["unix_bootstrap"]="$HOME/.local/projects/git/unix_bootstrap"
     ["nvim"]="$HOME/.config/nvim"
-    ["dotfiles"]="$HOME/.local/git/dotfiles"
+    ["dotfiles"]="$HOME/.local/projects/git/dotfiles"
     ["server-files"]="$HOME/.local/projects/git/server-files"
 )
 
