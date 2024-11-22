@@ -6,7 +6,7 @@ source config
 # usage=$(vnstat -i wlp3s0 --oneline | awk -F';' '{split($6, a, " "); print a[1]}')
 
 INTERFACE="wlp3s0"
-THRESHOLD=5.00
+THRESHOLD=3.00
 
 currentDate="$(date '+%Y-%m-%d')"
 

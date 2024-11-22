@@ -3,16 +3,15 @@
 isinstalled fd fzf || exit
 
 fzf_min() {
-    fzf --reverse --height 10
+    fzf --reverse --height 20
 }
 
-projects_location="$(echo -e "git\nlocal\nhttp\nold git" | fzf_min)"
+projects_location="$(echo -e "git\nlocal\nhttp" | fzf_min)"
 
 case "$projects_location" in
     "git") cd "$HOME/.local/projects/git" || return ;;
     "local") cd "$HOME/.local/projects/local" || return ;;
     "http") cd "/srv/http" || return ;;
-    "old git") cd "$HOME/.local/git" || return ;;
     *) return ;;
 esac
 
