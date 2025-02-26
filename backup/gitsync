@@ -10,41 +10,11 @@ declare -A GIT_DIRS=(
     ["st-enhanced"]="$HOME/.local/projects/git/st-enhanced"
     ["dmenu-enhanced"]="$HOME/.local/projects/git/dmenu-enhanced"
     # ["work"]="$HOME/.local/projects/git/work"
-    # ["unix_bootstrap"]="$HOME/.local/projects/git/unix_bootstrap"
+    ["unix_bootstrap"]="$HOME/.local/projects/git/unix_bootstrap"
     ["nvim"]="$HOME/.config/nvim"
     ["dotfiles"]="$HOME/.local/projects/git/dotfiles"
     ["server-files"]="$HOME/.local/projects/git/server-files"
 )
-
-# Dotfiles specific variables
-# DOTFILES_GIT_DIR="$HOME/.local/git/dotfiles"
-# GIT_WORK_TREE="$HOME"
-# DOTFILES_BACKUP_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/gitbackup.cfg"
-
-# dotfiles_push() {
-#     [ ! -d "$DOTFILES_GIT_DIR" ] && echo -e "\e[1;31m$DOTFILES_GIT_DIR\e[0m doesn't exist" && exit 1
-#     [ ! -f "$DOTFILES_BACKUP_FILE" ] && echo -e "\e[1;31m$DOTFILES_BACKUP_FILE\e[0m doesn't exist" && exit 1
-
-#     files=$(sed "/^#/d;s/\$HOME/\/home\/$USER/g;s/\$XDG_CONFIG_HOME/\/home\/$USER\/\.config/g" "$DOTFILES_BACKUP_FILE")
-
-#     echo -e "Working dir: \e[1;32m$GIT_WORK_TREE\e[0m"
-#     cd "$GIT_WORK_TREE" || exit 1
-
-#     git --git-dir="$DOTFILES_GIT_DIR" --work-tree="$GIT_WORK_TREE" add $files
-#     git --git-dir="$DOTFILES_GIT_DIR" --work-tree="$GIT_WORK_TREE" commit -m 'sync' --untracked-files=no
-#     git --git-dir="$DOTFILES_GIT_DIR" --work-tree="$GIT_WORK_TREE" push
-#     echo
-# }
-
-# dotfiles_pull() {
-#     [ ! -d "$DOTFILES_GIT_DIR" ] && echo -e "\e[1;31m$DOTFILES_GIT_DIR\e[0m doesn't exist" && exit 1
-
-#     echo -e "Working dir: \e[1;32m$GIT_WORK_TREE\e[0m"
-#     cd "$GIT_WORK_TREE" || exit 1
-
-#     git --git-dir="$DOTFILES_GIT_DIR" --work-tree="$GIT_WORK_TREE" pull
-#     echo
-# }
 
 git_status() {
     local dir="$1"
@@ -54,7 +24,7 @@ git_status() {
         return
     fi
 
-    echo -e "Working dir: \e[1;32m$dir\e[0m"
+    echo -e "Working dir \e[1;32m$dir\e[0m:"
     cd "$dir" || exit 1
     git status -s
     echo
@@ -98,31 +68,17 @@ case "$1" in
         done
         ;;
     "push")
-        # dotfiles_push
         for key in "${!GIT_DIRS[@]}"; do
             git_push "${GIT_DIRS[$key]}"
         done
         ;;
     "pull")
-        # dotfiles_pull
         for key in "${!GIT_DIRS[@]}"; do
             git_pull "${GIT_DIRS[$key]}"
         done
         ;;
-    # "push-df")
-    #     dotfiles_push
-    #     ;;
-    # "pull-df")
-    #     dotfiles_pull
-    #     ;;
-    # "status-df")
-    #     dir="$DOTFILES_GIT_DIR"
-    #     cd "$HOME" || exit 1
-    #     [ ! -d "$dir" ] && echo "$dir doesn't exist" && exit 1
-    #     git --git-dir="$dir" --work-tree="$HOME" status -s --untracked-files=no
-    #     ;;
     *)
-        echo "Usage: $0 {status|push|pull|push-df|pull-df|status-df}"
+        echo "Usage: status/push/pull"
         exit 1
         ;;
 esac

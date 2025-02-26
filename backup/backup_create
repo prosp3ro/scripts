@@ -25,6 +25,7 @@ standardBackup() {
     runDust "$VC_BACKUP_MNT_DIR/backup.tar.gz"
     runDust "$VC_BACKUP_MNT_DIR/oldbackup.tar.gz"
     file "$VC_BACKUP_MNT_DIR/backup.tar.gz" "$VC_BACKUP_MNT_DIR/oldbackup.tar.gz"
+    ls --color=auto -al --group-directories-first -h "$VC_BACKUP_MNT_DIR"
 
     echoBlue -n "$HOME/doc:"
     runDust "$HOME/doc"

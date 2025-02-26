@@ -7,55 +7,43 @@ source config
 isinstalled veracrypt-console-bin file tar || exit
 
 vc_tmp_mount_dir="$HOME/mnt/tmp"
+drive_backup_file="$HOME/mnt/dev/backup"
 
-backup_test(){
-    [ ! -d "$vc_tmp_mount_dir" ] && mkdir -p "$vc_tmp_mount_dir"
+[ ! -d "$vc_tmp_mount_dir" ] && mkdir -p "$vc_tmp_mount_dir"
 
-    echoBlue -n "Mounting $drive_backup_file volume to $vc_tmp_mount_dir."
-    [ -f "$vc_tmp_mount_dir/backup" ] && echoRedExit "[!] Looks like something is already mounted in $vc_tmp_mount_dir."
-    [ -f "$drive_backup_file" ] && sudo veracrypt -t --pim=0 -k "" --protect-hidden=no --display-password "$drive_backup_file" "$vc_tmp_mount_dir"
-    [ ! -f "$drive_backup_file" ] && echoRedExit "[!] $drive_backup_file doesn't exist."
+echoBlue "Mounting $drive_backup_file volume to $vc_tmp_mount_dir."
+[ -f "$vc_tmp_mount_dir/backup" ] && echoRedExit "[!] Looks like something is already mounted in $vc_tmp_mount_dir."
 
-    echoBlue -n "Running tests."
-    ls --color=auto -alh "$vc_tmp_mount_dir"
-    runDust "$vc_tmp_mount_dir" 2>/dev/null
-    file "$vc_tmp_mount_dir/backup.tar.gz"
-    file "$vc_tmp_mount_dir/oldbackup.tar.gz"
-    file "$vc_tmp_mount_dir/img.tar.gz"
+[ ! -f "$drive_backup_file" ] && echoRedExit "[!] $drive_backup_file doesn't exist."
+[ -f "$drive_backup_file" ] && sudo veracrypt -t --pim=0 -k "" --protect-hidden=no --display-password "$drive_backup_file" "$vc_tmp_mount_dir"
 
-    echoBlue -n "Do you want to copy backup.tar.gz to $TMP_DIR? [y/N]"
-    read -rp "Answer: " answer
+echoBlue "Tests:"
+runDust "$vc_tmp_mount_dir" 2>/dev/null
+file "$vc_tmp_mount_dir/backup.tar.gz"
+file "$vc_tmp_mount_dir/oldbackup.tar.gz"
+file "$vc_tmp_mount_dir/img.tar.gz"
+ls --color=auto -al --group-directories-first -h "$vc_tmp_mount_dir"
 
-    if [ "$answer" == "y" ]; then
-        echoYellow "=> Deleting old tar file and directory..."
-        [ -f "$TMP_DIR/backup.tar.gz" ] && rm -vrf "$TMP_DIR/backup.tar.gz"
-        [ -d "$TMP_DIR/home" ] && rm -rf "$TMP_DIR/home"
+echoBlue -n "Do you want to copy backup.tar.gz to $TMP_DIR? [y/N]"
+read -rp "Answer: " answer
 
-        echoYellow "=> Copying backup.tar.gz to $TMP_DIR for further tests..."
-        cp -v "$vc_tmp_mount_dir/backup.tar.gz" "$TMP_DIR"
+if [ "$answer" == "y" ]; then
+    echoBlue "Deleting old tar file and directory..."
+    [ -f "$TMP_DIR/backup.tar.gz" ] && rm -vrf "$TMP_DIR/backup.tar.gz"
+    [ -d "$TMP_DIR/home" ] && rm -rf "$TMP_DIR/home"
 
-        echoYellow "=> Untaring backup file..."
-        tar zxf "$TMP_DIR/backup.tar.gz" -C "$TMP_DIR"
+    echoBlue "Copying backup.tar.gz to $TMP_DIR for further tests..."
+    cp -v "$vc_tmp_mount_dir/backup.tar.gz" "$TMP_DIR"
 
-        echoBlue -n "Check $TMP_DIR/home directory."
-        ls --color=auto -alh "$TMP_DIR"
-        echo
-    fi
+    echoBlue "Untaring backup file..."
+    tar zxf "$TMP_DIR/backup.tar.gz" -C "$TMP_DIR"
 
-    echoYellow "Unmounting $drive_backup_file volume..."
-    sudo veracrypt -d "$vc_tmp_mount_dir"
-    [ -f "$vc_tmp_mount_dir/backup" ] && echoRedExit "[!] Looks like unmounting failed. Do it manually."
-    echo -e "\n$vc_tmp_mount_dir:"
-    ls --color=auto -alh "$vc_tmp_mount_dir"
-}
-
-echoBlue "Which dir in $HOME/mnt? [usb1/usb2/ext]"
-read -rp "Enter your choice: " answer
-
-if [[ "$answer" != "usb1" && "$answer" != "usb2" && "$answer" != "ext" ]]; then
-    echoRedExit "[!] Only usb1/usb2/ext allowed."
+    echoGreen "Check $TMP_DIR/home directory."
+    echo
 fi
 
-drive_backup_file="$HOME/mnt/$answer/backup"
-
-backup_test
+echoYellow "Unmounting $drive_backup_file volume..."
+sudo veracrypt -d "$vc_tmp_mount_dir"
+[ -f "$vc_tmp_mount_dir/backup" ] && echoRedExit "[!] Looks like unmounting failed. Do it manually."
+echo -e "\nChecking if $vc_tmp_mount_dir is empty:"
+ls --color=auto -alh "$vc_tmp_mount_dir"

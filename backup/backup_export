@@ -18,7 +18,7 @@ main() {
         echo
     fi
 
-    mountedDevice="$HOME/mnt/$1"
+    mountedDevice="$HOME/mnt/dev"
 
     [ ! -f "$VC_BACKUP" ] && echoRedExit "$VC_BACKUP does not exist."
     [ ! -f "$mountedDevice/backup" ] && echoRedExit "$mountedDevice is probably not mounted."
@@ -42,6 +42,7 @@ main() {
 
     now=$(date "+%d %B %Y [%A] %H:%M")
     echo "$now => $1" >> "$HOME/doc/last-backup-device.txt"
+    exit
 
     echoBlue -n "Run backup_test? [y/N]"
     read -r answer
@@ -52,14 +53,16 @@ main() {
 }
 
 case "$1" in
-    "usb1")
-        main "usb1" ;;
-    "usb2")
-        main "usb2" ;;
-    "ext")
-        main "ext" ;;
+    "make")
+        if [ "$2" != "--note" ]; then
+            echo "no note added"
+            exit 1
+        fi
+
+        main "$3"
+        ;;
     "last")
         cat "$HOME/doc/last-backup-device.txt" ;;
     *)
-        echo "usage: usb1/usb2/ext/last";
+        echo "usage: make --note goodram/last";
 esac

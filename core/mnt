@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source config
+
 args=("$@")
 
 MOUNT_DIR="$HOME/mnt"
@@ -15,24 +17,19 @@ checking_drives() {
 # lsblk -no "fstype" "/dev/sdb1"
 
 case "${args[0]}" in
-    "usb1")
+    "usb")
         checking_drives
-        sudo mount -t vfat "/dev/sdb1" "$MOUNT_DIR/usb1" -o rw,umask=0000
-        ls --color=auto -al "$MOUNT_DIR/usb1"
-        ;;
-    "usb2")
-        checking_drives
-        sudo mount -t vfat "/dev/sdb1" "$MOUNT_DIR/usb2" -o rw,umask=0000
-        ls --color=auto -al "$MOUNT_DIR/usb2"
+        sudo mount -t vfat "/dev/sdb1" "$MOUNT_DIR/dev" -o rw,umask=0000
+        ls --color=auto -al "$MOUNT_DIR/dev"
         ;;
     # ntfs
     "ext")
         checking_drives;
-        sudo mount "/dev/sdb1" "$MOUNT_DIR/ext";
+        sudo mount "/dev/sdb1" "$MOUNT_DIR/dev";
         user="$(whoami)";
         ug="$(groups | awk '{print $1}')";
-        sudo chown "$user":"$ug" "$MOUNT_DIR/ext"
-        ls --color=auto -al "$MOUNT_DIR/ext"
+        sudo chown "$user":"$ug" "$MOUNT_DIR/dev"
+        ls --color=auto -al "$MOUNT_DIR/dev"
         ;;
     "phone")
         sudo jmtpfs -o allow_other "$MOUNT_DIR/phone" 2>/dev/null
@@ -49,4 +46,4 @@ case "${args[0]}" in
         ;;
 esac
 
-echo "Device mounted."
+echoGreen "Device mounted."
