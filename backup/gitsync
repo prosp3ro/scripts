@@ -38,7 +38,7 @@ git_push() {
         return
     fi
 
-    echo -e "Working dir: \e[1;32m$dir\e[0m"
+    echo -e "Working dir \e[1;32m$dir\e[0m:"
     cd "$dir" || exit 1
     git add -A
     git commit -m "sync"
@@ -55,7 +55,7 @@ git_pull() {
         return
     fi
 
-    echo -e "Working dir: \e[1;32m$dir\e[0m"
+    echo -e "Working dir \e[1;32m$dir\e[0m:"
     cd "$dir" || exit 1
     git pull
     echo
