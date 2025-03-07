@@ -3,7 +3,7 @@
 isinstalled nmcli libnotify || exit
 
 WIRED_CONNECTION="Wired connection 1"
-WIFI_CONNECTION="blablabla"
+WIFI_CONNECTION="meow"
 
 set_default_connection() {
     local CONNECTION="$1"
