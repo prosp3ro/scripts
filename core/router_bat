@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+curl_cmd () {
+    curl -s 'http://192.168.32.1/goform/goform_get_cmd_process?cmd=battery_vol_percent' \
+        -H 'Accept: application/json, text/javascript, */*; q=0.01' \
+        -H 'Accept-Language: en-US,en;q=0.5' \
+        -H 'Accept-Encoding: gzip, deflate' \
+        -H 'X-Requested-With: XMLHttpRequest' \
+        -H 'Referer: http://192.168.32.1/index.html'
+}
+
+notify-send "Router battery level: $(curl_cmd | awk -F'\"' '{ print $4 }')%"
