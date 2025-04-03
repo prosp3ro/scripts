@@ -15,10 +15,10 @@ hdmi=$(xrandr -q | grep "connected" | awk '/ connected/{print $1}' | grep HDMI)
 case "$1" in
     "home")
         xrandr --output eDP1 --off --output $hdmi --mode 1920x1080 --pos 0x0 --rotate normal --output VIRTUAL1 --off
-        remaps us
+        remaps eng
         ;;
     # "work")
     #     xrandr --output eDP1 --off --output DP1 --off --output HDMI1 --off --output HDMI2 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output VIRTUAL1 --off
-    #     remaps us
+    #     remaps eng
     #     ;;
 esac
