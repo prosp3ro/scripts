@@ -15,5 +15,5 @@ do
         notify-send -t 5000 "Memory hungry processes" "$(ps axch -o cmd:15,%mem --sort=-%mem | head)"
     fi
 
-    sleep 30s
+    sleep 1m
 done

@@ -14,5 +14,5 @@ do
     fi
 
     # [ "$capacity" -gt 98 ] && notify-send "Battery full" "Battery level is at $capacity%." && sleep 10m
-    sleep 1m
+    sleep 2m
 done
