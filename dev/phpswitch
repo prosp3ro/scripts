@@ -31,6 +31,16 @@ activate_v74() {
     print_info
 }
 
+activate_v82() {
+    del_old_links
+
+    sudo ln -sf "/usr/bin/php82" "$BIN_DIR/php" || exit 1
+    sudo ln -sf "/usr/bin/phpize82" "$BIN_DIR/phpize" || exit 1
+
+    # change_ownership
+    print_info
+}
+
 activate_v8() {
     del_old_links
 
@@ -42,8 +52,8 @@ activate_v8() {
 }
 
 case "$1" in
-    "74")
-        activate_v74
+    "82")
+        activate_v82
         ;;
     "8")
         activate_v8
