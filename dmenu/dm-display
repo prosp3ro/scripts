@@ -6,7 +6,7 @@
 # displays and lets user select one to use. User may also select "manual
 # selection" which opens arandr.
 
-source config
+source _scripts_config
 isinstalled bc || exit
 
 twoscreen() { # If multi-monitor is selected and there are two screens.

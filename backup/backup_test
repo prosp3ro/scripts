@@ -3,7 +3,7 @@
 # shellcheck disable=SC1091
 # shellcheck disable=SC2115
 
-source config
+source _scripts_config
 isinstalled veracrypt-console-bin file tar || exit
 
 vc_tmp_mount_dir="$HOME/mnt/tmp"

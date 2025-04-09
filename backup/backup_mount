@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source config
+source _scripts_config
 isinstalled veracrypt-console-bin tar || exit
 
 [ ! -f "$VC_BACKUP_MNT_DIR/donotdelete" ] && sudo veracrypt --display-password \

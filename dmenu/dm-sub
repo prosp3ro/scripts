@@ -2,7 +2,7 @@
 
 # shellcheck disable=SC1091
 
-source config
+source _scripts_config
 isinstalled xdotool || exit
 
 subFile="$(find "$(readlink -f "$HOME/.local/web/ytsubs")" -type f -name '*.md' | $DMENU_V -i -p "Choose a sub file:")" || exit 1

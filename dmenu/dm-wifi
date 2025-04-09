@@ -2,7 +2,7 @@
 
 # shellcheck disable=SC1091
 
-source config
+source _scripts_config
 isinstalled nmcli || exit
 
 set -euo pipefail

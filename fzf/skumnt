@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # shellcheck disable=SC1091
-source config
+source _scripts_config
 
 unmountusb() {
 	[ -z "$drives" ] && exit

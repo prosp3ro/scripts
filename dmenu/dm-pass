@@ -5,7 +5,7 @@
 # This script is the SUDO_ASKPASS variable, meaning that it will be used as a
 # password prompt if needed.
 
-source config
+source _scripts_config
 
 $DMENU -P -p "$1" <&- && echo
 # $DMENU -p "$1" <&- && echo

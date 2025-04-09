@@ -2,7 +2,7 @@
 
 # shellcheck disable=SC1091
 
-source config
+source _scripts_config
 isinstalled xdotool || exit
 
 # getSite="$(grep -v '^#' $HOME/.local/web/bookmarks/sites.md | dmenu -i -l 25 | cut -d' ' -f1)"

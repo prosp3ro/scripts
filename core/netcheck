@@ -2,7 +2,7 @@
 
 # shellcheck disable=SC1091
 
-source config
+source _scripts_config
 
 if ping -c 1 google.com &> /dev/null; then
     echoGreen "Can ping sites."

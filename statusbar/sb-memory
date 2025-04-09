@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source config
+source _scripts_config
 
 # free --mebi | sed -n '2{p;q}' | awk '{printf ("📀%2.2fG/%2.2fG\n", ( $3 / 1024), ($2 / 1024))}'
 

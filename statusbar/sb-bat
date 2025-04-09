@@ -1,6 +1,6 @@
 #!/bin/sh
 
-source config
+source _scripts_config
 
 for battery in /sys/class/power_supply/BAT?*; do
     # If non-first battery, print a space separator.

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source config
+source _scripts_config
 isinstalled dust || exit
 
 MUSIC_DIR="$HOME/music"

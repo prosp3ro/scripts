@@ -7,7 +7,7 @@
 # mountpoint from already existsing directories. If you input a novel directory, 
 # it will prompt you to create that directory.
 
-source config
+source _scripts_config
 
 getmount() { \
 	[ -z "$chosen" ] && exit 1

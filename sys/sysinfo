@@ -2,7 +2,7 @@
 
 # shellcheck disable=SC1091
 
-source config
+source _scripts_config
 isinstalled sensors pamixer xbacklight || exit
 
 MEM="$( free --mebi | sed -n '2{p;q}' | awk '{printf ("%2.1f/%2.1fGiB\n", ($3 / 1024), ($2 / 1024) ) }' )"

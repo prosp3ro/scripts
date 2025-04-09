@@ -2,7 +2,7 @@
 
 # shellcheck disable=SC1091
 
-source config
+source _scripts_config
 
 # case "$(printf "turn screen off\\nlock\\nrebuild moonwm\\nlogout\\nreboot\\npoweroff" | $DMENU -i )" in
 case "$(printf "lock\\nturn screen off\\nrebuild moonwm\\nlogout\\nreboot\\npoweroff" | $DMENU -i )" in

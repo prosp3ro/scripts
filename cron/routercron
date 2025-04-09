@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source config
+source _scripts_config
 
 router_bat_level () {
     curl -s 'http://192.168.32.1/goform/goform_get_cmd_process?cmd=battery_vol_percent' \

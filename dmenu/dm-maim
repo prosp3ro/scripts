@@ -2,7 +2,7 @@
 
 # shellcheck disable=SC1091
 
-source config
+source _scripts_config
 isinstalled xdotool xclip maim || exit
 
 [ ! -d "$HOME/tmp/maim" ] && mkdir -p "$HOME/tmp/maim" && notify-send "$0" "$HOME/tmp/maim directory created."

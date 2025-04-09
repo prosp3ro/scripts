@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source config
+source _scripts_config
 
 BIN_DIR="$HOME/.local/bin"
 # GROUP="$(id -gn)"
@@ -10,52 +10,25 @@ del_old_links() {
     [ -f "$BIN_DIR/phpize" ] && sudo rm "$BIN_DIR/phpize"
 }
 
-# it's a symlink, won't work this way
-# change_ownership() {
-#     sudo chown "$USER:$GROUP" "$BIN_DIR/php"
-#     sudo chown "$USER:$GROUP" "$BIN_DIR/phpize"
-# }
-
 print_info() {
-    ls --color=auto -al "$BIN_DIR/php" "$BIN_DIR/phpize"
+    ls --color=auto -alh "$BIN_DIR/php" "$BIN_DIR/phpize"
     echo -e "\nExec zsh to refresh"
 }
 
-activate_v74() {
-    del_old_links
-
-    sudo ln -sf "/usr/bin/php74" "$BIN_DIR/php" || exit 1
-    sudo ln -sf "/usr/bin/phpize74" "$BIN_DIR/phpize" || exit 1
-
-    # change_ownership
-    print_info
-}
-
-activate_v82() {
-    del_old_links
-
-    sudo ln -sf "/usr/bin/php82" "$BIN_DIR/php" || exit 1
-    sudo ln -sf "/usr/bin/phpize82" "$BIN_DIR/phpize" || exit 1
-
-    # change_ownership
-    print_info
-}
-
-activate_v8() {
-    del_old_links
-
-    sudo ln -sf "/usr/bin/php" "$BIN_DIR/php" || exit 1
-    sudo ln -sf "/usr/bin/phpize" "$BIN_DIR/phpize" || exit 1
-
-    # change_ownership
-    print_info
+replace_php() {
+    sudo ln -sf "/usr/bin/php$1" "$BIN_DIR/php" || exit 1
+    sudo ln -sf "/usr/bin/phpize$1" "$BIN_DIR/phpize" || exit 1
 }
 
 case "$1" in
-    "82")
-        activate_v82
+    "--82")
+        del_old_links
+        replace_php 82
+        print_info
         ;;
-    "8")
-        activate_v8
+    "--current")
+        del_old_links
+        replace_php
+        print_info
         ;;
 esac
