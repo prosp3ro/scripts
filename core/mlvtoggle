@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if [ "$(mullvad status | grep "Connected")" ]; then
+    mullvad lockdown-mode set off
+    mullvad disconnect
+else
+    mullvad lockdown-mode set on
+    mullvad connect
+fi

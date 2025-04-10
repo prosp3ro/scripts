@@ -8,14 +8,11 @@ isinstalled veracrypt-console-bin mountpoint || exit
 set -e
 
 main() {
-    echo -n "Run backup_create? [y/N] "
+    echo -n "Did you create a backup first? [y/N]: "
     read -r answer
 
-    if [ "$answer" == "y" ]; then
-        backup_create standard || exit
-        echo -e "\nCreating new backup finished.\n"
-        echo "========="
-        echo
+    if [ "$answer" != "y" ]; then
+        exit 1
     fi
 
     mountedDevice="$HOME/mnt/dev"
@@ -48,7 +45,7 @@ main() {
     read -r answer
 
     if [ "$answer" == "y" ]; then
-        backup_test
+        btest
     fi
 }
 

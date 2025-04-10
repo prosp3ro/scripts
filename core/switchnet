@@ -11,18 +11,39 @@ set_default_connection() {
 
     nmcli connection up "$CONNECTION"
     nmcli connection down "$OTHER_CONNECTION"
-
-    # nmcli connection modify "$CONNECTION" ipv4.route-metric 100
-    # nmcli connection modify "$OTHER_CONNECTION" ipv4.route-metric 600
 }
 
-if [ "$1" == "wired" ]; then
-    set_default_connection "$WIRED_CONNECTION" "$WIFI_CONNECTION"
-    notify-send "Wired connection is now the default."
-elif [ "$1" == "wifi" ]; then
-    set_default_connection "$WIFI_CONNECTION" "$WIRED_CONNECTION"
-    notify-send "Wi-Fi connection is now the default."
-else
-    echo "Usage: $0 {wired|wifi}"
-    exit 1
-fi
+get_active_connection() {
+    nmcli -t -f NAME,DEVICE connection show --active |
+        awk -F: '{print $1}' |
+        head -n 1
+}
+
+toggle_connection() {
+    local ACTIVE=$(get_active_connection)
+
+    if [[ "$ACTIVE" == "$WIRED_CONNECTION" ]]; then
+        set_default_connection "$WIFI_CONNECTION" "$WIRED_CONNECTION"
+        notify-send "Switched to Wi-Fi: $WIFI_CONNECTION"
+    elif [[ "$ACTIVE" == "$WIFI_CONNECTION" ]]; then
+        set_default_connection "$WIRED_CONNECTION" "$WIFI_CONNECTION"
+        notify-send "Switched to Wired: $WIRED_CONNECTION"
+    else
+        set_default_connection "$WIRED_CONNECTION" "$WIFI_CONNECTION"
+        notify-send "Switched to Wired: $WIRED_CONNECTION"
+    fi
+}
+
+case "$1" in
+    wired)
+        set_default_connection "$WIRED_CONNECTION" "$WIFI_CONNECTION"
+        notify-send "Wired connection is now the default."
+        ;;
+    wifi)
+        set_default_connection "$WIFI_CONNECTION" "$WIRED_CONNECTION"
+        notify-send "Wi-Fi connection is now the default."
+        ;;
+    *)
+        toggle_connection
+        ;;
+esac

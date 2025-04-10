@@ -49,10 +49,10 @@ imgBackup() {
 
 case "$1" in
   "standard" | "s" )
-      backup_mount
+      bmnt
       standardBackup ;;
   "img") 
-      backup_mount 
+      bmnt 
       imgBackup ;;
   *) usage ;;
 esac
