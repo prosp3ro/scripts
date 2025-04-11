@@ -3,4 +3,4 @@
 sudo pacman -Syy
 sudo pacman -S archlinux-keyring
 sudo pacman -Su
-paru -Sua
+# paru -Sua

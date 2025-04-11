@@ -11,6 +11,11 @@
 # fi
 
 hdmi=$(xrandr -q | grep "connected" | awk '/ connected/{print $1}' | grep HDMI)
-xrandr --output eDP1 --off --output "$hdmi" --mode 1920x1080 --pos 0x0 --rotate normal --output VIRTUAL1 --off
+xrandr --output eDP1 --off \
+    --output DP1 --off \
+    --output HDMI1 --off \
+    --output "$hdmi" --primary --mode 1920x1080 --pos 0x0 --rotate normal \
+    --output VIRTUAL1 --off
+
 notify-send "Switched to HDMI display."
 remaps us
