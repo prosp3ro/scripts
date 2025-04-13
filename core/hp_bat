@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+device=$(bluetoothctl devices Connected | head -n 1)
+deviceMacAddress=$(echo "$device" | awk '{print $2}')
+battery=$(bluetoothctl info "$deviceMacAddress" | grep "Battery" | cut -d' ' -f4 | tr -d '()')
+echo "Headphones battery is at $battery%."

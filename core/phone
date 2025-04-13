@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1091
+
+source _scripts_config || exit
+isinstalled jmtpfs fusermount veracrypt-console-bin || exit
+
+PHONE_DIR="$HOME/mnt/phone"
+BACKUP_TO_PHONE_DIR="$PHONE_DIR/Internal shared storage/backup-from-pc"
+
+backup_to_phone() {
+    [ ! -d "$BACKUP_TO_PHONE_DIR" ] && echoRedExit "$BACKUP_TO_PHONE_DIR doesn't exist!"
+
+    echoBlue "Removing old backup from phone directory."
+    rm -vrf "${BACKUP_TO_PHONE_DIR:?}"/*
+
+    echoBlue -n "Copying files to the phone..."
+    [ -d "$XDG_DOCUMENTS_DIR/keepass" ] && cp -vR "$XDG_DOCUMENTS_DIR/keepass" "$BACKUP_TO_PHONE_DIR"
+    [ -d "$XDG_DOCUMENTS_DIR/health" ] && cp -vR "$XDG_DOCUMENTS_DIR/health" "$BACKUP_TO_PHONE_DIR"
+
+    lastBackupInfoFile="$HOME/doc/last-backup-device.txt"
+    if [ -f "$lastBackupInfoFile" ]; then
+        now=$(date "+%d %B %Y [%A] %H:%M")
+        echo "$now => phone" >> "$HOME/doc/last-backup-device.txt"
+    else
+        echo "$lastBackupInfoFile probably doesn't exist. Information wasn't saved."
+    fi
+}
+
+case "$1" in
+    "mount" | "m") sudo jmtpfs -o allow_other "$PHONE_DIR" 2>/dev/null ;;
+    "umount" | 'u') sudo fusermount -u "$PHONE_DIR" ;;
+    "backup") backup_to_phone ;;
+    *) echo -e "usage: mount or m / umount or u / backup" ;;
+esac
