@@ -4,7 +4,7 @@ site="$*"
 file="$HOME/doc/bookmarks.md"
 
 if grep -q "^$site$" "$file"; then
-  echo "Site already exists."
+    echo "Site already exists."
 else
-  echo "$site" >> "$file"
+    echo "$site" >> "$file"
 fi
