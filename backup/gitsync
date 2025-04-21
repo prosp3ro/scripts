@@ -40,9 +40,7 @@ git_push() {
 
     echo -e "Working dir \e[1;32m$dir\e[0m:"
     cd "$dir" || exit 1
-    git add -A
-    git commit -m "sync"
-    git push
+    git add -A && git commit -m "sync" && git push
     echo
 }
 
