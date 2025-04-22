@@ -2,8 +2,6 @@
 
 # shellcheck disable=SC2034
 
-set -euo pipefail
-
 isinstalled dmenu dust dunst libnotify || exit
 
 DMENU="dmenu"

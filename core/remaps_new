@@ -1,0 +1,111 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1091
+
+source _scripts_config
+
+set -euo pipefail
+
+isinstalled setxkbmap xset xinput xmodmap || exit
+
+declare -Ar DEVICES=(
+    ["touchpad"]="ELAN0501:01 04F3:3060 Touchpad"
+    ["touchpad_tp"]="SynPS/2 Synaptics TouchPad"
+    ["zowie_mouse"]="Kingsis Corporation ZOWIE Gaming mouse"
+    ["logitech_mouse"]="pointer:Logitech USB Receiver Mouse"
+)
+
+declare -Ar TOUCHPAD_OPTS=(
+    ["Tapping Enabled"]=1
+    ["Natural Scrolling Enabled"]=1
+)
+
+declare -Ar TOUCHPAD_TP_OPTS=(
+    ["Tapping Enabled"]=1
+    ["Natural Scrolling Enabled"]=1
+    ["Accel Speed"]=0.5
+)
+
+declare -Ar ZOWIE_MOUSE_OPTS=(
+    ["Accel Speed"]=-1
+)
+
+declare -Ar LOGITECH_MOUSE_OPTS=(
+    ["Accel Speed"]=-0.9
+)
+
+xlist=$(xinput list)
+
+for dev in "${!DEVICES[@]}"; do
+    echo "$dev"
+    # [[ $xlist == *"$dev"* ]] || continue
+    # while read -r opt val; do
+    #     echo "$dev ----- $opt ----- $val"
+    #     # [[ -n $opt ]] && xinput --set-prop "$dev" "libinput $opt" "$val"
+    # done <<< "${DEV_OPTS[$dev]}"
+done
+
+exit
+
+# declare -Ar DEV_OPTS=(
+#   ["ELAN0501:01 04F3:3060 Touchpad"]='
+#         Tapping Enabled=1
+#         Natural Scrolling Enabled=1'
+#   ["SynPS/2 Synaptics TouchPad"]='
+#         Tapping Enabled=1
+#         Natural Scrolling Enabled=1
+#         Accel Speed=0.5'
+#   ["Kingsis Corporation ZOWIE Gaming mouse"]='Accel Speed=-1'
+#   ["pointer:Logitech USB Receiver Mouse"]='Accel Speed=-0.9'
+# )
+#
+keyboard_common() {
+    setxkbmap "$1"
+    setxkbmap -option caps:escape
+    xset r rate 320 70
+    xmodmap -e 'keycode 135 = Super_R'
+}
+
+layout_us() {
+    keyboard_common us
+    xmodmap -e 'clear mod1'
+    xmodmap -e 'add mod1 = Alt_L'
+    xmodmap -e 'add mod4 = Alt_R'
+}
+
+layout_pl() {
+    keyboard_common pl;
+}
+
+apply_device_opts() {
+    local xlist
+    xlist=$(xinput list)
+
+    for dev in "${!DEV_OPTS[@]}"; do
+        [[ $xlist == *"$dev"* ]] || continue
+        while read -r opt val; do
+            echo "$dev ----- $opt ----- $val"
+            # [[ -n $opt ]] && xinput --set-prop "$dev" "libinput $opt" "$val"
+        done <<< "${DEV_OPTS[$dev]}"
+    done
+}
+
+case ${1-} in
+    us) notify-send "Switching to US keyboard";
+        layout_us
+        ;;
+    pl) notify-send "Switching to Polish keyboard";
+        layout_pl
+        ;;
+    *)
+        if [[ $(setxkbmap -query | awk '/layout/{print $2}') == us ]]; then
+            notify-send "Switching to Polish keyboard"
+            # layout_pl
+        else
+            notify-send "Switching to US keyboard"
+            # layout_us
+        fi
+        ;;
+esac
+
+apply_device_opts

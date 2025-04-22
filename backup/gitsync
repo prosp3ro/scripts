@@ -3,6 +3,7 @@
 # shellcheck disable=SC1091
 
 source _scripts_config
+set -euo pipefail
 
 declare -A GIT_DIRS=(
     ["scripts"]="$HOME/.local/scripts"

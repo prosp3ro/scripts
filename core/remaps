@@ -3,11 +3,14 @@
 # shellcheck disable=SC1091
 
 source _scripts_config
+
+# set -euo pipefail
+
 isinstalled setxkbmap xset xinput xmodmap || exit
 
 # xinput list
 touchpad="ELAN0501:01 04F3:3060 Touchpad"
-touchpad_tp="SynPS/2 Synaptics TouchPad"
+touchpad_thinkpad="SynPS/2 Synaptics TouchPad"
 
 remap() {
     setxkbmap
@@ -18,20 +21,14 @@ remap() {
     # Touchpad
     xinput --set-prop "$touchpad" "libinput Tapping Enabled" "1"
     xinput --set-prop "$touchpad" "libinput Natural Scrolling Enabled" "1"
-    xinput --set-prop "$touchpad_tp" "libinput Natural Scrolling Enabled" "1"
-    xinput --set-prop "$touchpad_tp" "libinput Accel Speed" "0.5"
+    xinput --set-prop "$touchpad_thinkpad" "libinput Natural Scrolling Enabled" "1"
+    xinput --set-prop "$touchpad_thinkpad" "libinput Accel Speed" "0.5"
 
     # Mouse
     xinput --set-prop "Kingsis Corporation ZOWIE Gaming mouse" "libinput Accel Speed" "-1"
     xinput --set-prop "2.4G Wireless Optical Mouse  Mouse" "libinput Accel Speed" "-1"
     xinput --set-prop "pointer:Logitech USB Receiver Mouse" "libinput Accel Speed" "-0.9"
 }
-
-# if [ $# -eq 0 ]; then
-#     value=$(echo -e "eng\npl" | $DMENU)
-# else
-#     value="$1"
-# fi
 
 remaps_toggle() {
     if [ "$(setxkbmap -query | awk '/layout/ {print $2}')" == "us" ]; then
@@ -48,13 +45,14 @@ remaps_toggle() {
     fi
 }
 
-# if [ $# -eq 0 ]; then
-#     remaps_toggle
-# else
-#     value="$1"
-# fi
+if [ $# -eq 0 ]; then
+    remaps_toggle
+    exit
+else
+    value="$1"
+fi
 
-case "$1" in
+case "$value" in
     "us")
         notify-send "Switching to us keyboard..."
         remap
@@ -69,6 +67,6 @@ case "$1" in
         setxkbmap pl
         ;;
     *)
-        remaps_toggle
+        echoRedExit "Wrong argument."
         ;;
 esac
