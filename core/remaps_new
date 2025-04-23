@@ -8,11 +8,16 @@ set -euo pipefail
 
 isinstalled setxkbmap xset xinput xmodmap || exit
 
-declare -Ar DEVICES=(
-    ["touchpad"]="ELAN0501:01 04F3:3060 Touchpad"
-    ["touchpad_tp"]="SynPS/2 Synaptics TouchPad"
-    ["zowie_mouse"]="Kingsis Corporation ZOWIE Gaming mouse"
-    ["logitech_mouse"]="pointer:Logitech USB Receiver Mouse"
+touchpad="ELAN0501:01 04F3:3060 Touchpad"
+touchpad_tp="SynPS/2 Synaptics TouchPad"
+zowie_mouse="Kingsis Corporation ZOWIE Gaming mouse"
+logitech_mouse="Logitech USB Receiver Mouse"
+
+declare -ar DEVICES=(
+    "$touchpad"
+    "$touchpad_tp"
+    "$zowie_mouse"
+    "$logitech_mouse"
 )
 
 declare -Ar TOUCHPAD_OPTS=(
@@ -36,9 +41,12 @@ declare -Ar LOGITECH_MOUSE_OPTS=(
 
 xlist=$(xinput list)
 
-for dev in "${!DEVICES[@]}"; do
+for dev in "${DEVICES[@]}"; do
+    [[ $xlist == *"$dev"* ]] || continue
     echo "$dev"
-    # [[ $xlist == *"$dev"* ]] || continue
+
+    [[ "$dev" == "$touchpad" ]] && xinput --set-prop "$dev" "libinput"
+
     # while read -r opt val; do
     #     echo "$dev ----- $opt ----- $val"
     #     # [[ -n $opt ]] && xinput --set-prop "$dev" "libinput $opt" "$val"
