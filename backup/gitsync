@@ -21,12 +21,8 @@ declare -Ar GIT_DIRS=(
 git_status() {
     local dir="$1"
 
-    if [ ! -d "$dir" ]; then
-        echo -e "\e[1;31m$dir\e[0m doesn't exist\n"
-        return
-    fi
-
-    echo -e "Working dir \e[1;32m$dir\e[0m:"
+    echo -n "Working dir:"
+    echoGreen "$dir"
     cd "$dir" || exit 1
     git status -s
     echo
@@ -35,12 +31,8 @@ git_status() {
 git_push() {
     local dir="$1"
 
-    if [ ! -d "$dir" ]; then
-        echo -e "\e[1;31m$dir\e[0m doesn't exist\n"
-        return
-    fi
-
-    echo -e "Working dir \e[1;32m$dir\e[0m:"
+    echo -n "Working dir:"
+    echoGreen "$dir"
     cd "$dir" || exit 1
     git add -A && git commit -m "sync" && git push
     echo
@@ -49,32 +41,39 @@ git_push() {
 git_pull() {
     local dir="$1"
 
-    if [ ! -d "$dir" ]; then
-        echo -e "\e[1;31m$dir\e[0m doesn't exist"
-        echo
-        return
-    fi
-
-    echo -e "Working dir \e[1;32m$dir\e[0m:"
-    cd "$dir" || exit 1
+    echo -n "Working dir:"
+    echoGreen "$dir"
     git pull
     echo
+}
+
+check_if_dir_exists() {
+    if [ ! -d "$1" ]; then
+        echoRed -n "$1 doesn't exist"
+        return
+    fi
 }
 
 case "${1-usage}" in
     "status")
         for key in "${!GIT_DIRS[@]}"; do
-            git_status "${GIT_DIRS[$key]}"
+            dir="${GIT_DIRS[$key]}"
+            check_if_dir_exists "$dir"
+            git_status "$dir"
         done
         ;;
     "push")
         for key in "${!GIT_DIRS[@]}"; do
-            git_push "${GIT_DIRS[$key]}"
+            dir="${GIT_DIRS[$key]}"
+            check_if_dir_exists "$dir"
+            git_push "$dir"
         done
         ;;
     "pull")
         for key in "${!GIT_DIRS[@]}"; do
-            git_pull "${GIT_DIRS[$key]}"
+            dir="${GIT_DIRS[$key]}"
+            check_if_dir_exists "$dir"
+            git_pull "$dir"
         done
         ;;
     "usage")
