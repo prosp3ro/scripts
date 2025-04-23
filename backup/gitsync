@@ -5,16 +5,17 @@
 source _scripts_config
 set -euo pipefail
 
-declare -A GIT_DIRS=(
+declare -Ar GIT_DIRS=(
     ["scripts"]="$HOME/.local/scripts"
     # ["moonwm"]="$HOME/.local/git/projects/moonwm"
     ["st-enhanced"]="$HOME/.local/projects/git/st-enhanced"
     ["dmenu-enhanced"]="$HOME/.local/projects/git/dmenu-enhanced"
     ["work"]="$HOME/.local/projects/git/work"
-    ["multi"]="$HOME/.local/projects/git/multi"
+    # ["multi"]="$HOME/.local/projects/git/multi"
     ["nvim"]="$HOME/.config/nvim"
     ["dotfiles"]="$HOME/.local/projects/git/dotfiles"
-    ["server-files"]="$HOME/.local/projects/git/server-files"
+    # ["server-files"]="$HOME/.local/projects/git/server-files"
+    ["adminer"]="/srv/http/adminer"
 )
 
 git_status() {
@@ -60,7 +61,7 @@ git_pull() {
     echo
 }
 
-case "$1" in
+case "${1-usage}" in
     "status")
         for key in "${!GIT_DIRS[@]}"; do
             git_status "${GIT_DIRS[$key]}"
@@ -76,7 +77,7 @@ case "$1" in
             git_pull "${GIT_DIRS[$key]}"
         done
         ;;
-    *)
+    "usage")
         echo "Usage: status/push/pull"
         exit 1
         ;;
