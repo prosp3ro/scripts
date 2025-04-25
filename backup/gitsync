@@ -21,7 +21,7 @@ declare -Ar GIT_DIRS=(
 git_status() {
     local dir="$1"
 
-    echo -n "Working dir:"
+    echo -n "Working dir: "
     echoGreen "$dir"
     cd "$dir" || exit 1
     git status -s
@@ -31,7 +31,7 @@ git_status() {
 git_push() {
     local dir="$1"
 
-    echo -n "Working dir:"
+    echo -n "Working dir: "
     echoGreen "$dir"
     cd "$dir" || exit 1
     git add -A
@@ -49,7 +49,7 @@ git_push() {
 git_pull() {
     local dir="$1"
 
-    echo -n "Working dir:"
+    echo -n "Working dir: "
     echoGreen "$dir"
     git pull
     echo
