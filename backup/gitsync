@@ -3,7 +3,7 @@
 # shellcheck disable=SC1091
 
 source _scripts_config
-set -euo pipefail
+# set -euo pipefail
 
 declare -Ar GIT_DIRS=(
     ["scripts"]="$HOME/.local/scripts"
@@ -36,11 +36,11 @@ git_push() {
     cd "$dir" || exit 1
     git add -A
 
-    if git diff --cached --quiet; then
-        echo "nothing to commit"
-    else
+    # if git diff --cached --quiet; then
+    #     echo "nothing to commit"
+    # else
         git commit -m "sync"
-    fi
+    # fi
 
     git push
     echo
@@ -51,6 +51,7 @@ git_pull() {
 
     echo -n "Working dir: "
     echoGreen "$dir"
+    cd "$dir" || exit 1
     git pull
     echo
 }
