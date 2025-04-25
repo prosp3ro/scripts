@@ -34,7 +34,15 @@ git_push() {
     echo -n "Working dir:"
     echoGreen "$dir"
     cd "$dir" || exit 1
-    git add -A && git commit -m "sync" && git push
+    git add -A
+
+    if git diff --cached --quiet; then
+        echo "nothing to commit"
+    else
+        git commit -m "sync"
+    fi
+
+    git push
     echo
 }
 
@@ -65,7 +73,6 @@ case "${1-usage}" in
     "push")
         for key in "${!GIT_DIRS[@]}"; do
             dir="${GIT_DIRS[$key]}"
-            echo "$dir"
             check_if_dir_exists "$dir"
             git_push "$dir"
         done
