@@ -65,6 +65,7 @@ case "${1-usage}" in
     "push")
         for key in "${!GIT_DIRS[@]}"; do
             dir="${GIT_DIRS[$key]}"
+            echo "$dir"
             check_if_dir_exists "$dir"
             git_push "$dir"
         done
