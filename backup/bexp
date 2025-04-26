@@ -5,8 +5,6 @@
 source _scripts_config
 isinstalled veracrypt-console-bin mountpoint || exit
 
-set -e
-
 main() {
     echo -n "Did you create a backup first? [y/N]: "
     read -r answer
@@ -41,7 +39,7 @@ main() {
     echo "$now => $1" >> "$HOME/doc/last-backup-device.txt"
     exit
 
-    echoBlue -n "Run backup_test? [y/N]"
+    echoBlue -n "Run btest? [y/N]"
     read -r answer
 
     if [ "$answer" == "y" ]; then
