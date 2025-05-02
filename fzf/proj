@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+isinstalled fd fzf || exit
+
+fzf_min() {
+    fzf --reverse --height 20
+}
+
+projects_location="$(echo -e "git\nlocal\nhttp" | fzf --reverse --height 20)"
+
+case "$projects_location" in
+    "git") dir="$HOME/.local/projects/git" ;;
+    "local") dir="$HOME/.local/projects/local" ;;
+    "http") dir="/srv/http" ;;
+esac
+
+if [ "$dir" ]; then
+    project="$(fd -d 1 --type d . "$dir" | fzf --reverse --height 20)"
+    [ "$project" ] && cd "$project"
+fi
