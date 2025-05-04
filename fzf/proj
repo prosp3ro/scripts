@@ -16,5 +16,10 @@ esac
 
 if [ "$dir" ]; then
     project="$(fd -d 1 --type d . "$dir" | fzf --reverse --height 20)"
-    [ "$project" ] && cd "$project"
+
+    if [ "$project" ]; then
+        cd "$project"
+    else
+        cd "$dir"
+    fi
 fi
