@@ -5,31 +5,35 @@
 source _scripts_config
 isinstalled xdotool xclip maim || exit
 
+maim_cmd() {
+    maim -o --hidecursor --format png $*
+}
+
 [ ! -d "$HOME/tmp/maim" ] && mkdir -p "$HOME/tmp/maim" && notify-send "$0" "$HOME/tmp/maim directory created."
 filename="$HOME/tmp/maim/$(date "+%d-%B-%A-%H-%M-%S").png"
 
 case "$(printf "a selected area (copy)\\nfull screen (copy)\\ncurrent window (copy)\\na selected area\\nfull screen\\ncurrent window" | $DMENU_V -i -p "Screenshot which area?")" in
 	"a selected area (copy)")
-        maim --hidecursor --format png -s | xclip -selection clipboard -t image/png
+        maim_cmd -s | xclip -selection clipboard -t image/png
         notify-send "Image copied to clipboard" ;;
 
 	"full screen (copy)")
-        maim --hidecursor --format png | xclip -selection clipboard -t image/png
+        maim_cmd | xclip -selection clipboard -t image/png
         notify-send "Image copied to clipboard" ;;
 
 	"current window (copy)")
-        maim --hidecursor --format png -i "$(xdotool getactivewindow)" | xclip -selection clipboard -t image/png
+        maim_cmd -i "$(xdotool getactivewindow)" | xclip -selection clipboard -t image/png
         notify-send "Image copied to clipboard";;
 
 	"a selected area")
-        maim --hidecursor --format png -s "$filename"
+        maim_cmd -s "$filename"
         notify-send "Image location" "$filename" ;;
 
 	"full screen")
-        maim --hidecursor --format png "$filename"
+        maim_cmd "$filename"
         notify-send "Image location" "$filename" ;;
 
 	"current window")
-        maim --hidecursor --format png -i "$(xdotool getactivewindow)" "$filename"
+        maim_cmd -i "$(xdotool getactivewindow)" "$filename"
         notify-send "Image location" "$filename" ;;
 esac

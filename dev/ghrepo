@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+isinstalled gh || exit
+
+if [ $# -eq 0 ]; then
+    exit
+fi
+
+git init
+gh repo create "$1" --source=. --private --remote=upstream --disable-wiki --disable-issues
