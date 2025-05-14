@@ -6,8 +6,8 @@ isinstalled tar || exit
 BACKUP_CONFIG="$XDG_CONFIG_HOME/backup.cfg"
 
 backup_standard() {
-    [ ! -f "$BACKUP_CONFIG" ] && echoRedExit "$BACKUP_CONFIG file doesn't exist"
-    [ ! -f "$VC_BACKUP_MNT_DIR/backup.tar.gz" ] && echoRedExit "$VC_BACKUP_MNT_DIR/backup.tar.gz doesn't exist!"
+    [ -f "$BACKUP_CONFIG" ] || echoRedExit "$BACKUP_CONFIG file doesn't exist"
+    [ -f "$VC_BACKUP_MNT_DIR/backup.tar.gz" ] || echoRedExit "$VC_BACKUP_MNT_DIR/backup.tar.gz doesn't exist!"
 
     echoBlue "Replacing oldbackup.tar.gz file."
     mv -v "$VC_BACKUP_MNT_DIR/backup.tar.gz" "$VC_BACKUP_MNT_DIR/oldbackup.tar.gz"
