@@ -4,7 +4,7 @@ paru -Sc
 
 [ ! -d "$HOME/tmp" ] && mkdir "$HOME/tmp"
 cp -R "$XDG_CACHE_HOME/keepassxc" "$HOME/tmp/keepassxc"
-cp -R "$XDG_CACHE_HOME/zsh" "$HOME/tmp/zsh"
+cp "$XDG_CACHE_HOME/zsh_history" "$HOME/tmp/zsh_history"
 
 rm -rf "$XDG_CONFIG_HOME/zsh/.zcompcache"
 rm -rf "$XDG_CONFIG_HOME/zsh/.zcompdump"*
@@ -16,5 +16,5 @@ if ! rm -rf "${XDG_CACHE_HOME:?}/"*; then
   exit 1
 fi
 
-mv "$HOME/tmp/keepassxc" "$XDG_CACHE_HOME/keepassxc"
-mv "$HOME/tmp/zsh" "$XDG_CACHE_HOME/zsh"
+mv "$HOME/tmp/keepassxc" "$XDG_CACHE_HOME"
+mv "$HOME/tmp/zsh_history" "$XDG_CACHE_HOME"
