@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# if [ ! -z "$#" ]; then
+#     rg -HSp -uuu "$1" .
+# fi
+
+rg -HSp --hidden -g '!{**/node_modules/*,**/.git/*}' "$1" .
