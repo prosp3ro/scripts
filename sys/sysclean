@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-paru -Sc
+paru -Sc --noconfirm
 
 [ ! -d "$HOME/tmp" ] && mkdir "$HOME/tmp"
 cp -R "$XDG_CACHE_HOME/keepassxc" "$HOME/tmp/keepassxc"
