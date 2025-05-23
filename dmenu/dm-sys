@@ -18,7 +18,7 @@ case "$(printf "lock\\nturn screen off\\nrebuild moonwm\\nlogout\\nreboot\\npowe
         xsecurelock
         picom &
         ;;
-    "turn screen off") xset dpms force off ;;
+    "turn screen off") sleep 1s; xset dpms force off & ;;
     # "rebuild dwm") rebuild dwm ;;
     "rebuild moonwm") rebuild moonwm ;;
     "logout") pkill X ;;
