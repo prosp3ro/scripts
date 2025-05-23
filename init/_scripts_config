@@ -10,7 +10,7 @@ DMENU_V="dmenu -l 20"
 SCRIPTS_DIR="$HOME/.local/scripts"
 
 VC_BACKUP="$HOME/.local/backup"
-VC_BACKUP_MNT_DIR="$HOME/mnt/vc-backup"
+VC_BACKUP_MNT_DIR="$HOME/mnt/vc"
 
 NOTIFICATION_SOUNDS_DIR="$HOME/doc/sounds"
 LOW_BAT_SOUND="$NOTIFICATION_SOUNDS_DIR/low-battery.mp3"
