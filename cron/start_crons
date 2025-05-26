@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+case "$(hostname)" in
+    "arch")
+        pgrep -f batcron >/dev/null || batcron &
+        pgrep -f netcron >/dev/null || netcron &
+        ;;
+    "null")
+        pgrep -f batcron >/dev/null || batcron &
+        pgrep -f memcron >/dev/null || memcron &
+        pgrep -f netcron >/dev/null || netcron &
+        ;;
+esac
