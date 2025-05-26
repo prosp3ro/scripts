@@ -12,12 +12,13 @@ bluetooth_connect(){
 }
 
 menu_options="disconnect current device\n"
-menu_options+="pair\n"
 menu_options+="connect\n"
+menu_options+="restart pipewire\n"
+# menu_options+="pair\n"
 menu_options+="status\n"
-menu_options+="restart\n"
+menu_options+="restart bluetooth\n"
 menu_options+="enable bluetooth\n"
-menu_options+="disable bluetooth"
+menu_options+="disable bluetooth\n"
 
 selection="$(printf "$menu_options" | $DMENU_V -i -p "Select option:")"
 
@@ -36,7 +37,7 @@ case "$selection" in
         status=$(bluetoothctl show | grep 'Powered' | sed 's/	//g')
         notify-send "Bluetooth" "$status."
         ;;
-    "restart")
+    "restart bluetooth")
         if sudo systemctl restart bluetooth; then
             notify-send "Bluetooth restarted."
         else
@@ -50,5 +51,9 @@ case "$selection" in
     "disable bluetooth")
         bluetoothctl power off
         notify-send "Bluetooth disabled."
+        ;;
+    "restart pipewire")
+        systemctl --user restart pipewire pipewire-pulse wireplumber
+        notify-send "Pipewire restarted."
         ;;
 esac

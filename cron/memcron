@@ -2,6 +2,8 @@
 
 source _scripts_config
 
+isinstalled bc || exit 1
+
 while true
 do
     memory=$(free --mebi | sed -n '2{p;q}')

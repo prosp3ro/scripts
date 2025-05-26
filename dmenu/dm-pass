@@ -7,5 +7,5 @@
 
 source _scripts_config
 
-$DMENU -P -p "$1" <&- && echo
+dmenu -P -p "$1" <&- && echo
 # $DMENU -p "$1" <&- && echo
