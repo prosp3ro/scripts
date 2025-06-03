@@ -12,11 +12,12 @@ backup_to_phone() {
     [ ! -d "$BACKUP_TO_PHONE_DIR" ] && echoRedExit "$BACKUP_TO_PHONE_DIR doesn't exist!"
 
     echoBlue "Removing old backup from phone directory."
-    rm -vrf "${BACKUP_TO_PHONE_DIR:?}"/*
+    rm -rf "${BACKUP_TO_PHONE_DIR:?}"/*
 
     echoBlue -n "Copying files to the phone..."
     [ -d "$XDG_DOCUMENTS_DIR/keepass" ] && cp -vR "$XDG_DOCUMENTS_DIR/keepass" "$BACKUP_TO_PHONE_DIR"
     [ -d "$XDG_DOCUMENTS_DIR/health" ] && cp -vR "$XDG_DOCUMENTS_DIR/health" "$BACKUP_TO_PHONE_DIR"
+    [ -d "$XDG_DOCUMENTS_DIR/job_search" ] && cp -vR "$XDG_DOCUMENTS_DIR/job_search" "$BACKUP_TO_PHONE_DIR"
 
     lastBackupInfoFile="$HOME/doc/last-backup-device.txt"
     if [ -f "$lastBackupInfoFile" ]; then
