@@ -39,7 +39,7 @@ git_push() {
     # if git diff --cached --quiet; then
     #     echo "nothing to commit"
     # else
-        git commit -m "sync"
+    git commit -m "sync"
     # fi
 
     git push
