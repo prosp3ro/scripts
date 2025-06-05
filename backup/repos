@@ -56,6 +56,19 @@ git_pull() {
     echo
 }
 
+sync_repo() {
+    local dir="$1"
+
+    echo -n "Working dir: "
+    echoGreen "$dir"
+    cd "$dir" || exit 1
+    git pull --rebase
+    git add .
+    git commit -m "sync"
+    git push
+    echo
+}
+
 check_if_dir_exists() {
     if [ ! -d "$1" ]; then
         echoRed -n "$1 doesn't exist"
@@ -83,6 +96,13 @@ case "${1-usage}" in
             dir="${GIT_DIRS[$key]}"
             check_if_dir_exists "$dir"
             git_pull "$dir"
+        done
+        ;;
+    "sync")
+        for key in "${!GIT_DIRS[@]}"; do
+            dir="${GIT_DIRS[$key]}"
+            check_if_dir_exists "$dir"
+            sync_repo "$dir"
         done
         ;;
     "usage")
