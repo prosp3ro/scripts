@@ -15,8 +15,11 @@ backup_to_phone() {
     rm -rf "${BACKUP_TO_PHONE_DIR:?}"/*
 
     echoBlue -n "Copying files to the phone..."
+    echoGreen "Keepass:"
     [ -d "$XDG_DOCUMENTS_DIR/keepass" ] && cp -vR "$XDG_DOCUMENTS_DIR/keepass" "$BACKUP_TO_PHONE_DIR"
+    echoGreen -n "Health:"
     [ -d "$XDG_DOCUMENTS_DIR/health" ] && cp -vR "$XDG_DOCUMENTS_DIR/health" "$BACKUP_TO_PHONE_DIR"
+    echoGreen -n "Job Search:"
     [ -d "$XDG_DOCUMENTS_DIR/job_search" ] && cp -vR "$XDG_DOCUMENTS_DIR/job_search" "$BACKUP_TO_PHONE_DIR"
 
     lastBackupInfoFile="$HOME/doc/last-backup-device.txt"
