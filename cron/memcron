@@ -4,18 +4,13 @@ source _scripts_config
 
 isinstalled bc || exit 1
 
-while true
-do
-    memory=$(free --mebi | sed -n '2{p;q}')
-    used_memory=$(echo "$memory" | awk '{print $3}')
-    formatted_used=$(bc <<< "scale=2; $used_memory / 1024")
+memory=$(free --mebi | sed -n '2{p;q}')
+used_memory=$(echo "$memory" | awk '{print $3}')
+formatted_used=$(bc <<< "scale=2; $used_memory / 1024")
 
-    if (( $(bc <<< "$formatted_used >= 5.90") )); then
-        notify-send -u critical "Low memory!" "${formatted_used}GiB is used by system."
-        mpv --volume=70 "$LOW_MEM_SOUND" 1>/dev/null || notify-send --critical "$0" "$LOW_MEM_SOUND not found."
-        sleep 1s
-        notify-send -t 5000 "Memory hungry processes" "$(ps axch -o cmd:15,%mem --sort=-%mem | head)"
-    fi
-
-    sleep 1m
-done
+if (( $(bc <<< "$formatted_used >= 5.90") )); then
+    notify-send -u critical "Low memory!" "${formatted_used}GiB is used by system."
+    # mpv --volume=70 "$LOW_MEM_SOUND" 1>/dev/null || notify-send --critical "$0" "$LOW_MEM_SOUND not found."
+    sleep 1s
+    notify-send -t 5000 "Memory hungry processes" "$(ps axch -o cmd:15,%mem --sort=-%mem | head)"
+fi

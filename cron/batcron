@@ -2,17 +2,15 @@
 
 source _scripts_config
 
-while true
-do
-    capacity="$(cat /sys/class/power_supply/BAT1/capacity)"
-    status="$(cat /sys/class/power_supply/BAT1/status)"
+notify-send "crontab works"
 
-    if [ "$capacity" -le 20 ] && [ "$status" == "Discharging" ]; then
-        xset dpms force on
-        notify-send -u critical "Low battery!" "Battery level is at $capacity%."
-        mpv --volume=80 "$LOW_BAT_SOUND" 1>/dev/null || notify-send --critical "$0" "$LOW_BAT_SOUND not found."
-    fi
+capacity="$(cat /sys/class/power_supply/BAT1/capacity)"
+status="$(cat /sys/class/power_supply/BAT1/status)"
 
-    # [ "$capacity" -gt 98 ] && notify-send "Battery full" "Battery level is at $capacity%." && sleep 10m
-    sleep 2m
-done
+if [ "$capacity" -le 20 ] && [ "$status" == "Discharging" ]; then
+    xset dpms force on
+    notify-send -u critical "Low battery!" "Battery level is at $capacity%."
+    mpv --volume=80 "$LOW_BAT_SOUND" 1>/dev/null || notify-send --critical "$0" "$LOW_BAT_SOUND not found."
+fi
+
+# [ "$capacity" -gt 98 ] && notify-send "Battery full" "Battery level is at $capacity%." && sleep 10m
