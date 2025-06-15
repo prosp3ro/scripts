@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 source _scripts_config
-isinstalled tar || exit
+isinstalled tar cronie || exit
 
 BACKUP_CONFIG="$XDG_CONFIG_HOME/backup.cfg"
 
@@ -13,6 +13,7 @@ backup_standard() {
     mv -v "$VC_BACKUP_MNT_DIR/backup.tar.gz" "$VC_BACKUP_MNT_DIR/oldbackup.tar.gz"
 
     echoBlue -n "Creating new backup tar archive."
+    crontab -l > "$HOME/doc/crontab.txt"
     tar -czf "$VC_BACKUP_MNT_DIR/backup.tar.gz" -T "$BACKUP_CONFIG" || echoRedExit "tar command failed"
 
     echoBlue -n "Backup info:"

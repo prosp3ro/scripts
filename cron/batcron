@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
-source _scripts_config
-
-notify-send "crontab works"
+LOW_BAT_SOUND="$HOME/doc/sounds/low-battery.mp3"
 
 capacity="$(cat /sys/class/power_supply/BAT1/capacity)"
 status="$(cat /sys/class/power_supply/BAT1/status)"
@@ -10,7 +8,7 @@ status="$(cat /sys/class/power_supply/BAT1/status)"
 if [ "$capacity" -le 20 ] && [ "$status" == "Discharging" ]; then
     xset dpms force on
     notify-send -u critical "Low battery!" "Battery level is at $capacity%."
-    mpv --volume=80 "$LOW_BAT_SOUND" 1>/dev/null || notify-send --critical "$0" "$LOW_BAT_SOUND not found."
+    mpv "$LOW_BAT_SOUND" 1>/dev/null || notify-send --critical "$0" "$LOW_BAT_SOUND not found."
 fi
 
 # [ "$capacity" -gt 98 ] && notify-send "Battery full" "Battery level is at $capacity%." && sleep 10m

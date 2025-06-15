@@ -1,12 +1,23 @@
 #!/usr/bin/env bash
 
-source _scripts_config
-
 # usage="$(vnstat -i wlp3s0 --oneline | awk -F';' '{print $6}' | cut -d ' ' -f 1)"
 # usage=$(vnstat -i wlp3s0 --oneline | awk -F';' '{split($6, a, " "); print a[1]}')
 
+NET_USAGE_SOUND="$HOME/doc/sounds/net-usage.wav"
 INTERFACE="wlp3s0"
 THRESHOLD=3.00
+
+if ! command -v vnstat &>/dev/null
+then
+    notify-send "netcron" "vnstat is not installed"
+    exit 1
+fi
+
+if ! command -v bc &>/dev/null
+then
+    notify-send "netcron" "bc is not installed"
+    exit 1
+fi
 
 currentDate="$(date '+%Y-%m-%d')"
 

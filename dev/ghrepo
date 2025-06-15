@@ -6,5 +6,16 @@ if [ $# -eq 0 ]; then
     exit
 fi
 
-git init
-gh repo create "$1" --source=. --private --remote=upstream --disable-wiki --disable-issues
+echo -n "visibility [public/private/internal]: "
+read -r visibility
+
+case "$visibility" in
+    public|private|internal)
+        git init
+        gh repo create "$1" --source=. --visibility "$visibility" --remote upstream --disable-wiki --disable-issues
+        ;;
+    *)
+        echo "wrong argument";
+        exit 1
+        ;;
+esac
