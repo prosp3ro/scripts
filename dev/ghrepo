@@ -12,7 +12,7 @@ read -r visibility
 case "$visibility" in
     public|private|internal)
         git init
-        gh repo create "$1" --source=. --visibility "$visibility" --remote upstream --disable-wiki --disable-issues
+        gh repo create "$1" --source=. --"$visibility" --remote upstream --disable-wiki --disable-issues
         ;;
     *)
         echo "wrong argument";
