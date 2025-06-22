@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+isinstalled xwallpaper || exit
+
+xwallpaper --zoom "$HOME/img/background"
+monlay
+pgrep -f "fastcompmgr" > /dev/null || fastcompmgr &
