@@ -4,4 +4,4 @@ isinstalled xwallpaper || exit
 
 xwallpaper --zoom "$HOME/img/background"
 monlay
-pgrep -f "fastcompmgr" > /dev/null || fastcompmgr &
+# pgrep -f "fastcompmgr" > /dev/null || fastcompmgr &
