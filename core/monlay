@@ -16,7 +16,7 @@ if [ "$hdmi" ]; then
     xrandr --output eDP1 --off \
         --output DP1 --off \
         --output HDMI1 --off \
-        --output "$hdmi" --primary --mode 1920x1080 --pos 0x0 --rotate normal \
+        --output "$hdmi" --primary --mode 1920x1080 --pos 0x0 --rotate normal --rate 100 \
         --output VIRTUAL1 --off
 
     notify-send "Switched to HDMI display."

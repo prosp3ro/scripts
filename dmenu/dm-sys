@@ -25,6 +25,7 @@ case "$(printf "lock\\nturn screen off\\nrebuild moonwm\\nlogout\\nreboot\\npowe
     # "leave i3") kill -TERM "$(pgrep -u "$USER" "\bi3$")" ;;
     # "leave awesome") kill -TERM "$(pgrep -u "$USER" "\bawesome$")" ;;
     "reboot") systemctl reboot -i ;;
-    "poweroff") systemctl poweroff -i ;;
+    # "poweroff") systemctl poweroff -i ;;
+    "poweroff") notify-send "use new method" ;;
     *) exit 1 ;;
 esac
