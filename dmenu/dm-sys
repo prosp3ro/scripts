@@ -26,6 +26,6 @@ case "$(printf "lock\\nturn screen off\\nrebuild moonwm\\nlogout\\nreboot\\npowe
     # "leave awesome") kill -TERM "$(pgrep -u "$USER" "\bawesome$")" ;;
     "reboot") systemctl reboot -i ;;
     # "poweroff") systemctl poweroff -i ;;
-    "poweroff") notify-send "use new method" ;;
+    "poweroff") notify-send --expire-time=100000 "new method" "1. logout\n2.switch into tty\n3.login as root\n4. systemctl poweroff -i --output=verbose\n5. next time check journalctl" ;;
     *) exit 1 ;;
 esac

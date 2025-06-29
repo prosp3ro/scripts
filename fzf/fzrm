@@ -2,15 +2,15 @@
 
 isinstalled fzf || exit
 
-file=$(pacman -Qq | fzf)
-# file=$(pacman -Qq | fzf --reverse)
+file=$(pacman -Qq | fzf --reverse)
+[ -z "$file" ] && exit
 
-option=$(echo -e "R\\nRn\\nRs\\nRns" | fzf --header "Chose pacman option:")
-# option=$(echo -e "R\\nRn\\nRs\\nRns" | fzf --reverse --header "Chose pacman option:")
+option=$(echo -e "R\\nRn (with configuration files)\\nRs (recursive)\\nRns" | fzf --reverse --header "Chose pacman option:")
 
 case "$option" in
-    "R") sudo pacman -R "$file" ;;
-    "Rn") sudo pacman -Rn "$file" ;;
-    "Rs") sudo pacman -Rs "$file" ;;
-    "Rns") sudo pacman -Rns "$file" ;;
+    "R") sudo pacman -Rv "$file" ;;
+    "Rn (with configuration files)") sudo pacman -Rnv "$file" ;;
+    "Rs (recursive)") sudo pacman -Rsv "$file" ;;
+    "Rns") sudo pacman -Rnsv "$file" ;;
+    *) exit ;;
 esac
