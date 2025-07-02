@@ -11,9 +11,8 @@ router_bat_level () {
         -H 'Referer: http://192.168.32.1/index.html'
 }
 
-while true
-do
-    level="$(router_bat_level | awk -F'\"' '{ print $4 }')"
+level="$(router_bat_level | awk -F'\"' '{ print $4 }')"
 
-    sleep 5m
-done
+if [ "$level" -lt 25 ]; then
+    notify-send -u critical "Low router battery!" "Battery level is at $level%."
+fi

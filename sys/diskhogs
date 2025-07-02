@@ -2,4 +2,5 @@
 
 isinstalled expac bat || exit
 
-expac '%m %n' -H 'G' | sort -n -r | bat --style=numbers,grid
+# expac '%m %n' -H 'G' | sort -n -r | bat --style=numbers,grid
+expac '%m %n, package name: %e' -H 'M' | sort -n -r | head -n 30
