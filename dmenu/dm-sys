@@ -14,9 +14,10 @@ case "$(printf "lock\\nturn screen off\\nrebuild moonwm\\nlogout\\nreboot\\npowe
         export XSECURELOCK_DISCARD_FIRST_KEYPRESS=0
         export XSECURELOCK_BLANK_DPMS_STATE="on"
         export XSECURELOCK_BLANK_TIMEOUT=-1
-        pgrep ! -f fastcompmgr >/dev/null || killall -9 fastcompmgr
+        isinstalled xcompmgr || exit
+        pgrep ! -f xcompmgr >/dev/null || killall -9 xcompmgr
         xsecurelock
-        pgrep -f fastcompmgr >/dev/null || fastcompmgr &
+        pgrep -f xcompmgr >/dev/null || xcompmgr &
         ;;
     "turn screen off") sleep 1s; xset dpms force off & ;;
     # "rebuild dwm") rebuild dwm ;;
@@ -25,7 +26,8 @@ case "$(printf "lock\\nturn screen off\\nrebuild moonwm\\nlogout\\nreboot\\npowe
     # "leave i3") kill -TERM "$(pgrep -u "$USER" "\bi3$")" ;;
     # "leave awesome") kill -TERM "$(pgrep -u "$USER" "\bawesome$")" ;;
     "reboot") systemctl reboot -i ;;
-    # "poweroff") systemctl poweroff -i ;;
-    "poweroff") notify-send --expire-time=100000 "new method" "1. logout\n2.switch into tty\n3.login as root\n4. systemctl poweroff -i --output=verbose\n5. next time check journalctl" ;;
+    "poweroff")
+        sudo systemctl poweroff -i --output=verbose
+        ;;
     *) exit 1 ;;
 esac

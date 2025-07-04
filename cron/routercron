@@ -12,7 +12,15 @@ router_bat_level () {
 }
 
 level="$(router_bat_level | awk -F'\"' '{ print $4 }')"
+file="/tmp/routerbatchecked"
 
 if [ "$level" -lt 25 ]; then
-    notify-send -u critical "Low router battery!" "Battery level is at $level%."
+    [ "$(cat $file)" == "checked" ] && exit
+
+    notify-send -u critical -t 43200000 "Low router battery!" "Router battery level is at $level%."
+    echo "checked" > "$file"
+fi
+
+if [ "$level" -gt 30 ]; then
+    echo "unchecked" > "$file"
 fi
