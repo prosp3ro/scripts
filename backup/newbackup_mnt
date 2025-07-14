@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+source _scripts_config
+isinstalled veracrypt-console-bin tar || exit
+
+# TODO just use backup_mnt
+
+[ -f "$HOME/mnt/vc/donotdelete" ] && echoRedExit "$HOME/mnt/vc already mounted."
+
+[ ! -f "$HOME/mnt/vc/donotdelete" ] && sudo veracrypt --display-password \
+    -t \
+    --pim=0 \
+    -k "" \
+    --protect-hidden=no \
+    "$HOME/.local/newbackup" "$HOME/mnt/vc"
+
+[ ! -f "$HOME/mnt/vc/donotdelete" ] && echoRedExit "$HOME/mnt/vc isn't mounted or donotdelete file doesn't exist."

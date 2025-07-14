@@ -10,7 +10,13 @@ MOUNT_DIR="$HOME/mnt"
 isinstalled jmtpfs
 
 checking_drives() {
-  [[ -z "$(lsblk | grep sdb1)" ]] && echo "No drives detected." && exit 1
+  [[ -z "$(lsblk | grep sdb)" ]] && echo "No drives detected." && exit 1
+}
+
+change_perms() {
+    user="$(whoami)";
+    ug="$(groups | awk '{print $1}')";
+    sudo chown "$user":"$ug" "$MOUNT_DIR/dev"
 }
 
 # Check partition type:
@@ -26,14 +32,19 @@ case "${args[0]}" in
     "ext")
         checking_drives;
         sudo mount "/dev/sdb1" "$MOUNT_DIR/dev";
-        user="$(whoami)";
-        ug="$(groups | awk '{print $1}')";
-        sudo chown "$user":"$ug" "$MOUNT_DIR/dev"
+        change_perms;
         ls --color=auto -alh "$MOUNT_DIR/dev"
         ;;
     "phone")
         sudo jmtpfs -o allow_other "$MOUNT_DIR/phone" 2>/dev/null
         ls --color=auto -alh "$MOUNT_DIR/phone"
+        ;;
+    "encrypted")
+        [ -f /dev/mapper/backupDrive ] && echoRedExit "Already mounted"
+        sudo cryptsetup luksOpen /dev/sdb backupDrive || exit 1
+        sudo mount "/dev/mapper/backupDrive" "$MOUNT_DIR/dev" || exit 1
+        change_perms;
+        ls --color=auto -alh "$MOUNT_DIR/dev"
         ;;
     "tmp")
         checking_drives

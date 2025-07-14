@@ -3,6 +3,11 @@
 source _scripts_config
 isinstalled veracrypt-console-bin tar || exit
 
+# TODO rewrite
+# dont use "donotdelete"
+
+[ -f "$HOME/mnt/vc/donotdelete" ] && echoRedExit "$HOME/mnt/vc already mounted."
+
 [ ! -f "$VC_BACKUP_MNT_DIR/donotdelete" ] && sudo veracrypt --display-password \
     -t \
     --pim=0 \

@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1091
+
+source _scripts_config
+isinstalled veracrypt-console-bin mountpoint || exit
+
+# TODO rewrite it
+
+export_backup() {
+    mountedDevice="$HOME/mnt/dev"
+
+    [ ! -f "$VC_BACKUP" ] && echoRedExit "$VC_BACKUP does not exist."
+    [ ! -f "$mountedDevice/backup" ] && echoRedExit "$mountedDevice is probably not mounted."
+
+    if mountpoint -q "$VC_BACKUP_MNT_DIR"; then
+        echoBlue "Unmounting VeraCrypt volume."
+        sudo veracrypt -d "$VC_BACKUP_MNT_DIR"
+
+        mountpoint -q "$VC_BACKUP_MNT_DIR" && echoRedExit "Error: $VC_BACKUP_MNT_DIR is still mounted."
+    fi
+
+    # echoBlue "Replacing old backup file."
+    # mv -v "$mountedDevice/backup" "$mountedDevice/backup-old"
+
+    echoBlue -n "Copying current backup file to $mountedDevice."
+    cp -v "$VC_BACKUP" "$mountedDevice"
+
+    echoBlue -n "Info:"
+    runDust "$mountedDevice"
+    ls --color=auto -alh "$mountedDevice"
+
+    now=$(date "+%d %B %Y [%A] %H:%M")
+    echo "backup: $now => $1" >> "$HOME/doc/last-backup-device.txt"
+}
+
+export_newbackup() {
+    echo -n "Did you create a backup first? [y/N]: "
+    read -r answer
+
+    if [ "$answer" != "y" ]; then
+        exit 1
+    fi
+
+    mountedDevice="$HOME/mnt/dev"
+
+    [ ! -f "$HOME/.local/newbackup" ] && echoRedExit "$HOME/.local/newbackup does not exist."
+    [ ! -f "$mountedDevice/newbackup" ] && echoRedExit "$mountedDevice is probably not mounted."
+
+    if mountpoint -q "$VC_BACKUP_MNT_DIR"; then
+        echoBlue "Unmounting VeraCrypt volume."
+        sudo veracrypt -d "$VC_BACKUP_MNT_DIR"
+
+        mountpoint -q "$VC_BACKUP_MNT_DIR" && echoRedExit "Error: $VC_BACKUP_MNT_DIR is still mounted."
+    fi
+
+    echoBlue "Replacing old backup file."
+    mv -v "$mountedDevice/newbackup" "$mountedDevice/newbackup-old"
+
+    echoBlue -n "Copying current backup file to $mountedDevice."
+    cp -v "$HOME/.local/newbackup" "$mountedDevice"
+
+    echoBlue -n "Info:"
+    runDust "$mountedDevice"
+    ls --color=auto -alh "$mountedDevice"
+
+    now=$(date "+%d %B %Y [%A] %H:%M")
+    echo "newbackup: $now => $1" >> "$HOME/doc/last-backup-device.txt"
+}
+
+case "$1" in
+    "backup")
+        if [ "$2" != "--note" ]; then
+            echo "no note added"
+            exit 1
+        fi
+
+        export_backup "$3"
+        ;;
+    "newbackup")
+        if [ "$2" != "--note" ]; then
+            echo "no note added"
+            exit 1
+        fi
+
+        export_newbackup "$3"
+        ;;
+    "last")
+        cat "$HOME/doc/last-backup-device.txt" ;;
+    *)
+        echo "usage: backup/newbackup --note goodram/last";
+esac

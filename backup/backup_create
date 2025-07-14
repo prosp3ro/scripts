@@ -1,11 +1,20 @@
 #!/usr/bin/env bash
 
 source _scripts_config
-isinstalled tar cronie || exit
+isinstalled tar cronie dust || exit
 
 BACKUP_CONFIG="$XDG_CONFIG_HOME/backup.cfg"
 
-backup_standard() {
+# TODO use consts in files instead of scripts config
+
+make_backup() {
+    echo -n "Are you sure newbackup volume is mounted instead of backup? [y/N]: "
+    read -r answer
+
+    if [ "$answer" != "y" ]; then
+        exit 1
+    fi
+
     [ -f "$BACKUP_CONFIG" ] || echoRedExit "$BACKUP_CONFIG file doesn't exist"
     [ -f "$VC_BACKUP_MNT_DIR/backup.tar.gz" ] || echoRedExit "$VC_BACKUP_MNT_DIR/backup.tar.gz doesn't exist!"
 
@@ -27,7 +36,14 @@ backup_standard() {
     runDust "$HOME/doc"
 }
 
-backup_img() {
+make_img_backup() {
+    echo -n "Are you sure backup volume is mounted? [y/N]: "
+    read -r answer
+
+    if [ "$answer" != "y" ]; then
+        exit 1
+    fi
+
     echoBlue "Before update info:"
     runDust "$VC_BACKUP_MNT_DIR/img.tar.gz"
 
@@ -44,16 +60,12 @@ backup_img() {
 }
 
 case "${1-usage}" in
-    "standard" | "s" )
-        bmnt
-        backup_standard
+    "new")
+        newbackup_mnt
+        make_backup
         ;;
     "img") 
-        bmnt 
-        backup_img
-        ;;
-    *)
-        echo -e "Options: \n- standard or s \n- img"
-        exit 1
+        backup_mnt 
+        make_img_backup
         ;;
 esac

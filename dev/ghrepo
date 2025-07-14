@@ -2,20 +2,23 @@
 
 isinstalled gh || exit
 
-if [ $# -eq 0 ]; then
-    exit
-fi
+# if [ $# -eq 0 ]; then
+#     exit
+# fi
 
-echo -n "visibility [public/private/internal]: "
-read -r visibility
+git init
+gh repo create "$1" --source=. --public --remote upstream --disable-wiki --disable-issues
 
-case "$visibility" in
-    public|private|internal)
-        git init
-        gh repo create "$1" --source=. --"$visibility" --remote upstream --disable-wiki --disable-issues
-        ;;
-    *)
-        echo "wrong argument";
-        exit 1
-        ;;
-esac
+# echo -n "visibility [public/private/internal]: "
+# read -r visibility
+
+# case "$visibility" in
+#     public|private|internal)
+#         git init
+#         gh repo create "$1" --source=. --"$visibility" --remote upstream --disable-wiki --disable-issues
+#         ;;
+#     *)
+#         echo "wrong argument";
+#         exit 1
+#         ;;
+# esac

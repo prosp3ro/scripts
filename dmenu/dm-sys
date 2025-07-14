@@ -14,10 +14,10 @@ case "$(printf "lock\\nturn screen off\\nrebuild moonwm\\nlogout\\nreboot\\npowe
         export XSECURELOCK_DISCARD_FIRST_KEYPRESS=0
         export XSECURELOCK_BLANK_DPMS_STATE="on"
         export XSECURELOCK_BLANK_TIMEOUT=-1
-        isinstalled xcompmgr || exit
-        pgrep ! -f xcompmgr >/dev/null || killall -9 xcompmgr
+        isinstalled picom || exit
+        pgrep ! -f picom >/dev/null || killall -9 picom
         xsecurelock
-        pgrep -f xcompmgr >/dev/null || xcompmgr &
+        pgrep -f picom >/dev/null || picom &
         ;;
     "turn screen off") sleep 1s; xset dpms force off & ;;
     # "rebuild dwm") rebuild dwm ;;

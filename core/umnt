@@ -9,11 +9,11 @@ DEV_MOUNT_DIR="$HOME/mnt/dev"
 [ ! -d "$MOUNT_DIR" ] && echo "$MOUNT_DIR does not exist." && exit 1
 
 case "${args[0]}" in
-  "dev")
+  "standard")
       mounted_device="$(lsblk -nrpo "name,type,size,mountpoint" | grep $DEV_MOUNT_DIR)"
       [ -z "$mounted_device" ] && echo "Device not found." && exit 1
 
-      sudo -A umount "$DEV_MOUNT_DIR"
+      sudo -A umount "$DEV_MOUNT_DIR" || exit 1
       echoGreen "Device unmounted."
 
       echoBlue "Dir: $DEV_MOUNT_DIR:"
@@ -22,10 +22,16 @@ case "${args[0]}" in
       echoBlue -n "lsblk:"
       lsblk
       ;;
+  "encrypted")
+      sudo -A umount "$DEV_MOUNT_DIR" || exit 1
+      echoBlue "Dir: $DEV_MOUNT_DIR:"
+      ls --color=auto -al "$DEV_MOUNT_DIR"
+
+      sudo cryptsetup luksClose backupDrive || exit 1
+      echoGreen -n "LUKS partition was closed."
+      lsblk
+      ;;
   "phone")
       sudo fusermount -u "$MOUNT_DIR/phone"
-      ;;
-  *)
-      echo "Usage: dev/phone"
       ;;
 esac
