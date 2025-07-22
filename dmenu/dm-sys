@@ -27,7 +27,7 @@ case "$(printf "lock\\nturn screen off\\nrebuild moonwm\\nlogout\\nreboot\\npowe
     # "leave awesome") kill -TERM "$(pgrep -u "$USER" "\bawesome$")" ;;
     "reboot") systemctl reboot -i ;;
     "poweroff")
-        sudo systemctl poweroff -i --output=verbose
+        systemctl poweroff -i --output=verbose
         ;;
     *) exit 1 ;;
 esac

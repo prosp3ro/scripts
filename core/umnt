@@ -34,4 +34,7 @@ case "${args[0]}" in
   "phone")
       sudo fusermount -u "$MOUNT_DIR/phone"
       ;;
+    *)
+        echo "incorrect"
+        exit 1
 esac

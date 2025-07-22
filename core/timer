@@ -3,6 +3,9 @@
 source _scripts_config
 isinstalled termdown || exit
 
+RINGTONE="$HOME/music/songs/Coldplay - Viva la Vida.mp3"
+VOLUME_LVL="100"
+
 if [ ! "$1" ]; then
     termdown
     exit
@@ -12,9 +15,7 @@ if [ ! -f "$RINGTONE" ]; then
     echoRedExit "$RINGTONE not found."
 fi
 
-volume_lvl="50"
-
-[ "$(pamixer --get-mute)" = true ] && echo "Volume is muted!" && exit
+# [ "$(pamixer --get-mute)" = true ] && echo "Volume is muted!" && exit
 # [ "$(bluetoothctl info | head -n 1)" != "Missing device address argument" ] && echo "headphones detected!" && exit
 
 if [ "$(bluetoothctl info | head -n 1)" != "Missing device address argument" ]; then
@@ -26,4 +27,4 @@ if [ "$(bluetoothctl info | head -n 1)" != "Missing device address argument" ]; 
     fi
 fi
 
-termdown "$1" && mpv --volume="$volume_lvl" "$RINGTONE"
+termdown "$1" && mpv --volume="$VOLUME_LVL" "$RINGTONE"
