@@ -16,9 +16,10 @@ if [ -f "$MNT_DIR/backup.tar.gz" ]; then
     mv -v "$MNT_DIR/backup.tar.gz" "$MNT_DIR/oldbackup.tar.gz"
 fi
 
-echo "=> Creating new backup tar archive."
+echo "=> Creating new backup tar archives."
 crontab -l > "$HOME/doc/crontab.txt"
 tar -czf "$MNT_DIR/backup.tar.gz" -T "$BACKUP_CONFIG" || echoRedExit "tar command failed"
+tar -czf "$MNT_DIR/img.tar.gz" "$HOME/img" || echoRedExit "tar command failed"
 
 echo -e "\n=> Backup info:"
 dust -br -d 0 --print-errors "$MNT_DIR"
