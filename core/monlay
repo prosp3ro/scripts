@@ -15,6 +15,7 @@ hdmi=$(xrandr -q | grep "connected" | awk '/ connected/{print $1}' | grep HDMI)
 if [ "$hdmi" ]; then
     xrandr --output eDP1 --off \
         --output DP1 --off \
+        --output eDP-1 --off \
         --output HDMI1 --off \
         --output "$hdmi" --primary --mode 1920x1080 --pos 0x0 --rotate normal --rate 100 \
         --output VIRTUAL1 --off
