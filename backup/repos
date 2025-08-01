@@ -7,14 +7,11 @@ source _scripts_config
 
 declare -Ar GIT_DIRS=(
     ["scripts"]="$HOME/.local/scripts"
-    # ["moonwm"]="$HOME/.local/git/projects/moonwm"
-    ["st-enhanced"]="$HOME/.local/projects/git/st-enhanced"
+    # ["st-enhanced"]="$HOME/.local/projects/git/st-enhanced"
     ["dmenu-enhanced"]="$HOME/.local/projects/git/dmenu-enhanced"
-    ["work"]="$HOME/.local/projects/git/work"
-    # ["multi"]="$HOME/.local/projects/git/multi"
+    ["work"]="$HOME/work"
     ["nvim"]="$HOME/.config/nvim"
     ["dotfiles"]="$HOME/.local/projects/git/dotfiles"
-    # ["server-files"]="$HOME/.local/projects/git/server-files"
     ["adminer"]="/srv/http/adminer"
 )
 
