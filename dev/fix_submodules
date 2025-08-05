@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+git submodule deinit -f --all
+rm -rf .git/modules/*
+git submodule update --init --recursive
