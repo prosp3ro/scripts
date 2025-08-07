@@ -1,25 +1,34 @@
 #!/usr/bin/env bash
 
-# HOST="$(hostname)"
-
-# if [ "$HOST" == "moon" ]; then
-#     xrandr --output eDP1 --off --output HDMI1 --mode 1920x1080 --pos 0x0 --rotate normal --output VIRTUAL1 --off
-# elif [ "$HOST" == "arch" ]; then
-#     xrandr --output eDP1 --off --output DP1 --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI1 --off --output HDMI2 --mode 1920x1080 --pos 1920x0 --rotate normal --output VIRTUAL1 --off
-# else
-#     notify-send "$0" "hostname isn't moon/arch"
-# fi
-
-hdmi=$(xrandr -q | grep "connected" | awk '/ connected/{print $1}' | grep HDMI)
+hdmi=$(xrandr -q | grep -w "connected" | grep "HDMI" | awk '/ connected/{print $1}')
+edp=$(xrandr -q | grep -w "connected" | grep "eDP" | awk '/ connected/{print $1}')
 
 if [ "$hdmi" ]; then
-    xrandr --output eDP1 --off \
-        --output DP1 --off \
-        --output eDP-1 --off \
-        --output HDMI1 --off \
-        --output "$hdmi" --primary --mode 1920x1080 --pos 0x0 --rotate normal --rate 100 \
-        --output VIRTUAL1 --off
+    xrandr --output $edp --off \
+        --output $hdmi --primary --mode 1920x1080 --pos 1937x0 --rotate normal \
+        --output DP-1 --off \
+        --output DP-2 --off \
+        --output DP-3 --off \
+        --output DP-4 --off \
+        --output DP-1-0 --off \
+        --output DP-1-1 --off \
+        --output HDMI-1-0 --off \
+        --output DP-1-2 --off \
+        --output DP-1-3 --off
 
-    notify-send "Switched to HDMI display."
-    remaps us
+    setbg "$HOME/img/background"
+elif [ "$edp" ]; then
+    xrandr --output $edp --mode 1920x1080 --rotate normal \
+        --output HDMI-1 --off \
+        --output HDMI-1-0 --off \
+        --output DP-1 --off \
+        --output DP-2 --off \
+        --output DP-3 --off \
+        --output DP-4 --off \
+        --output DP-1-0 --off \
+        --output DP-1-1 --off \
+        --output DP-1-2 --off \
+        --output DP-1-3 --off
+
+    setbg "$HOME/img/background"
 fi
